@@ -101,7 +101,7 @@ a:hover {
 						</c:if>
 					</c:when>
 				</c:choose>
-				<div class="order-left">
+				<div class="order-left extra_width">
 					<h2 class="pageTitle"><i class="fa fa-birthday-cake" aria-hidden="true"></i> ${menuTitle} 
 					
 					<span class="sub_order">Order Date : ${orderDate}</span>
@@ -120,9 +120,9 @@ a:hover {
 				</div>
 
 
+ 
 
-
-				<div class="order-right">
+				<div class="order-right small">
 					<%-- <div class="ordermto2px">
 						<div class="orderclose">Order Closing Time :</div>
 						<div class="ordercloser2">
