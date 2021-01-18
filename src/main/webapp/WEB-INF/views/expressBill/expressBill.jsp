@@ -146,11 +146,53 @@ input:checked+.slider:before {
 				<!------------ Place Actual content of page inside this div ----------->
 				<div class="sidebarright">
 
-					<div class="row">
-						<div class="col-md-3">
-							<h2 class="pageTitle"
-								style="color: #e53878; width: auto; margin-right: 15px">Express
+					<div ><!-- class="row" -->
+						<div> <!-- class="col-md-3" -->
+						
+						<div class="title_row_one">
+							<div class="left_title">
+								<h2 class="pageTitle"> <i class="fa fa-file-pdf-o"></i> Express
 								Bill</h2>
+							</div>
+							
+							
+								
+							
+							
+							<div class="right_bill">
+								<div class="bill_txt">Bill No
+										:${sellBillHeader.sellBillNo} &nbsp; &nbsp; &nbsp; Bill Date
+										:${sellBillHeader.billDate}</div>
+							</div>
+							
+							
+							<div class="on_off_row">
+							<div class="on_off_one">
+								<p> Print</p>
+								<label class="switch"> <input type="checkbox" id="id"> <span class="slider round"></span>
+							
+							</div>
+							<div class="on_off_one">
+								<p>SP</p>
+								<label class="switch"> <input type="checkbox" id="sp"
+								name="sp"> <span class="slider round"></span>
+							    </label>
+							</div>
+							<div class="on_off_one">
+								<p>With stock</p>
+								<label class="switch"> <input
+								type="checkbox" id="checkStock" name="checkStock"> 
+								<span class="slider round"></span>
+							</label>
+							</div>
+						</div>
+							<div class="clr"></div>
+							
+						</div>
+						
+							
+							
+							
 
 							<c:choose>
 
@@ -169,42 +211,43 @@ input:checked+.slider:before {
 								<c:when test="${count ==2}">
 
 
-									<div class="bill_txt">Bill No
-										:${sellBillHeader.sellBillNo} &nbsp; &nbsp; &nbsp; Bill Date
-										:${sellBillHeader.billDate}</div>
+									
+								
 						</div>
-
-						<!-- <div class="col-md-2">
+						<div class="clr"></div>
+	
 						
-					</div> -->
+						
+						
+						
+						
+						
 
-						<div class="col-md-1">
+						<!-- <div class="col-md-1">
 							<span
 								style="padding-top: 0px; float: left; margin: 13px 10px 0 0; font-size: 16px;">
 								Print</span>&nbsp;<label class="switch"> <input type="checkbox"
 								id="id"> <span class="slider round"></span>
-						</div>
+						</div> -->
 
-						<div class="col-md-1">
+						<!-- <div class="col-md-1">
 							<span
 								style="padding-top: 0px; float: left; margin: 13px 10px 0 0; font-size: 16px;">SP</span>&nbsp;
 							<label class="switch"> <input type="checkbox" id="sp"
 								name="sp"> <span class="slider round"></span>
 							</label>
-						</div>
-						<div class="col-md-2">
+						</div> -->
+						<!-- <div class="col-md-2">
 							<span
 								style="padding-top: 0px; float: left; margin: 13px 10px 0 0; font-size: 16px;">With
 								stock</span>&nbsp; <label class="switch"> <input
 								type="checkbox" id="checkStock" name="checkStock"> <span
 								class="slider round"></span>
 							</label>
-						</div>
-						<br> <br> <br>
-
-
-						<div class="col-md-2" style="display: none; margin: 5px 0 0 0;"
-							id="tp">
+						</div> -->
+						
+					<div class="show_row">
+						<div class="hide_one" style="display: none;" id="tp">
 							<select class="form-control" data-placeholder="Search Type"
 								name="type" tabindex="-1" id="type" data-rule-required="true"
 								onchange="onchangetype()">
@@ -214,13 +257,63 @@ input:checked+.slider:before {
 								<!-- <option value="2">Search By Order No.</option> -->
 							</select>
 						</div>
+						<div class="hide_two" style="display: none;" id="byDate">
+							<form name="frm_search" id="frm_search" method="post" action="itemHistory"> 
+							
+							<div class="divide_one">
+								<select name="group" id="group" placeholder="Select Menu"
+										class="form-control" required>
+										<option value="">Select Type</option>
+										<option value="0">All</option>
+										<c:forEach items="${menusList}" var="menusList">
+											<c:choose>
+												<c:when
+													test="${menusList.mainCatId==5 || menusList.menuId==42}">
 
-						<div class="row" style="display: none; margin: 5px 0 0 0;"
+													<option value="${menusList.menuId}">${menusList.menuTitle}</option>
+												</c:when>
+
+											</c:choose>
+										</c:forEach>
+									</select>
+							</div>
+							<div class="divide_one">
+								<input id="todatepicker" class="texboxitemcode texboxcal"
+										placeholder="Delivery Date" name="datepicker" type="text"
+										autocomplete="off">
+							</div>
+							<div class="divide_one">
+								<input name="" class="buttonsaveorder" value="Search"
+										type="button" onclick="searchOrders()">
+							</div>
+							
+							</form>
+						</div>
+						
+						<div class="order_three">
+							<div class="order_three_one"></div>
+						</div>
+						
+					</div>
+
+						<!-- <div class="col-md-2" style="display: none; margin: 5px 0 0 0;"
+							id="tp">
+							<select class="form-control" data-placeholder="Search Type"
+								name="type" tabindex="-1" id="type" data-rule-required="true"
+								onchange="onchangetype()">
+								<option value="">Select Search Type</option>
+								<option value="1">Delivery Date</option>
+								<option value="2">Order Date</option>
+								<option value="2">Search By Order No.</option>
+							</select>
+						</div> -->
+
+						<%-- <div class="row" style="display: none; margin: 5px 0 0 0;"
 							id="byDate">
 							<form name="frm_search" id="frm_search" method="post"
 								action="itemHistory">
 
-								<div class="col-md-2">
+								 <div class="col-md-2">
 									<select name="group" id="group" placeholder="Select Menu"
 										class="form-control" required>
 										<option value="">Select Type</option>
@@ -236,20 +329,20 @@ input:checked+.slider:before {
 											</c:choose>
 										</c:forEach>
 									</select>
-								</div>
+								</div> 
 
-								<div class="col-md-2">
+								 <div class="col-md-2">
 									<input id="todatepicker" class="texboxitemcode texboxcal"
 										placeholder="Delivery Date" name="datepicker" type="text"
 										autocomplete="off">
-								</div>
-								<div class="col-md-1">
+								</div> 
+								 <div class="col-md-1">
 									<input name="" class="buttonsaveorder" value="Search"
 										type="button" onclick="searchOrders()">
-								</div>
+								</div> 
 								<br>
 							</form>
-						</div>
+						</div> --%>
 						<br>
 
 						<div style="display: none;" id="byOrderNo">
@@ -275,23 +368,22 @@ input:checked+.slider:before {
 
 
 
+			
 
-
-					</label>
-					<div class="row">
-
-
-
-
-
-
-
+					
+					
+					<div><!--  class="row" -->
 						<div class="clearfix"></div>
-						<div class="table-wrap" id="orderHistory" style="display: none;">
-
-							<div id="table-scroll" class="table-scroll">
-								<div id="faux-table" class="faux-table1" aria="hidden"></div>
-								<table id="table_history" class="main-table" border="1px">
+						
+						
+						
+						
+						
+						<div id="orderHistory" style="display: none;">
+							<div id="table-scroll">
+								
+								<div class="tableFixHead">
+								<table id="table_history">
 									<thead>
 										<tr class="bgpink">
 											<th class="col-md-1" style="text-align: center;">Bill
@@ -321,21 +413,26 @@ input:checked+.slider:before {
 								</table>
 							</div>
 						</div>
-						<br>
+					</div>	
+						
 					</div>
-					<div class="table" style="margin: 0;">
-						<div class="shInnerwidth">
+					
+					<div ><!-- class="row" -->
+					
+					
+					
+						<div class="tableFixHead">
 							<table width="100%" border="0" cellspacing="0" cellpadding="0"
 								class="table">
 								<tr>
 									<td align="center" valign="middle" style="padding: 0px;">
 										<table width="100%" border="0" cellspacing="0" cellpadding="0">
 											<tr class="bgpink">
-												<td align="center">BARCODE</td>
-												<td align="center">QTY</td>
-												<td align="center">ITEM NAME</td>
-												<td align="center">RATE</td>
-												<td align="center">&nbsp;</td>
+												<th style="text-align: center;">Barcode</th>
+												<th style="text-align: center;">Qty</th>
+												<th style="text-align: center;">Item Name</th>
+												<th style="text-align: center;">Rate</th>
+												<th style="text-align: center;">&nbsp;</th>
 											</tr>
 											<tr>
 												<td><input type="text" class="form-control"
@@ -377,7 +474,10 @@ input:checked+.slider:before {
 
 							</table>
 						</div>
+					
 					</div>
+					
+					
 					<input name="rate1" id="rate1" type="hidden" value="00" />
 					<div class="row" style="margin: -10px 0 5px 0;">
 						<div class="col-md-12">
@@ -399,21 +499,21 @@ input:checked+.slider:before {
 
 					</div>
 					<!-- Form End -->
-					<div class="table-responsive">
-						<div class="shInnerwidth">
-
+					<div>
+						<div >
+							<div class="tableFixHead">
 							<table class="table table-bordered" width="100%" border="0"
 								cellspacing="0" cellpadding="0 " id="table_grid1">
 								<tr class="bgpink">
-									<th style="text-align: center;">PRINT</th>
+									<th style="text-align: center;">Print</th>
 									<th style="text-align: center;">Sr.</th>
-									<th style="text-align: center;">DETAIL ID</th>
-									<th style="text-align: center;">BARCODE</th>
-									<th style="text-align: center;">ITEM NAME</th>
-									<th style="text-align: center;">QTY</th>
-									<th style="text-align: center;">RATE</th>
-									<th style="text-align: center;">AMT</th>
-									<th style="text-align: center;">ACTION</th>
+									<th style="text-align: center;">Detail ID</th>
+									<th style="text-align: center;">Barcode</th>
+									<th style="text-align: center;">Item Name</th>
+									<th style="text-align: center;">Qty</th>
+									<th style="text-align: center;">Rate</th>
+									<th style="text-align: center;">Amt.</th>
+									<th style="text-align: center;">Action</th>
 								</tr>
 								<c:forEach items="${sellBillDetails}" var="sellBillDetails"
 									varStatus="count">
@@ -445,7 +545,7 @@ input:checked+.slider:before {
 												title="Delete"><i class="fa fa-trash"></i></abbr></a></td>
 									</tr>
 								</c:forEach>
-							</table>
+							</table> </div>
 						</div>
 
 
@@ -464,21 +564,26 @@ input:checked+.slider:before {
 					</div>
 
 					<center>
-						<input type="button" class="btn btn-primary"
+						<input type="button" class="buttonsaveorder"
 							onclick="todaysDayClose()" value="DAY CLOSE" id="dayClose1" />
 					</center>
 					<!--here input para was bill No  -->
 					<!-- </li> -->
 
 					</c:when>
+					
+					
 					<c:when test="${count ==3}">
-						<li>
-							<div class="row"></div> <br /> <br />
-							<div class="table">
-								<div class="shInnerwidth">
-
-									<table class="table table-bordered" width="100%" border="0"
-										cellspacing="0" cellpadding="0 " id="table_grid">
+						
+							<div class="row"></div>
+							
+							<div id="table-scroll" style="margin: 15px 0 0 0;">
+						
+						
+						
+						<div  class="tableFixHead">
+								<table class="main-table" width="100%" border="0"
+										cellspacing="0" cellpadding="0 " id="table_grid"><!--  class="table table-bordered" -->
 										<tr class="bgpink">
 											<th>Bill No.</th>
 											<th>Bill Date</th>
@@ -493,31 +598,52 @@ input:checked+.slider:before {
 											<td><c:out value="${sellBillHeader.taxableAmt}" /></td>
 											<td><c:out value="${sellBillHeader.payableAmt}" /></td>
 											<td><c:out value="${sellBillHeader.grandTotal}" /></td>
-											<td><input type="button" class="btn btn-primary"
+											<td><input type="button" class="buttonsaveorder"
 												id="dayClose1" onclick="todaysDayClose()" value="DAY CLOSE"
 												id="callSubmit" /> <!--here input para was bill No  --></td>
 										</tr>
-									</table>
-								</div>
-							</div>
-						</li>
-
-						<li>
-
-							<div class="table-responsive">
+									</table></div>
+									
+									
+						</div>
+							
+							
+							
+							
+							<!-- <div class="table">
 								<div class="shInnerwidth">
 
-									<table class="table table-bordered" width="100%" border="0"
-										cellspacing="0" cellpadding="0 " id="table_grid">
+									
+								</div>
+							</div> -->
+						
+						<div id="table-scroll" style="margin: 15px 0 0 0;">
+						
+						
+						
+						
+							<div class="tableFixHead">
+							<table width="100%" border="0"
+										cellspacing="0" cellpadding="0 " id="table_grid"> <!-- table table-bordered -->
 										<tr class="bgpink">
 
 											<th>Sr.No.</th>
 											<th>Detail Id</th>
 											<th>Barcode</th>
 											<th>Item Name</th>
-											<th style="width: 130px;">Qty</th>
+											<th>Qty</th>
 											<th>Rate</th>
 											<th>Amount</th>
+										</tr>
+										
+										<tr>
+											<td>44343</td>
+											<td>04-12-2020</td>
+											<td>0.0</td>
+											<td>04-12-2020</td>
+											<td>0.0</td>
+											<td>0.0</td>
+											<td><input type="button" class="buttonsaveorder" id="dayClose1" onclick="todaysDayClose()" value="DAY CLOSE"> <!--here input para was bill No  --></td>
 										</tr>
 
 										<c:forEach items="${sellBillDetails}" var="sellBillDetails"
@@ -541,9 +667,15 @@ input:checked+.slider:before {
 											</tr>
 										</c:forEach>
 									</table>
-								</div>
-							</div>
-						</li>
+						
+						</div>
+						</div>
+						
+						
+
+
+						
+						
 
 					</c:when>
 					<c:otherwise>
@@ -555,10 +687,10 @@ input:checked+.slider:before {
 						<div class="row" id="loadmsg"
 							style="display: none; text-align: center; color: blue; font-size: 24px; margin: top:20px;">
 							Please wait...</div>
-						<div class="table" id="div1" style="display: none;">
-							<div class="shInnerwidth">
-								<table width="100%" border="0" cellspacing="0" cellpadding="0"
-									class="table">
+						<div cid="div1" style="display: none;">
+							
+								<div class="tableFixHead">
+								<table width="100%" border="0" cellspacing="0" cellpadding="0">
 									<tr>
 										<td align="center" valign="middle" style="padding: 0px;">
 											<table width="100%" border="0" cellspacing="0"
@@ -603,8 +735,8 @@ input:checked+.slider:before {
 									</tr>
 
 								</table>
-
-							</div>
+							  </div>
+							
 
 						</div> <input name="rate1" id="rate1" type="hidden" value="00" />
 						<div class="row">
@@ -623,9 +755,9 @@ input:checked+.slider:before {
 							</div>
 
 						</div> <br /> <!-- Form End -->
-						<div class="table-responsive" style="display: none;" id="div2">
-							<div class="shInnerwidth">
-
+						<div style="display: none;" id="div2">
+							
+								<div class="tableFixHead">
 								<table class="table table-bordered" width="100%" border="0"
 									cellspacing="0" cellpadding="0 " id="table_grid">
 									<tr class="bgpink">
@@ -640,16 +772,16 @@ input:checked+.slider:before {
 									<tr>
 
 									</tr>
-								</table>
-							</div>
+								</table></div>
+							
 						</div>
 						<hr /> <br />
 						<center>
-							<button class="btn additem_btn" onclick="todaysDayClose()"
+							<button class="buttonsaveorder" onclick="todaysDayClose()"
 								style="display: none;" id="dayClose1">DAY CLOSE</button>
 						</center>
 						<center>
-							<input type="submit" class="btn btn-primary"
+							<input type="submit" class="buttonsaveorder"
 								onclick="todaysDayClose()" style="display: none;" id="dayClose1"
 								value="DAY CLOSE">
 						</center>

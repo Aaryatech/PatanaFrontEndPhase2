@@ -110,7 +110,7 @@ table, th, td {
 	<!--rightContainer-->
 	<div class="fullGrid center">
 		<!--fullGrid-->
-		<div class="wrapperIn2">
+		<div class="wrapperIn3"><!-- wrapperIn2 -->
 
 			<!--leftNav-->
 
@@ -126,35 +126,23 @@ table, th, td {
 					<c:if test="${not empty message}">
 						<div class="alert1">
 							<span class="closebtn"
-								onclick="this.parentElement.style.display='none';">&times;</span>
+								onclick="this.parentElement.style.display='none';"></span>
 							${message}
 						</div>
 					</c:if>
 				</div>
-			</div>
+			</div> 
 
 			<!--rightSidebar-->
 			<div class="sidebarright">
-				<div class="order-left">
-					<h2 class="pageTitle">Stock Details  </h2>
-					<!--<h3 class="pageTitle2">Order Date : 22-02-2017 </h3>-->
+			
+			<div class="title_row_one marg_top_btm">
+				<div class="left_title">
+					<h2 class="pageTitle"><i class="fa fa-file-o"></i> Stock Details  </h2>
 				</div>
-
-		<%-- 		<div class="order-right" align="right">
-
-					<a href="${pageContext.request.contextPath}/showFrOpeningStock"><input
-						type="button" value="Add Opening Stock" class="btn btn-info">
-					</a>
-
-				</div> --%>
-
-
-				<div class="order-right">
-					<div class="col-sm-2">
-						<div class="col1title">Current Month:</div>
-					</div>
-					<div class="col-md-8" style="margin: 8px 0 0 0;">
-
+				<div class="on_off_row extra_margin_top">
+					<div class="current_mon">
+						<span>Current Month:</span>
 						<c:forEach items="${category}" var="category" varStatus="count">
 							<c:forEach items="${getMonthList}" var="getMonthList"
 								varStatus="count">
@@ -204,7 +192,7 @@ table, th, td {
 														<c:set var="month" value=""></c:set>
 													</c:otherwise>
 												</c:choose>
-												<strong> ${category.catName}</strong> : ${month}, 
+												<div class="month_spn"> ${category.catName} : <span>${month}.</span></div> 
 													 
 													 </c:when>
 										</c:choose>
@@ -212,17 +200,65 @@ table, th, td {
 								</c:choose>
 							</c:forEach>
 						</c:forEach>
-
-
+						
 					</div>
-
 				</div>
-				<div class="colOuter">
-					<div class="col-md-1">
-						<div class="col1title">Select Category</div>
+				<div class="clr"></div>
+			</div>
+			
+			
+			
+				
+
+
+				
+				
+				<div class="single_row">
+					
+					
+					<div class="date_sear four_bx_divid">
+						<div class="date_sear_txt">Type</div>
+						<div class="date_sear_int inpt_width_one">
+							<select name="st_type" class="form-control chosen" tabindex="4"
+							id="st_type" required>
+
+							<option value="">Select Type</option>
+							<option value="1">ALL</option>
+							<option value="2">In Stock</option>
+							<option value="3">0 Stock</option>
+
+						</select>
+						</div>
+						<div class="date_sear_int inpt_width_two">
+							<select name="select_rate" class="form-control chosen"
+							tabindex="4" id="select_rate" onchange="searchStock()" required>
+							<option value="">Rate Type</option>
+							<option value="1">Rate</option>
+							<option value="2">MRP</option>
+
+						</select>
+						</div>
 					</div>
-					<div class="col-md-2">
-						<select name="select_category" class="form-control chosen"
+					
+					<div class="date_sear four_bx">
+						<div class="date_sear_txt"> Option</div>
+						<div class="date_sear_int inpt_widths">
+							<select name="selectStock" class="form-control chosen"
+							tabindex="6" id="selectStock" onchange="showDiv(this)" required>
+
+							<option value="-1">Select Option</option>
+							<option value="1" id="currentStock">Get Current Stock</option>
+
+							<option value="3" id="dateStock">Get Stock Between Dates</option>
+
+						</select>
+						</div>
+					</div>
+					
+					<div class="date_sear four_bx">
+						<div class="date_sear_txt">Category</div>
+						<div class="date_sear_int inpt_widths">
+							<select name="select_category" class="form-control chosen"
 							tabindex="4" id="selectCategory" required>
 
 							<option value="-1">Select Category</option>
@@ -239,111 +275,55 @@ table, th, td {
 							</c:forEach>
 
 						</select>
-					</div>
-
-
-
-					<div class="col-md-1">
-						<div class="col1title">Select View Option</div>
-					</div>
-					<div class="col-md-2">
-						<select name="selectStock" class="form-control chosen"
-							tabindex="6" id="selectStock" onchange="showDiv(this)" required>
-
-							<option value="-1">Select Option</option>
-							<option value="1" id="currentStock">Get Current Stock</option>
-
-							<option value="3" id="dateStock">Get Stock Between Dates</option>
-
-						</select>
-					</div>
-					<div class="col-md-1">
-						<div class="col1title">Type</div>
-					</div>
-					<div class="col-md-2">
-						<select name="st_type" class="form-control chosen" tabindex="4"
-							id="st_type" required>
-
-							<option value="">Select Type</option>
-							<option value="1">ALL</option>
-							<option value="2">In Stock</option>
-							<option value="3">0 Stock</option>
-
-						</select>
-					</div>
-
-
-					<div class="col-md-2">
-						<select name="select_rate" class="form-control chosen"
-							tabindex="4" id="select_rate" onchange="searchStock()" required>
-							<option value="">Select Rate Type</option>
-
-
-							<option value="1">Rate</option>
-
-							<option value="2">MRP</option>
-
-						</select>
+						</div>
 					</div>
 					
-					<div class="col-md-1"><input name="search_stock" class="buttonsaveorder" value="Search"
-							type="button" onclick="searchStock()"></div>
+					<div class="date_btn mrg_lft">
+						<input name="search_stock" class="buttonsaveorder" value="Search"
+							type="button" onclick="searchStock()">
+					</div>
+					<div class="clr"></div>
 				</div>
-
-
-
-				<!-- <div class="colOuter" style="display: none" id=select_month_year>
-					<div class="col-md-2">
-						<div class="col1title">Select Month From :</div>
-					</div>
-					<div class="col-md-2" align="left">
-
-						<input type='text' placeholder="Select From Month" id='txtDate'
-							name="from_stockdate" required />
-					</div>
-
-					<div class="col3"></div>
-
-
-
-					<div class="col-md-2">
-						<div class="col1title">To :</div>
-					</div>
-					<div class="col-md-2" align="left">
-						<input type='text' placeholder="Select To Month" id=txtDateto
-							name="to_stockdate" required />
-					</div>
-
-				</div> -->
-
-
-
-				<div class="colOuter" style="display: none" id=select_date>
-					<div class="col-md-2">
-						<div class="col1title">From Date:</div>
-					</div>
-					<div class="col-md-2" align="left">
-
-						<input id="fromdatepicker" class="texboxitemcode texboxcal"
-							autocomplete="off" placeholder="From Date" name="from_datepicker"
-							type="text">
-
-					</div>
-
-					<div class="col3"></div>
-
-
-
-					<div class="col-md-2">
-						<div class="col1title">To Date:</div>
-					</div>
-					<div class="col-md-2" align="left">
-						<input id="todatepicker" class="texboxitemcode texboxcal"
+				
+				<div class="single_row margtp" style="display: none" id=select_date>
+					<div class="date_sear four_bx left">
+						<div class="date_sear_txt">To</div>
+						<div class="date_sear_int inpt_widths">
+							<input id="todatepicker" class="texboxitemcode texboxcal"
 							autocomplete="off" placeholder="To Date" name="to_datepicker"
 							type="text">
+						</div>
 					</div>
-
+					
+					<div class="date_sear four_bx left">
+						<div class="date_sear_txt">From</div>
+						<div class="date_sear_int inpt_widths">
+							<input id="fromdatepicker" class="texboxitemcode texboxcal"
+							autocomplete="off" placeholder="From Date" name="from_datepicker"
+							type="text">
+						</div>
+					</div>
 				</div>
+				
+				
+				
+
+
+
+					
+					
+					
+					<!-- <div class="col-md-1"><input name="search_stock" class="buttonsaveorder" value="Search"
+							type="button" onclick="searchStock()"></div> 
+				</div>-->
+
+
+
+				
+
+
+
+				
 
 
 
@@ -389,33 +369,20 @@ table, th, td {
 							</label>
 
 
-							<div id="table-scroll" class="table-scroll">
-								<!-- <div id="faux-table" class="faux-table" aria="hidden"> -->
-								<%-- <div class="table-wrap">	<table id="table_grid1" class="main-table">
-										<thead>
-											<tr class="bgpink">
-							<th class="col-md-1">Item Id</th>
-												<th class="col-md-1">Item_Name</th>
-												<th class="col-md-1">Reg Op Stock</th>
-												<th class="col-md-1">Sp Op Stock</th>
-												<th class="col-md-1">Reg Pur Qty</th>
-												<th class="col-md-1">Sp Pur Qty</th>
-												<th class="col-md-1">Grn-Gvn Qty</th>
-												<th class="col-md-1">Regular Sale</th>
-												<th class="col-md-1">Sp Sale</th>
-												<th>Reorder Qty</th>
-												<th class="col-md-1">Reg Cur Stock</th>
-												<th class="col-md-1">Sp Cur Stock</th>
+							
+							
 
-												<c:if test="${isMonthCloseApplicable eq true}">
-													<th>Physical Stock</th>
-													<th>Stock Difference</th>
-												</c:if>
-											</tr>
-										</thead></table></div> --%>
-								<!-- </div> -->
-								<div class="table-wrap">
-									<table id="table_grid" class="main-table">
+									
+
+
+							<div id="table-scroll">
+							
+															
+								
+								<div class="tableFixHead">
+								
+								
+									<table id="table_grid">
 										<thead>
 												<tr class="bgpink">
 												<th class="col-md-1">Item Id</th>
@@ -448,7 +415,7 @@ table, th, td {
 
 										</tbody>
 
-										<!-- 	<tr>
+										 	<!-- <tr>
 											<td></td>
 											<td></td>
 											<td class="col-md-1">Total</td>
@@ -488,7 +455,7 @@ table, th, td {
 											<td><input type="text" id="curStockVal"
 												style="width: 80px;" name="curStockVal" value="0" readonly></td>
 
-										</tr> -->
+										</tr>  -->
 
 
 
@@ -500,15 +467,16 @@ table, th, td {
 
 
 
-									&nbsp;
+									
+								
 								</div>
 
 							</div>
 
 							<div class="three_buttons">
-									<button type="button" class="btn one btn-primary" onclick="exportToExcel();" id="expExcel"> Export To Excel</button>
+									<button type="button" class="buttonsaveorder" onclick="exportToExcel();" id="expExcel"> Export To Excel</button>
 									
-									<button type="button" class="btn one btn-primary" onclick="genPdf()" id="PDFButton"> PDF</button>
+									<button type="button" class="buttonsaveorder" onclick="genPdf()" id="PDFButton"> PDF</button>
 									
 									<button type="button" class="buttonsaveorder" value="" id="substk" type="submit"> Month End</button>
 									

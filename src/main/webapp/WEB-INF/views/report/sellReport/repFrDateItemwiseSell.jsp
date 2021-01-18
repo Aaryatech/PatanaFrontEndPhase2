@@ -2,8 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
-		<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 <style>
 table, th, td {
     border: 1px solid #9da88d;
@@ -102,105 +101,67 @@ jQuery(document).ready(function(){
 				<!-- Place Actual content of page inside this div -->
 				<div class="sidebarright">
 				
-
-<div class="row">
-	    <div class="col-md-12"><h2 class="pageTitle">Datewise-Itemwise Sale Report</h2></div>
-	</div>
-	<br>
-<div class="row">
-	
-	<div class="col-sm-1"><div class="pull-left"><b>Group</b></div></div>
-		<div class="col-md-3"><select id="category" class="form-control chosen"  style="width: 230px" placeholder="Select Category"  name="category" tabindex="4"    >
-		<option value="-1">Select Option</option>
-								
-											
+				<div class="title_row_one">
+					<div class="left_title">
+						<h2 class="pageTitle"><i class="fa fa-file-o"></i> Datewise-Itemwise Sale Report</h2>
+					</div>
+					<div class="right_content"></div>
+					<div class="clr"></div>
+				</div>
+				
+				<div class="single_row">
+					
+					
+					<div class="date_sear four_bx">
+						<div class="date_sear_txt">Select Group</div>
+						<div class="date_sear_int inpt_width">
+							<select id="category" class="form-control chosen" placeholder="Select Category"  name="category" tabindex="4"    style="width:100%;">
+		<option value="-1">Select Option</option>											
 											<c:forEach items="${unSelectedCatList}" var="unSelectedCat"
 													varStatus="count">
 												<option value="${unSelectedCat.catId}"><c:out value="${unSelectedCat.catName}"/></option>
 												</c:forEach>
 
 							</select>
-							</div>
-		<div class="col-sm-1"><div class="pull-left"><b>From</b></div></div>
-	    <div class="col-md-3">
-		<input id="fromdatepicker"  placeholder="From Date"  name="from_Date" type="text" style="width: 230px; text-align:left;" size="30"  class="form-control" autocomplete="off">
-		</div>
-			<div class="col-sm-1"><div class="pull-left"><b>TO</b></div></div>
-			  <div class="col-md-3">
-		<input id="todatepicker"  placeholder="To Date"  name="to_Date" type="text" size="30" style="width: 230px;  text-align:left;"  class="form-control" autocomplete="off">
-		</div></div>
+						</div>
+					</div>
+					
+					<div class="date_sear four_bx">
+						<div class="date_sear_txt">From Date</div>
+						<div class="date_sear_int inpt_width">
+							<input id="fromdatepicker"  placeholder="From Date"  name="from_Date" type="text" class="texboxitemcode texboxcal " autocomplete="off" style="width:100%;">
+						</div>
+					</div>
+					
+					<div class="date_sear four_bx">
+						<div class="date_sear_txt">To Date</div>
+						<div class="date_sear_int inpt_width">
+							<input id="todatepicker"  placeholder="To Date"  name="to_Date" type="text" style="width:100%;" class="texboxitemcode texboxcal " autocomplete="off">
+						</div>
+					</div>
+					
 					<input type="hidden" name="frId" id="frId" value="${frId}">
-		
-	<!-- </div>
- </div> -->
-	<br>
- <!-- 	<div align="center"> 
-		    <button class="btn search_btn" onclick="searchSellBill()" >HTML View </button>
-		    <button class="btn search_btn" onclick="showChart()" >Graph</button>
-		    	    <button class="btn search_btn" onclick="showPdf()" >PDF </button>
-		 
-		<br>
-    </div> -->
-	<!-- </div> -->
-	<div class="row">
-		<div align="center"> 
-		    <button class="btn search_btn" onclick="searchSellBill()" >HTML View </button>
-		    <button class="btn search_btn" onclick="showChart()" >Graph</button>
-<%-- 		    	     <a href='${pageContext.request.contextPath}/pdf?reportURL=showSellDateItemwisewiseReportpPdf' class="btn search_btn" id="btn_pdf" style="display: none">PDF</a>
- --%>		 	<button class="btn btn-primary" value="PDF" id="PDFButton" onclick="genPdf()">PDF</button>
-		
-    </div></div> 
-		<br> 
-	<%-- <div class="row">
-	
-	<div class="colOuter">
-		<div class="col1"><div class="col1title">Group</div></div>
-		<div class="col2"><select id="category" class="form-control chosen" placeholder="Select Category"  name="category" tabindex="6"    >
-		<option value="-1">Select Option</option>
-								
-											
-											<c:forEach items="${unSelectedCatList}" var="unSelectedCat"
-													varStatus="count">
-												<option value="${unSelectedCat.catId}"><c:out value="${unSelectedCat.catName}"/></option>
-												</c:forEach>
+					
+					<div class="date_btn marg_lft">
+			<button class="buttonsaveorder" onclick="searchSellBill()" >HTML View </button>
+		    <button class="buttonsaveorder" onclick="showChart()" >Graph</button>
+		 	<button class="buttonsaveorder" value="PDF" id="PDFButton" onclick="genPdf()">PDF</button>
+					</div>
+					
+				</div>
+				
 
-							</select>
-		</div>
-			
-								
-	</div>
-	
-		<div class="colOuter">
-		<div class="col1"><div class="col1title">From</div></div>
-		<div class="col2"><input id="fromdatepicker" class="texboxitemcode texboxcal" placeholder="Delivery Date"  name="from_Date" type="text"  >
-		</div>
-	</div>
 
-	<div class="colOuter">
-		<div class="col1"><div class="col1title">TO</div></div>
-		<div class="col2"><input id="todatepicker" class="texboxitemcode texboxcal" placeholder="Delivery Date"  name="to_Date" type="text"  >
-		</div>
-	</div>
 	
-		<div align="center">
-		     <button class="btn search_btn" onclick="searchSellBill()" >HTML View </button>
-		    <button class="btn search_btn" onclick="showChart()" >Graph</button>
-		    	   <br><br> <button id="btn_pdf" class="btn search_btn" onclick="showPdf()"  >PDF </button>
-		</div>
-		<br>
-		
-    </div>
-	 --%>
 	<div class="row" id="table">
 		<div class="col-md-12">
 		<!--table-->
 			<div class="clearfix"></div>
 
 
-				<div id="table-scroll" class="table-scroll">
-					<div id="faux-table" class="faux-table" aria="hidden"></div>
-					<div class="table-wrap">
-						<table id="table_grid" class="main-table">
+				<div id="table-scroll">					
+					<div class="tableFixHead">
+						<table id="table_grid">
 							<thead>
 								<tr class="bgpink">
 
@@ -227,8 +188,8 @@ jQuery(document).ready(function(){
 								 
 											 
 											 
-											<div class="col-sm-3  controls">
-											 <input type="button" id="expExcel" class="btn btn-primary" value="EXPORT TO Excel" onclick="exportToExcel();" disabled="disabled">
+											<div class="col-sm-12  controls" style="margin: 0 0 20px 0;">
+											 <input type="button" id="expExcel" class="buttonsaveorder" value="EXPORT TO Excel" onclick="exportToExcel();" disabled="disabled">
 											</div>
 											</div>
 			
@@ -429,7 +390,7 @@ function showChart(){
 							 function drawStuff() {
  
 							   var chartDiv = document.getElementById('chart_div');
-							   document.getElementById("chart_div").style.border = "thin dotted red";
+							   document.getElementById("chart_div").style.border = "1px solid #CCC"; /* thin dotted red */
 						       var dataTable = new google.visualization.DataTable();
 						       
 						       dataTable.addColumn('string', 'Bill Date'); // Implicit domain column.

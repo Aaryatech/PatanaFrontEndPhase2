@@ -41,38 +41,46 @@
 
 			<!--rightSidebar-->
 			<div class="sidebarright">
-				<div class="order-left">
-					<h2 class="pageTitle">Other Purchase Bills</h2>
-
-
-				</div>
-				<div class="col1title" align="right">
-					<a href="${pageContext.request.contextPath}/showOtherBill"><input
-						type="button" value="Purchase Bill" class="btn btn-info">
+			
+				<div class="title_row_one btm_margin">
+					<div class="left_title">
+						<h2 class="pageTitle"><i class="fa fa-file-pdf-o"></i> Other Purchase Bills</h2>
+					</div>
+					<div class="on_off_row extra_margin_topten">
+						<a href="${pageContext.request.contextPath}/showOtherBill"><input
+						type="button" value="Purchase Bill" class="buttonsaveorder">
 					</a>
+					</div>
 				</div>
+				
+				
+			
+			
 				<form id="validation-form">
-
-					<div class="colOuter">
-						<!-- copy div kalpesh -->
-
-						<div class="col-md-1" align="left">From Date :</div>
-						<div class="col-md-2">
-							<input id="datepicker" class="texboxitemcode texboxcal"
-								value="${cDate}" name="from_Date" autocomplete="off" type="text"
-								placeholder="From Date">
-						</div>
-
-						<div class="col-md-1" align="left">TO Date:</div>
-						<div class="col-md-2">
+				
+					<div class="single_row">
+					
+					<div class="date_sear four_bx">
+						<div class="date_sear_txt">To</div>
+						<div class="date_sear_int inpt_widths">
 							<input id="datepicker2" class="texboxitemcode texboxcal"
 								value="${cDate}" name="to_Date" autocomplete="off" type="text"
 								placeholder="To Date">
 						</div>
-
-
-						<div class="col-md-2" align="left">Select Supplier:</div>
-						<div class="col-md-2">
+					</div>
+					
+					<div class="date_sear four_bx">
+						<div class="date_sear_txt">From</div>
+						<div class="date_sear_int inpt_widths">
+							<input id="datepicker" class="texboxitemcode texboxcal"
+								value="${cDate}" name="from_Date" autocomplete="off" type="text"
+								placeholder="From Date">
+						</div>
+					</div>
+					
+					<div class="date_sear four_bx">
+						<div class="date_sear_txt">Supplier</div>
+						<div class="date_sear_int inpt_widths">
 							<select class="form-control" data-live-search="true"
 								title="Please Select Item" name="suppId" id="suppId"
 								data-rule-required="true">
@@ -83,15 +91,18 @@
 
 							</select>
 						</div>
-
-
-						<div class="col-md-1">
-							<button type="button" class="btn  buttonsaveorder"
-								onclick="serchOtherBill()">Search</button>
-						</div>
 					</div>
+					
+					
+					
+					<div class="date_btn">
+						<button type="button" class="buttonsaveorder" onclick="serchOtherBill()">Search</button>
+					</div>
+					
+				</div>
+				
 
-					<div class="colOuter"></div>
+					
 
 
 
@@ -103,10 +114,10 @@
 						<!--tabMenu-->
 
 
-						<div id="table-scroll" class="table-scroll">
-							<div id="faux-table" class="faux-table" aria="hidden"></div>
-							<div class="table-wrap">
-								<table id="table_grid" class="main-table" border="1px;">
+						<div id="table-scroll">
+							
+							<div class="tableFixHead">
+								<table id="table_grid">
 									<thead>
 										<tr class="bgpink">
 											<th class="col-md-1" style="text-align: center;">Sr No</th>

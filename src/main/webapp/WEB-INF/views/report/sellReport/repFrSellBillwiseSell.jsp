@@ -64,45 +64,38 @@ table, th, td {
 				<!-- Place Actual content of page inside this div -->
 				<div class="sidebarright">
 
-
-					<div class="row">
-						<div class="col-md-12">
-							<h2 class="pageTitle">Billwise Sale Report</h2>
+					<div class="title_row_one marg_top_btm">
+						<div class="left_title">
+							<h2 class="pageTitle"><i class="fa fa-birthday-cake" aria-hidden="true"></i> Billwise Sale Report</h2>
 						</div>
-					</div>
-
-					<div class="colOuter">
-						<div align="center">
-							<div class="col1">
-								<div class="col1title">
-									<b>From&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b> <input
-										id="fromdatepicker" placeholder="Delivery Date"
-										name="from_Date" type="text" autocomplete="off"  size="35">
-								</div>
+						<div class="on_off_row extra_margin">
+						
+						   
+							<div class="pop_one">
+								<div class="pop_one_txt s">From :</div>
+								<div class="pop_one_inp"><input id="fromdatepicker" class="texboxitemcode texboxcal" placeholder="Delivery Date" name="from_Date" type="text" autocomplete="off"  style="width:100%;"></div>
 							</div>
-							<div class="col2">
-								<div class="col1title">
-									<b>TO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b> <input
-										id="todatepicker" placeholder="Delivery Date" name="to_Date" autocomplete="off" 
-										type="text" size="35">
-								</div>
-							</div>
+							<div class="pop_one">
+								<div class="pop_one_txt margin_tp">To :</div>
+								<div class="pop_one_inp"><input id="todatepicker" class="texboxitemcode texboxcal" placeholder="Delivery Date" name="to_Date" autocomplete="off" type="text" style="width:100%;" ></div>
+							</div>	
 							<input type="hidden" name="frId" id="frId" value="${frId}">
-						</div>
-
-
-						<div align="center">
-							<button class="btn search_btn" onclick="searchSellBill()">HTML
+						
+							<div class="buttons_right">
+								<button class="buttonsaveorder" onclick="searchSellBill()">HTML
 								View</button>
-
-							<%--  <a href='${pageContext.request.contextPath}/pdf?reportURL=showSellBillwiseReportpPdf' id="btn_pdf" class="btn search_btn" style="display: none">PDF</a> --%>
-							<button class="btn btn-primary" value="PDF" id="PDFButton"
+								<button class="buttonsaveorder" value="PDF" id="PDFButton"
 								onclick="genPdf()">PDF</button>
-
-
-							<br>
+							</div> 
+							
+							
 						</div>
+						<div class="clr"></div>
 					</div>
+
+				
+
+					
 
 
 					<div class="row">
@@ -111,40 +104,10 @@ table, th, td {
 							<div class="clearfix"></div>
 
 
-							<div id="table-scroll" class="table-scroll">
-								<div id="faux-table" class="faux-table" aria="hidden">
-									<table id="table_grid" class="main-table">
-										<thead>
-											<tr class="bgpink">
-
-												<th class="col-sm-1" style="text-align: center;">Sr.No.</th>
-												<!-- <th class="col-sm-1" style="text-align: center;">Bill
-													No</th> -->
-												<th class="col-md-2" style="text-align: center;">Invoice
-													No</th>
-												<th class="col-md-2" style="text-align: center;">Franchisee
-													Name</th>
-												<th class="col-md-1" style="text-align: center;">Bill
-													Date</th>
-												<th class="col-md-1" style="text-align: center;">Amount</th>
-												<th class="col-md-2" style="text-align: center;">Payment
-													Mode</th>
-
-												<th class="col-md-2" style="text-align: center;">BillType</th>
-
-												<!-- 	<th class="col-md-1">Card</th>
-									<th class="col-md-1">Other</th> -->
-
-											</tr>
-										</thead>
-
-										<tbody>
-
-										</tbody>
-									</table>
-								</div>
-								<div class="table-wrap">
-									<table id="table_grid" class="main-table">
+							<div id="table-scroll">
+								
+								<div class="tableFixHead">
+									<table id="table_grid">
 										<thead>
 											<tr class="bgpink">
 
@@ -184,8 +147,8 @@ table, th, td {
 
 
 
-								<div class="col-sm-3  controls">
-									<input type="button" id="expExcel" class="btn btn-primary"
+								<div class="col-sm-12  controls">
+									<input type="button" id="expExcel" class="buttonsaveorder"
 										value="EXPORT TO Excel" onclick="exportToExcel();"
 										disabled="disabled">
 								</div>

@@ -104,46 +104,49 @@ jQuery(document).ready(function(){
 
 			<!-- Place Actual content of page inside this div -->
 			<div class="sidebarright">
-
-
-				<div class="row">
-					<div class="col-md-12">
-						<h2 class="pageTitle">Monthwise Purchase Report</h2>
-					</div>
+				
+				<div class="title_row_one marg_top_btm">
+				<div class="left_title">
+					<h2 class="pageTitle"><i class="fa fa-file-o"></i> Monthwise Purchase Report</h2>
 				</div>
-
-				<div class="row">
+				<div class="on_off_row extra_margin">
 					<input type="hidden" name="frId" id="frId" value="${frId}">
-
-					<div class="col-md-2">
-						<h4 class="pull-left">Month From :-</h4>
+					
+					<div class="pop_one">
+						<div class="pop_one_txt margin_tp">From </div>
+						<div class="pop_one_inp">
+							<input type='text' placeholder="Select From Month" id='txtDate'
+							name="from_stockdate" class="texboxitemcode texboxcal " />
+						</div>
 					</div>
-					<div class="col-md-2 ">
-						<input type='text' placeholder="Select From Month" id='txtDate'
-							name="from_stockdate" required size="25" />
+					
+					<div class="pop_one">
+						<div class="pop_one_txt margin_tp">To </div>
+						<div class="pop_one_inp">
+							
+							
+							<input type='text' placeholder="Select To Month" id=txtDateto
+							name="to_stockdate" class="texboxitemcode texboxcal "  />
+						</div>
 					</div>
-					<div class="col-md-2">
-						<h4 class="pull-left">To Month:-</h4>
+					
+					
+					
+					<div class="buttons_right">
+						<button class="buttonsaveorder" onclick="monthWisePurchase()">HTML View</button>
+						<button class="buttonsaveorder" onclick="showChart()">Graph</button>						
+						<button class="buttonsaveorder" value="PDF" id="PDFButton" onclick="genPdf()">PDF</button>
 					</div>
-					<div class="col-md-2 ">
-						<input type='text' placeholder="Select To Month" id=txtDateto
-							name="to_stockdate" required size="25" />
-					</div>
-					<!-- <div class="col-md-2">
-		    <button class="btn search_btn pull-left" onclick="monthWisePurchase()">Search </button>
-		</div> -->
-					<div align="center">
-						<button class="btn search_btn" onclick="monthWisePurchase()">HTML
-							View</button>
-						<button class="btn search_btn" onclick="showChart()">Graph</button>
-
-						<%-- 		   &nbsp;&nbsp;&nbsp; <a href='${pageContext.request.contextPath}/pdf?reportURL=showPurchaseMonthwiseReportPdf' id="btn_pdf" class="btn search_btn" style="display: none">PDF</a>
- --%>
-						<button class="btn btn-primary" value="PDF" id="PDFButton"
-							onclick="genPdf()">PDF</button>
-					</div>
-
+					
 				</div>
+				<div class="clr"></div>
+			</div>
+			
+			
+
+
+				
+
 
 				<div class="row" id="table">
 					<div class="col-md-12">
@@ -151,8 +154,8 @@ jQuery(document).ready(function(){
 						<div class="clearfix"></div>
 
 
-						<div id="table-scroll" class="table-scroll">
-							<div id="faux-table" class="faux-table" aria="hidden">
+						<div id="table-scroll">
+							<!-- <div id="faux-table" class="faux-table" aria="hidden">
 								<div class="table-wrap">
 									<table id="table_grid" class="main-table">
 										<thead>
@@ -168,7 +171,7 @@ jQuery(document).ready(function(){
 												<th class="col-md-1" style="text-align: center;">CGST</th>
 												<th class="col-md-1" style="text-align: center;">SGST</th>
 												<th class="col-md-1" style="text-align: center;">CESS</th>
-											<!-- 	<th class="col-md-1" style="text-align: center;">ROFF</th> -->
+												<th class="col-md-1" style="text-align: center;">ROFF</th>
 												<th class="col-md-1" style="text-align: center;">TOTAL</th>
 
 											</tr>
@@ -177,9 +180,9 @@ jQuery(document).ready(function(){
 									</table>
 
 								</div>
-							</div>
-							<div class="table-wrap">
-								<table id="table_grid" class="main-table">
+							</div> -->
+							<div class="tableFixHead">
+								<table id="table_grid">
 									<thead>
 										<tr class="bgpink">
 
@@ -209,8 +212,8 @@ jQuery(document).ready(function(){
 
 
 
-							<div class="col-sm-3  controls">
-								<input type="button" id="expExcel" class="btn btn-primary"
+							<div class="col-sm-12  controls">
+								<input type="button" id="expExcel" class="buttonsaveorder"
 									value="EXPORT TO Excel" onclick="exportToExcel();"
 									disabled="disabled">
 							</div>
@@ -219,28 +222,25 @@ jQuery(document).ready(function(){
 
 					</div>
 				</div>
-
-				<div id="chart">
-					<hr>
-					<div>
-
-
-
-						<div id="chart_div" style="width: 60%; height: 300; float: left;"
-							style="overflow-y: scroll;"></div>
-
-						<div id="pieChart_div"
-							style="width: 40%%; height: 300; float: right;"></div>
-						<div id="Piechart" style="width: 40%%; height: 300; float: right;"></div>
-						<!-- <div   id="PieChart_div" style="width:40%%; height:300; float: right;" ></div>  -->
-					</div>
-					<!-- <hr style="height:1px; width:50%%;" color="black">
-			<div class="colOuter" >
+				
+				
+				
+				<div id="chart" class="svg_bx">
+	
+		<div class="svg_l" id="chart_div" style="overflow-y: scroll;"></div>
+		<div class="svg_r">
+			<div class="chart_1" id="pieChart_div"></div>
+			<div class="chart_1" id="Piechart"></div>
+		</div>
+	
+	
+	
 			 
-				<div   id="PieChart_div" style="width:100%; height:300;" align="center" ></div>
-				</div> -->
-
+			
+				 
 				</div>
+
+				
 
 
 			</div>
@@ -700,7 +700,7 @@ jQuery(document).ready(function(){
 
 								var chartDiv = document
 										.getElementById('chart_div');
-								document.getElementById("chart_div").style.border = "thin dotted red";
+								document.getElementById("chart_div").style.border = "1px solid rgb(204, 204, 204)";
 								var dataTable = new google.visualization.DataTable();
 
 								dataTable.addColumn('string', 'Month'); // Implicit domain column.
@@ -783,7 +783,7 @@ jQuery(document).ready(function(){
 
 								var chartDiv = document
 										.getElementById('pieChart_div');
-								document.getElementById("pieChart_div").style.border = "thin dotted red";
+								document.getElementById("pieChart_div").style.border = "1px solid rgb(204, 204, 204)";
 								var dataTable = new google.visualization.DataTable();
 
 								dataTable.addColumn('string', 'Month'); // Implicit domain column.
@@ -825,7 +825,7 @@ jQuery(document).ready(function(){
 
 								var chartDiv = document
 										.getElementById('Piechart');
-								document.getElementById("Piechart").style.border = "thin dotted red";
+								document.getElementById("Piechart").style.border = "1px solid rgb(204, 204, 204)";
 								var dataTable = new google.visualization.DataTable();
 
 								dataTable.addColumn('string', 'Month'); // Implicit domain column.

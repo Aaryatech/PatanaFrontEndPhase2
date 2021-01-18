@@ -8,7 +8,7 @@
 
 <style>
 table, th, td {
-	border: 1px solid #9da88d;
+	border: 1px solid #CCC;
 }
 </style>
 
@@ -67,28 +67,49 @@ table, th, td {
 				</c:if>
 				<div class="row">
 					<div class="col-md-12">
-						<h3 class="pageTitle">Request GRN</h3>
-						<form action="${pageContext.request.contextPath}/showGrn"
+					
+					<div class="title_row_one">
+						<div class="title_l_one">
+							<h3 class="pageTitle"><i class="fa fa-birthday-cake" aria-hidden="true"></i> Request GRN</h3>
+						</div>
+						
+						<div class="title_r_one">
+							
+							<form action="${pageContext.request.contextPath}/showGrn"
 							name="search_form" id="search_form" method="get">
-							<div class='colOuter' style="float: right;">
-								<div class="col1" style="width: 10%;">Select Date</div>
-								<div class="col1" style="width: 19.333333%;">
-									<input id="fromdatepicker" class="texboxitemcode texboxcal "
-										style="width: 250px;" autocomplete="off"
-										placeholder="Search Date" name="searchDate" type="text"
-										value="${searchDate}">
+							<div class='colOuter'>
+							
+								<div class="top_Search_l">
+									<div class="select_date_l">Select Date</div>
+									<div class="select_area_l">
+										<input id="fromdatepicker" class="texboxitemcode texboxcal" autocomplete="off"
+											placeholder="Search Date" name="searchDate" type="text"
+											value="${searchDate}">
+									</div>
+									<div class="select_search_btn">
+										<input type="submit" name="" class="buttonsaveorder"
+											value="Search">
+									</div>								
 								</div>
-								<div class="col1">
-									<input type="submit" name="" class="buttonsaveorder"
-										value="Search">
-								</div>
-								<div class="col1" style="float: right; width: 13.333333%;">
+							
+								
+								
+								
+								<div class="right_grn_btn">
 									<a href='${pageContext.request.contextPath}/showGrn'> <input
 										type="button" name="" class="buttonsaveorder"
 										value="Todays GRN"></a>
 								</div>
 							</div>
 						</form>
+						
+						</div>
+						<div class="clr"></div>
+					</div>
+					
+					
+						
+						
 					</div>
 				</div>
 
@@ -98,14 +119,15 @@ table, th, td {
 					name="validation_form" id="validation_form" method="post">
 
 
-
-					<div id="table-scroll" class="table-scroll">
-						<div id="faux-table" class="faux-table" aria="hidden"></div>
-						<div class="table-wrap">
-							<table id="table_grid1" class="main-table">
+					<div class="title_margin">
+					
+					<div id="table-scroll">
+						
+						
+							<!--	<table id="table_grid1" class="main-table">
 								<thead>
 									<tr class="bgpink">
-										<!--	<th class="col-md-1">Invoice No</th>
+										<th class="col-md-1">Invoice No</th>
 										<th class="col-md-3">Name</th>
 										<th class="col-md-2">Type</th>
 										<th class="col-md-1">QTY</th>
@@ -116,14 +138,14 @@ table, th, td {
 										<th class="col-md-1">Taxable Amt</th>
 										<th class="col-md-1">Tax Amt</th>
 										<th class="col-md-1">Total Amt</th>
-										<th class="col-md-1">Remark</th>-->
+										<th class="col-md-1">Remark</th>
 									</tr>
 
 								</thead>
 								<tbody>
-							</table>
-							<div class="table-wrap">
-								<table id="table_grid" class="main-table">
+							</table>-->
+							<div class="tableFixHead">
+								<table id="table_grid">
 									<thead>
 										<tr class="bgpink">
 											<th class="col-md-1" style="text-align: center;">Invoice
@@ -263,8 +285,9 @@ table, th, td {
 
 								</table>
 							</div>
-						</div>
+						
 					</div>
+				</div>
 					<c:if test="${searchDate==null}">
 						<button type="submit" class="buttonsaveorder" id="submitGrn">Save</button>
 

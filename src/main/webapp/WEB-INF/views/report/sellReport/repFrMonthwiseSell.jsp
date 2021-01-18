@@ -109,34 +109,39 @@ jQuery(document).ready(function(){
 				<!-- Place Actual content of page inside this div -->
 				<div class="sidebarright">
 				
+				<div class="title_row_one marg_top_btm">
+					<div class="left_title"><h2 class="pageTitle"><i class="fa fa-file-o"></i> Monthwise Sale Report </h2></div>
+					<div class="on_off_row extra_margin">
+						
+						
+						<div class="pop_one">
+								<div class="pop_one_txt margin_tp">From :</div>
+								<div class="pop_one_inp">
+									<input id="fromdatepicker" class="texboxitemcode texboxcal" placeholder="Delivery Date"  name="from_Date" type="text" value="${frommonth}" style="width:100%;">
+									
+								</div>
+							</div>
+							
+							<div class="pop_one">
+								<div class="pop_one_txt margin_tp">To :</div>
+								<div class="pop_one_inp">
+								<input id="todatepicker" class="texboxitemcode texboxcal" placeholder="Delivery Date"  name="to_Date" type="text"  value="${tomonth}" style="width:100%;">
+								</div>
+								<input type="hidden" name="frId" id="frId" value="${frId}">
+							</div>
+							
+							<div class="buttons_right">
+							<button class="buttonsaveorder" onclick="searchSellBill()" >HTML View </button>
+		   					<button class="buttonsaveorder" onclick="showChart()" >Graph</button>
+		 		 			<button class="buttonsaveorder" value="PDF" id="PDFButton" onclick="genPdf()">PDF</button>
+						</div>
+					</div>
+				</div>
+				
 
-<div class="row">
-	    <div class="col-md-12"><h2 class="pageTitle">Monthwise Sale Report</h2></div>
-	</div>
+
 	
-	<div class="colOuter">
-		<div align="center" >
-		<div class="col1"><div class="col1title"><b>From&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
-		<input id="fromdatepicker"  placeholder="Delivery Date"  name="from_Date" type="text" size="35" value="${frommonth}">
-		</div></div>
-		<div class="col2"><div class="col1title"><b>TO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
-		<input id="todatepicker"  placeholder="Delivery Date"  name="to_Date" type="text" size="35" value="${tomonth}">
-		</div></div>
-				<input type="hidden" name="frId" id="frId" value="${frId}">
-		
-	</div>
- 
 	
- 	<div align="center"> 
-		    <button class="btn search_btn" onclick="searchSellBill()" >HTML View </button>
-		    <button class="btn search_btn" onclick="showChart()" >Graph</button>
-<%-- 		    	    <a href='${pageContext.request.contextPath}/pdf?reportURL=showSellMonthwiseReportpPdf' id="btn_pdf" class="btn search_btn" style="display: none">PDF</a>
- --%>		 		 												<button class="btn btn-primary" value="PDF" id="PDFButton" onclick="genPdf()">PDF</button>
- 
-		 
-		<br>
-    </div>
-	</div>
 	
 	<div class="row" id="table">
 		<div class="col-md-12">
@@ -144,8 +149,8 @@ jQuery(document).ready(function(){
 			<div class="clearfix"></div>
 
 
-				<div id="table-scroll" class="table-scroll">
-					<div id="faux-table" class="faux-table" aria="hidden">
+				<div id="table-scroll">
+					<!-- <div id="faux-table" class="faux-table" aria="hidden">
 						<div class="table-wrap">
 						<table id="table_grid" class="main-table">
 							<thead>
@@ -153,12 +158,12 @@ jQuery(document).ready(function(){
 
 									<th class="col-md-1"style="text-align:center;">Sr.No.</th>
 
-									<!-- <th class="col-md-1">Bill No</th> -->
+									<th class="col-md-1">Bill No</th>
 									<th class="col-md-1" style="text-align:center;">Month</th>
 									<th class="col-md-1" style="text-align:center;">Amount</th>
 									<th class="col-md-1" style="text-align:center;">Cash</th>
 								 	<th class="col-md-1" style="text-align:center;">Card</th>
-									<!-- <th class="col-md-1" style="text-align:center;">Other</th>  -->
+									<th class="col-md-1" style="text-align:center;">Other</th> 
 								  </tr>
 								</thead>
 								
@@ -168,9 +173,9 @@ jQuery(document).ready(function(){
 								</table>
 					
 				</div>
-					</div>
-					<div class="table-wrap">
-						<table id="table_grid" class="main-table">
+					</div> -->
+					<div class="tableFixHead">
+						<table id="table_grid">
 							<thead>
 								<tr class="bgpink">
 
@@ -195,8 +200,8 @@ jQuery(document).ready(function(){
 								 
 											 
 											 
-											<div class="col-sm-3  controls">
-											 <input type="button" id="expExcel" class="btn btn-primary" value="EXPORT TO Excel" onclick="exportToExcel();" disabled="disabled">
+											<div class="col-sm-12  controls">
+											 <input type="button" id="expExcel" class="buttonsaveorder" value="EXPORT TO Excel" onclick="exportToExcel();" disabled="disabled">
 											</div>
 											</div>
 		
@@ -205,18 +210,18 @@ jQuery(document).ready(function(){
 		</div>	
     </div>
 
-	<div id="chart" style="display: none"><br><br><br>
-	<hr><div  >
-	 
-			<div  id="chart_div" style="width:60%; height:300; float:left;" ></div> 
-		 
-			<div   id="Piechart" style="width:40%%; height:300; float: right;" ></div> 
-			</div>
+	<div id="chart" class="svg_bx" style="display: none">
+	
+		<div class="svg_l" id="chart_div"></div>
+		<div class="svg_r">
+			<div class="chart_1" id="Piechart"></div>
+			<div class="chart_1"  id="PieChart_div"></div>
+		</div>
+	
+	
+	
 			 
-			<div class="colOuter" align="center" >
-			 <br>
-				<div   id="PieChart_div" style="width:50%; height:400;" align="center" ></div>
-				</div>
+			
 				 
 				</div>
 				
@@ -427,7 +432,7 @@ function showChart(){
 							 function drawStuff() {
 								 
 								   var chartDiv = document.getElementById('chart_div');
-								   document.getElementById("chart_div").style.border = "thin dotted red";
+								   document.getElementById("chart_div").style.border = "1px solid #ccc"; /* thin dotted red */
 							       var dataTable = new google.visualization.DataTable();
 							       
 							       dataTable.addColumn('string', 'Month'); // Implicit domain column.
@@ -521,7 +526,7 @@ function showChart(){
 				                       'width':400,
 				                       'height':250};
 							 var chart = new google.visualization.PieChart(document.getElementById('Piechart'));
-							 document.getElementById("Piechart").style.border = "thin dotted red";
+							 document.getElementById("Piechart").style.border = "1px solid #ccc"; /* thin dotted red */
 							      function selectHandler() {
 						          var selectedItem = chart.getSelection()[0];
 						          if (selectedItem) {
@@ -558,7 +563,7 @@ function showChart(){
 				                       'width':500,
 				                       'height':350};
 							 var chart = new google.visualization.PieChart(document.getElementById('PieChart_div'));
-							 document.getElementById("PieChart_div").style.border = "thin dotted red";
+							 document.getElementById("PieChart_div").style.border = "1px solid #ccc";/* thin dotted red */
 						        function selectHandler() {
 						          var selectedItem = chart.getSelection()[0];
 						          if (selectedItem) {

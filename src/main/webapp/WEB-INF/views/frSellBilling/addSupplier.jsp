@@ -5,6 +5,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
+
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 <style>
 .form-control {
 	text-align: left !important;
@@ -70,20 +73,20 @@
 						action="${pageContext.request.contextPath}/insertSupplier">
 						<input type="hidden" name="mod_ser" id="mod_ser"
 							value="search_result">
-
-
-						<div class="col-md- 3">
-
-							<div class="col1title" style="float: left;">
-								<h3>Add Supplier</h3>
+							
+						<div class="title_row_one btm_margin">
+							<div class="left_title">								
+								<h2 class="pageTitle"> <i class="fa fa-file-pdf-o"></i> Add Supplier</h2>
 							</div>
-							<div class="col1title" style="float: right;">
+							<div class="on_off_row extra_margin_topten">
 								<a href="${pageContext.request.contextPath}/showOtherBill"><input
-									type="button" value="Other Purchase Bill" class="btn btn-info">
+									type="button" value="Other Purchase Bill" class="buttonsaveorder">
 								</a>
 							</div>
-						</div>
+						</div>	
 
+
+						
 						<div class="colOuter">
 							<div class="col-md-2">
 								<div class="col1title" align="left">Supplier Name*:</div>
@@ -221,10 +224,10 @@
 
 						</div>
 
-						<div id="table-scroll" class="table-scroll">
-							<div id="faux-table" class="faux-table" aria="hidden"></div>
-							<div class="table-wrap">
-								<table id="table_grid" class="main-table" border="1px">
+						<div id="table-scroll">
+							
+							<div class="tableFixHead">
+								<table id="table_grid">
 
 									<thead>
 										<tr class="bgpink">

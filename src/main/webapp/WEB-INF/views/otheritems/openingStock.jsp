@@ -9,6 +9,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+	
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 
 <title>Monginis</title>
 
@@ -238,35 +241,43 @@ body {
 				<div class="sidebarright">
 					<form name="frm_search" id="frm_search" method="post"
 						action="${pageContext.request.contextPath}/insertOtherStockBill">
-						<div class="order-left">
-							<h2 class="pageTitle">Other Item Opening Stock</h2>
-
-						</div>
-						<br>
-						<div class="order-right" align="right">
-
-							<a href="${pageContext.request.contextPath}/addSupplier"><input
-								type="button" value="Add Supplier" class="btn btn-info">
-							</a> <a href="${pageContext.request.contextPath}/viewOtherItemBill"><input
+						
+						<div class="title_row_one">
+							<div class="left_title">
+								<h2 class="pageTitle"> <i class="fa fa-file-pdf-o"></i> Other Item Opening Stock</h2>
+							</div>
+							<div class="on_off_row margtp">
+								<a href="${pageContext.request.contextPath}/addSupplier"><input
+								type="button" value="Add Supplier" class="buttonsaveorder"></a> 
+							<a href="${pageContext.request.contextPath}/viewOtherItemBill"><input
 								type="button" value="List Of Other Purchase Bill"
-								class="btn btn-info"> </a>
+								class="buttonsaveorder"> </a>
+								
+								
+							</div>
+							<div class="clr"></div>
 						</div>
-						<div class="col-md-2">
+						
+						
+						
+						
+						
+						<%--  <div class="col-md-2">
 							<div class="col1title">
 								<b>${monthName}</b> <b>${year}</b>
 							</div>
-						</div>
+						</div>  --%>
 
 
 
 						<!--tabNavigation-->
 						<div class="cd-tabs">
 							<!--tabMenu-->
-							<nav>
+							<!-- <nav>
 								<ul class="cd-tabs-navigation">
 
 								</ul>
-							</nav>
+							</nav> -->
 							<!--tabMenu-->
 							<ul class="cd-tabs-content">
 								<!--tab1-->
@@ -334,12 +345,12 @@ body {
 									</div>
 
 
-									<div class="clearfix"></div> <br /> <!-- Form End -->
+									<div class="clearfix"></div><!-- Form End -->
 
-									<div id="table-scroll" class="table-scroll">
-										<div id="faux-table" class="faux-table" aria="hidden"></div>
-										<div class="table-wrap">
-											<table id="table_grid" class="main-table">
+									<div id="table-scroll">
+										
+										<div class="tableFixHead">
+											<table id="table_grid">
 
 												<thead>
 													<tr class="bgpink">

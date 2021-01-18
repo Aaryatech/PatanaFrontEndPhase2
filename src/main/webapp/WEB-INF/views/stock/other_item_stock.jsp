@@ -110,7 +110,7 @@ table, th, td {
 	<!--rightContainer-->
 	<div class="fullGrid center">
 		<!--fullGrid-->
-		<div class="wrapperIn2">
+		<div class="wrapperIn3"><!-- wrapperIn2 -->
 
 			<!--leftNav-->
 
@@ -135,8 +135,82 @@ table, th, td {
 
 			<!--rightSidebar-->
 			<div class="sidebarright">
+			
+				<div class="title_row_one marg_top_btm">
+					<div class="left_title">
+						<h2 class="pageTitle"><i class="fa fa-file-o"></i> Other Item Stock Details</h2>
+					</div>
+					<div class="on_off_row margtp">
+						
+						
+						
+						<b>${monthName}</b> <b>${year}</b>
+					
+						
+						
+				
+				
+						
+						
+						
+					</div>
+				</div>
+				
+				<div class="single_row">
+					<div class="pop_one singl three_one">
+							<div class="pop_one_txt margin_tp">Option</div>
+							<div class="pop_one_inp">
+								<select name="selectStock" class="form-control chosen"
+							tabindex="6" id="selectStock" onchange="showDiv(this)" required>
+
+							<option value="-1">Select Option</option>
+							<option value="1" id="currentStock">Get Current Stock</option>
+
+							<option value="3" id="dateStock">Stock Between Dates</option>
+
+						</select>
+							</div>
+						</div>
+						
+						<div style="display: none" id=select_date> <!-- class="colOuter" -->
+						
+						<div class="pop_one singl  three_one">
+							<div class="pop_one_txt margin_tp">From</div>
+							<div class="pop_one_inp">
+								<input id="fromdatepicker" class="texboxitemcode texboxcal"
+							autocomplete="off" placeholder="From Date" name="from_datepicker"
+							type="text">
+							</div>
+						</div>
+						
+						<div class="pop_one singl  three_one">
+							<div class="pop_one_txt margin_tp">To</div>
+							<div class="pop_one_inp">
+								<input id="todatepicker" class="texboxitemcode texboxcal"
+							autocomplete="off" placeholder="To Date" name="to_datepicker"
+							type="text">
+							</div>
+						</div>
+						
+						
+					
+
+				</div>
+				
+				
+						
+						<div class="buttons_right single">
+							<input name="search_stock" class="buttonsaveorder" value="Search"
+							type="button" onclick="searchStock()">
+							
+						<button type="button" class="buttonsaveorder" id='pdf'
+							onclick="genPdf()" disabled>Generate PDF</button>
+						</div>
+				</div>
+			
+			
 				<div class="order-left">
-					<h2 class="pageTitle">Other Item Stock Details</h2>
+					
 					<!--<h3 class="pageTitle2">Order Date : 22-02-2017 </h3>-->
 				</div>
 
@@ -170,7 +244,7 @@ table, th, td {
 
 
 
-					<div class="col-md-1">
+					<!-- <div class="col-md-1">
 						<div class="col1title">Select Option</div>
 					</div>
 					<div class="col-md-2">
@@ -183,44 +257,21 @@ table, th, td {
 							<option value="3" id="dateStock">Stock Between Dates</option>
 
 						</select>
-					</div>
+					</div> -->
 					
-					<div style="display: none" id=select_date> <!-- class="colOuter" -->
-					<div class="col-md-1">
-						<div class="col1title">From Date:</div>
-					</div>
-					<div class="col-md-2" align="left">
-
-						<input id="fromdatepicker" class="texboxitemcode texboxcal"
-							autocomplete="off" placeholder="From Date" name="from_datepicker"
-							type="text">
-
-					</div>
-
 					
-
-
-
-					<div class="col-md-1">
-						<div class="col1title">To Date:</div>
-					</div>
-					<div class="col-md-2" align="left">
-						<input id="todatepicker" class="texboxitemcode texboxcal"
-							autocomplete="off" placeholder="To Date" name="to_datepicker"
-							type="text">
-					</div>
-
-				</div>
 					
 					
 					<div class="col-md-1">
-						<input name="search_stock" class="buttonsaveorder" value="Search"
-							type="button" onclick="searchStock()">
+						
 					</div>
 
 					<div class="col-md-2">
+					   <!-- <input name="search_stock" class="buttonsaveorder" value="Search"
+							type="button" onclick="searchStock()">
+							
 						<button type="button" class="buttonsaveorder" id='pdf'
-							onclick="genPdf()" disabled>Generate PDF</button>
+							onclick="genPdf()" disabled>Generate PDF</button> -->
 					</div>
 
 
@@ -260,10 +311,8 @@ table, th, td {
 
 
 				<div class="colOuter">
-					<div class="col1">
-						<div class="col1title"></div>
-					</div>
-					<div class="col2">
+					
+					<div class="col12">
 
 
 						<div align="center" id="loader" style="display: none;">
@@ -282,11 +331,7 @@ table, th, td {
 
 				</div>
 
-				<div class="col-md-4">
-					<div class="colleft">
-						<b>${monthName}</b> <b>${year}</b>
-					</div>
-				</div>
+				
 
 
 
@@ -307,7 +352,7 @@ table, th, td {
 							</label>
 
 
-							<div id="table-scroll" class="table-scroll">
+							<div id="table-scroll">
 								<!-- <div id="faux-table" class="faux-table" aria="hidden"> -->
 								<%-- <div class="table-wrap">	<table id="table_grid1" class="main-table">
 										<thead>
@@ -332,10 +377,10 @@ table, th, td {
 											</tr>
 										</thead></table></div> --%>
 								<!-- </div> -->
-								<div id="table-scroll" class="table-scroll">
-					<div id="faux-table" class="faux-table" aria="hidden"></div>
-								<div class="table-wrap">
-									<table id="table_grid" class="main-table">
+								<div id="table-scroll">
+					
+								<div class="tableFixHead">
+									<table id="table_grid">
 										<thead>
 											<tr class="bgpink">
 												<th class="col-md-1">Item Code</th>
@@ -365,7 +410,7 @@ table, th, td {
 <!--  -->
 							</div>
 							<div class="row">
-							<div class="col-sm-3  controls" style="margin-top: 20px;">
+							<div class="col-sm-12  controls" style="margin-top: 20px;">
 								<input type="button" id="expExcel" class="buttonsaveorder"
 									value="EXPORT TO Excel" onclick="exportToExcel();"
 									disabled="disabled">

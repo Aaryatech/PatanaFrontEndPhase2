@@ -44,38 +44,25 @@ table, th, td {
 
 			<!--rightSidebar-->
 			<div class="sidebarright">
-				<div class="order-left">
-					<h2 class="pageTitle">GVN Details</h2>
-					<!--<h3 class="pageTitle2">Order Date : 22-02-2017 </h3>-->
-				</div>
-				<div class="colOuter">
-					<!-- copy div kalpesh -->
-					<div class="calender-title"></div>
-
-					<div class="col-md-6">
-						<form action="" id="gvnForm" method="get">
-
-							<table border="1">
-								<tr bgcolor="orange">
-									<th width="30%" align="left">Gvn Date</th>
-									<th width="40%" align="left">Gvn SrNo</th>
-									<th width="30%" align="left">Aprroved Amt</th>
-								</tr>
-								<tbody>
-									<tr>
-										<td align="center">${gvnDate}</td>
-										<td align="center">${gvnSrNo}</td>
-										<td align="center">${aprAmt}</td>
-									</tr>
-								</tbody>
-							</table>
-							<%-- 	GVN Date -<b> ${gvnDate}</b><br>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Grn SrNo -<b>${gvnSrNo}</b>
-				    Appproved Amt -<b>${aprAmt}</b>
-				     --%>
+			
+				<div class="title_row_one marg_zero">
+					<div class="left_title">
+						<h2 class="pageTitle"><i class="fa fa-file-pdf-o"></i>GVN Details</h2>
+					</div>
+					<div class="on_off_row extra_margin_topten">
+						<form action="" id="grnForm" method="get">
+							<div class="gvn_l">Grn Date : <span>${gvnDate}</span></div>
+							<div class="gvn_l">Grn SrNo : <span>${gvnSrNo}</span></div>
+							<div class="gvn_l">Aprroved Amt : <span>${aprAmt}</span></div>
 						</form>
 					</div>
-				</div>
+				</div>	
+			
+			
+			
+			
+				
+				
 
 				<input type="hidden" name="mod_ser" id="mod_ser"
 					value="search_result">

@@ -58,6 +58,10 @@
 		});
 	});
 </script>
+
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+
 <!--rightNav-->
 
 <!--new css added by kalpesh -->
@@ -243,54 +247,45 @@ body {
 
 				<!------------ Place Actual content of page inside this div ----------->
 				<div class="sidebarright">
-			
-					<div class="order-left">
-						<h2 class="pageTitle">Other Purchase Bill</h2>
-
+				
+					<div class="title_row_one btm_margin">
+						<div class="left_title">
+							<h2 class="pageTitle"><i class="fa fa-file-pdf-o"></i> Other Purchase Bill</h2>
+						</div>
+						<div class="on_off_row extra_margin_topten">
+							<a href="${pageContext.request.contextPath}/addSupplier">
+								<input type="button" value="Add Supplier" class="buttonsaveorder">	
+							</a>
+						<a href="${pageContext.request.contextPath}/viewOtherItemBill">
+							<input type="button" value="List Of Other Purchase Bill" class="buttonsaveorder">
+						</a>
+						</div>
 					</div>
-					<br>
-					<div class="order-right" align="right">
-					 
-						<a href="${pageContext.request.contextPath}/addSupplier"><input type="button" value="Add Supplier" class="btn btn-info">
-										</a>
-						<a href="${pageContext.request.contextPath}/viewOtherItemBill"><input type="button" value="List Of Other Purchase Bill" class="btn btn-info">
-										</a>
-					</div>
-
-					<!--tabNavigation-->
-					<div class="cd-tabs">
-						<!--tabMenu-->
-						<nav>
-							<ul class="cd-tabs-navigation">
-								 
-							</ul>
-						</nav>
-						<!--tabMenu-->
-						<ul class="cd-tabs-content">
-							<!--tab1-->
-							<li data-content="tab1" class="selected" onshow="onloadTab(1)">
-								<div class="row">
-									<div class="col-md-9">
-										<div class="control-label">
-										
-										<div class="row">
-											<!-- <div class="col-md-4">
-												<h4 class="col-md-7">
-													<b>Invoice No:-</b>
-												</h4>
-												<input type="text" class="form-control"
-												placeholder="Enter Invoice No" name="invoiceNo" id="invoiceNo"
-												 required><br>
-											</div> -->
-
-											 
-
-											<div class="col-md-4">
-												<h4 class="col-md-8" style="margin-top: 5px">
-													<b>Supplier:-</b>
-												</h4>
-		
-												<select class="form-control" data-live-search="true" title="Please Select Item"
+					
+					<div class="single_row">
+						
+						<div class="date_sear four_bx">
+							<div class="date_sear_txt">From</div>
+							<div class="date_sear_int inpt_widths">
+								<input id="datepicker1" class="texboxitemcode texboxcal" value="${fromDate}"  autocomplete="off"
+															name="fromDate" type="text" required>
+							</div>
+						</div>
+						
+						<div class="date_sear four_bx">
+							<div class="date_sear_txt">To </div>
+							<div class="date_sear_int inpt_widths">
+								<input id="datepicker2"  class="texboxitemcode texboxcal" value="${toDate}" autocomplete="off"
+															name="toDate" type="text" required>
+							</div>
+						</div>
+						
+						
+						
+						<div class="date_sear four_bx">
+							<div class="date_sear_txt">Supplier </div>
+							<div class="date_sear_int inpt_widths">
+								<select class="form-control" data-live-search="true" title="Please Select Item"
 																			name="suppId" id="suppId"
 																			required>
 																			<option value="1">Select Supplier</option>
@@ -298,89 +293,28 @@ body {
 																				<option value="${supplierList.suppId}">${supplierList.suppName}</option> 
 																				</c:forEach>
 
-																		</select> 
-											</div>
-											<div class="col-md-4">
-												<h4 class="col-md-8" style="margin-top: 5px">
-													<b>From Date:-</b>
-												</h4>
-													<div class="col-md-8">
-														<input id="datepicker1" class="texboxitemcode texboxcal" value="${fromDate}"  autocomplete="off"
-															name="fromDate" type="text" required>
-													</div>
- 											</div>
- 											
- 											<div class="col-md-4">
-												<h4 class="col-md-8" style="margin-top: 5px">
-													<b>To Date:-</b>
-												</h4>
-													<div class="col-md-8">
-														<input id="datepicker2"  class="texboxitemcode texboxcal" value="${toDate}" autocomplete="off"
-															name="toDate" type="text" required>
-													</div>
- 											</div>
- 											
-								<div class="clearfix"></div>
-									   
+																		</select>
+							</div>
+						</div>
+						
+						<div class="date_btn">
+							<input type="submit" class="buttonsaveorder" id="insert"  onclick="showBill()"
+										 value="Submit" > 
+						</div>
+						
+					</div>
+				
 
-								</div>
-								<center>
-									<input type="submit" class="btn additem_btn" id="insert"  onclick="showBill()"
-										 value="Submit" >  
-								 
-								</center>  
-					
-<%-- 											<div>
-												<div class="shInnerwidth">
-													<table width="100%" border="0" cellspacing="0"
-														cellpadding="0" class="table">
-														<tr>
-															<td align="center" valign="middle" style="padding: 0px;">
-																<table width="100%" border="0" cellspacing="0"
-																	cellpadding="0">
-																	<tr class="bgpink">
-																		<td>Item Code</td>
-																		<td>Item Name</td>
-																		<td>Qty</td>
-																		<td>Rate</td>
-																		<td>Discount</td>
-																	</tr>
-																	<tr>
-																		<td><input type="text" class="form-control"
-																			id="barcode1" name="barcode1"
-																			placeholder="Enter Barcode" onchange="selectItem(1)"
-																			onkeypress="onBarcode(event,1)"></td>
-																		<td><select class="form-control" data-live-search="true" title="Please Select Item"
-																			name="itemName1" id="itemName1"
-																			data-rule-required="true">
-																			<option value="">Select Item</option> 
-																				<c:forEach items="${itemsList}" var="itemsList"> 
-																				<option value="${itemsList.id}">${itemsList.itemName}</option> 
-																				</c:forEach>
-
-																		</select> <input name="item_name1" id="item_name1"
-																			type="hidden" value="" /></td>
-																		<td><input type="number" min="0" max="500"
-																			class="form-control" name="qty" id="qty" value="1"
-																			onkeypress="onQty(event,1)"
-																			oninput="validity.valid||(value='');"></td>
-																		<td id="rateTdVal1">00</td>
-																		<td><input type="text" min="0" max="500"
-																			class="form-control" name="discPer" id="discPer" value="0"
-																			onkeypress="onQty(event,1)"
-																			oninput="validity.valid||(value='');"></td>
-																		 <td ><input type="button" class="btn additem_btn" value="Add Item" onclick="addItem();"
-												id="b1"/> </td>
-																	</tr>
-																</table>
-															</td>
-														</tr>
-
-													</table>
-												</div>
-											</div> --%>
-										</div>
-									</div>
+					<!--tabNavigation-->
+					<div class="cd-tabs">
+						<!--tabMenu-->
+						
+						<!--tabMenu-->
+						<ul class="cd-tabs-content">
+							<!--tab1-->
+							<li data-content="tab1" class="selected" onshow="onloadTab(1)">
+								<div class="row">
+									
 
 
 
@@ -396,13 +330,13 @@ body {
 								</div>
 
 
-								<div class="clearfix"></div> <br /> <!-- Form End -->
+								<div class="clearfix"></div>  <!-- Form End -->
 
 
 
-								<div id="table-scroll" class="table-scroll">
-									<div id="faux-table" class="faux-table" aria="hidden"></div>
-									<div class="table-wrap table-wrap-custbill">
+								<div id="table-scroll" >
+									
+									<div class="tableFixHead">
 										<table id="table_grid1" class="main-table small-td">
 											<thead>
 												<tr class="bgpink">

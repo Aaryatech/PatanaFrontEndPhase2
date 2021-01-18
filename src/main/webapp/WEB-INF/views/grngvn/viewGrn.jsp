@@ -44,46 +44,48 @@ table, th, td {
 
 			<!--rightSidebar-->
 			<div class="sidebarright">
-				<div class="order-left">
-					<h2 class="pageTitle">GRN Headers</h2>
-
-				</div>
-				<form id="validation-form">
-					<input type="hidden" value="${gstType}" name="type" id="type" /> <input
+			
+				<div class="title_row_one">
+					<div class="left_title">
+						<h2 class="pageTitle"><i class="fa fa-file-pdf-o"></i>  GRN Headers</h2>
+					</div>
+					<div class="right_content">
+						<form id="validation-form">
+						<input type="hidden" value="${gstType}" name="type" id="type" /> <input
 						type="hidden" class="form-control" id="headeIdText"
 						style="width: 120px" name="headeIdText" value="0" />
-					<div class="colOuter">
-						<!-- copy div kalpesh -->
-
-						<div class="calender-title">From</div>
-						<div class="col-md-2">
-							<input id="datepicker" class="texboxitemcode texboxcal"
+						
+						<div class="date_sear">
+							<div class="date_sear_txt">From Date:-</div>
+							<div class="date_sear_int">
+								<input id="datepicker" class="texboxitemcode texboxcal"
 								value="${cDate}" name="from_Date" type="text">
+							</div>
 						</div>
-
-						<div class="calender-title">TO</div>
-						<div class="col-md-2">
-							<input id="datepicker2" class="texboxitemcode texboxcal"
+						
+						<div class="date_sear">
+							<div class="date_sear_txt">To Date:-</div>
+							<div class="date_sear_int">
+								<input id="datepicker2" class="texboxitemcode texboxcal"
 								value="${cDate}" name="to_Date" type="text">
+							</div>
 						</div>
-
-
-
-						<!-- <div class="col-sm-2">
-							<label>OR Grn Sr No</label>
-							<input type="checkbox" class="form-control" id="headerCheckBox"
-						 name="headerCheckBox" id="headerCheckBox"
-							/>
+						
+						
+						
+						<div class="date_btn">
+							<button type="button" class="buttonsaveorder" onclick="searchGRN()">Search</button>
 						</div>
-						<div class="col-md-1"></div>
-						<div class="col-md-1"></div> -->
-						<div class="col-md-1">
-							<button type="button" class="btn  buttonsaveorder"
-								onclick="searchGRN()">Search</button>
-
-						</div>
-
+						
+						
 					</div>
+				</div>
+			
+			
+			
+				
+				
+					
 
 
 
@@ -95,32 +97,31 @@ table, th, td {
 						<!--tabMenu-->
 
 
-						<div id="table-scroll" class="table-scroll">
-							<div id="faux-table" class="faux-table" aria="hidden">
-								<table id="table_grid" class="main-table" border="1px">
-									<thead>
-										<tr class="bgpink">
-											<th class="col-md-2" style="text-align: center;">GrnSr
-												No</th>
-											<th class="col-md-1" style="text-align: center;">Date</th>
-											<!-- <th class="col-md-1" style="text-align: center;">Taxable
+						<div id="table-scroll" class="tableFixHead">
+						
+							<!-- <table id="table_grid" >
+								<thead>
+									<tr class="bgpink">
+										<th class="col-md-2" style="text-align: center;">GrnSr No</th>
+										<th class="col-md-1" style="text-align: center;">Date</th>
+										<th class="col-md-1" style="text-align: center;">Taxable
 												Amt</th>
-											<th class="col-md-1" style="text-align: center;">Tax Amt</th> -->
-											<th class="col-md-1" style="text-align: center;">Amount</th>
-											<th class="col-md-1" style="text-align: center;">Approved
-												Amt</th>
-											<th class="col-md-3" style="text-align: center;">Status</th>
-											<th class="col-md-1" style="text-align: center;">Credited?</th>
-											<th class="col-md-1" style="text-align: center;">Credit
-												Number</th>
-											<th class="col-md-1" style="text-align: center;">Action</th>
+											<th class="col-md-1" style="text-align: center;">Tax Amt</th>
+										<th class="col-md-1" style="text-align: center;">Amount</th>
+										<th class="col-md-1" style="text-align: center;">Approved
+											Amt</th>
+										<th class="col-md-3" style="text-align: center;">Status</th>
+										<th class="col-md-1" style="text-align: center;">Credited?</th>
+										<th class="col-md-1" style="text-align: center;">Credit
+											Number</th>
+										<th class="col-md-1" style="text-align: center;">Action</th>
 
-										</tr>
-									</thead>
-								</table>
-							</div>
-							<div class="table-wrap">
-								<table id="table_grid" class="main-table">
+									</tr>
+								</thead>
+							</table> -->
+
+							
+								<table id="table_grid">
 									<thead>
 										<tr class="bgpink">
 											<th class="col-md-2" style="text-align: center;">GrnSr
@@ -239,7 +240,7 @@ table, th, td {
 									</tbody>
 
 								</table>
-							</div>
+							
 						</div>
 
 

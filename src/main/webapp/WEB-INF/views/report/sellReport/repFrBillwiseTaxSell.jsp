@@ -57,54 +57,53 @@
 
 			<!-- Place Actual content of page inside this div -->
 			<div class="sidebarright">
-
-
-				<div class="row">
-					<div class="col-md-12">
-						<h2 class="pageTitle">View Sell Tax Bill wise Report</h2>
+			
+				<div class="title_row_one marg_top_btm">
+					<div class="left_title">
+						<h2 class="pageTitle"><i class="fa fa-file-o"></i> View Sell Tax Bill wise Report</h2>
+					</div>
+					
+					<div class="on_off_row extra_margin">						
+					    
+					    <div class="pop_one">
+							<div class="pop_one_txt margin_tp"> From  </div>
+							<div class="pop_one_inp">
+							<input	id="fromdatepicker" class="texboxitemcode texboxcal " autocomplete="off"
+									placeholder="Delivery Date" name="from_Date" type="text">								
+								
+							</div>
+					    </div>
+					    
+					    <div class="pop_one">
+							<div class="pop_one_txt margin_tp"> To  </div>
+							<div class="pop_one_inp">								
+								<input id="todatepicker" class="texboxitemcode texboxcal " autocomplete="off" placeholder="Delivery Date" name="to_Date">
+							</div>
+					    </div>
+					    
+					    <input type="hidden" name="frId" id="frId" value="${frId}">
+					    
+					    <div class="buttons_right">
+							<button class="buttonsaveorder" onclick="searchSellBill()">HTML View</button>						
+						<button class="buttonsaveorder" value="PDF" id="PDFButton" onclick="genPdf()">PDF</button>
+						</div>
+						
 					</div>
 				</div>
-
-				<div class="colOuter">
-					<div align="center">
-						<div class="col1">
-							<div class="col1title">
-								<b>From&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b> <input
-									id="fromdatepicker" autocomplete="off"
-									placeholder="Delivery Date" name="from_Date" type="text"
-									size="35">
-							</div>
-						</div>
-						<div class="col2">
-							<div class="col1title">
-								<b>TO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b> <input id="todatepicker"
-									autocomplete="off" placeholder="Delivery Date" name="to_Date"
-									type="text" size="35">
-							</div>
-						</div>
-						<input type="hidden" name="frId" id="frId" value="${frId}">
-
-					</div>
+				
 
 
-					<div align="center">
-						<button class="btn search_btn" onclick="searchSellBill()">HTML
-							View</button>
-						<%--   &nbsp;&nbsp;&nbsp;
-		    	     <a href='${pageContext.request.contextPath}/pdf?reportURL=showSellTaxBillwiseReportpPdf' id="btn_pdf" class="btn search_btn" style="display: none">PDF</a> --%>
-						<button class="btn btn-primary" value="PDF" id="PDFButton"
-							onclick="genPdf()">PDF</button>
-						<br>
-					</div>
-				</div>
+				
+
+				
 				<div class="row">
 					<div class="col-md-12">
 						<!--table-->
 						<div class="clearfix"></div>
 
 
-						<div id="table-scroll" class="table-scroll">
-							<div id="faux-table" class="faux-table" aria="hidden">
+						<div id="table-scroll">
+							<!-- <div id="faux-table" class="faux-table" aria="hidden">
 								<table id="table_grid1" class="main-table" border="1">
 									<thead>
 										<tr class="bgpink">
@@ -112,9 +111,9 @@
 
 
 											<th class="col-md-1">Sr.No.</th>
-											<!-- <th class="md=col-1">Bill No</th> -->
-											<!-- <th class="md=col-1">Party name</th> -->
-											<!-- <th class="col-md-1">GST No.</th> -->
+											<th class="md=col-1">Bill No</th>
+											<th class="md=col-1">Party name</th>
+											<th class="col-md-1">GST No.</th>
 											<th class="col-md-1">Bill no.</th>
 											<th class="col-md-1">Date</th>
 											<th class="col-md-1">Bill Amt</th>
@@ -132,27 +131,27 @@
 									</tbody>
 
 								</table>
-							</div>
-							<div class="table-wrap">
-								<table id="table_grid" class="main-table" border="1">
+							</div> -->
+							<div class="tableFixHead">
+								<table id="table_grid" >
 									<thead>
 										<tr class="bgpink">
 
 
 
-											<th class="col-md-1">Sr.No.</th>
+											<th>Sr.No.</th>
 											<!-- <th class="md=col-1">Bill No</th> -->
 											<!-- <th class="md=col-1">Party name</th> -->
 											<!-- <th class="col-md-1">GST No.</th> -->
-											<th class="col-md-1">Bill no.</th>
-											<th class="col-md-1">Date</th>
-											<th class="col-md-1">Bill Amt</th>
-											<th class="col-md-1">Taxable Amt</th>
-											<th class="col-md-1">Tax Rate</th>
-											<th class="col-md-1">IGST</th>
-											<th class="col-md-1">CGST</th>
-											<th class="col-md-1">SGST</th>
-											<th class="col-md-1">CESS</th>
+											<th>Bill no.</th>
+											<th>Date</th>
+											<th >Bill Amt</th>
+											<th >Taxable Amt</th>
+											<th>Tax Rate</th>
+											<th>IGST</th>
+											<th>CGST</th>
+											<th>SGST</th>
+											<th>CESS</th>
 										</tr>
 									</thead>
 
@@ -168,8 +167,8 @@
 
 
 
-								<div class="col-sm-3  controls">
-									<input type="button" id="expExcel" class="btn btn-primary"
+								<div class="col-sm-12 controls" style="margin: 15px 0;">
+									<input type="button" id="expExcel" class="buttonsaveorder"
 										value="EXPORT TO Excel" onclick="exportToExcel();"
 										disabled="disabled">
 								</div>
@@ -248,7 +247,7 @@
 
 													tr
 															.append($(
-																	'<td class="col-md-1"></td>')
+																	'<td></td>')
 																	.html(
 																			key + 1));
 
@@ -256,38 +255,38 @@
 													 */
 													tr
 															.append($(
-																	'<td class="col-md-1"></td>')
+																	'<td></td>')
 																	.html(
 																			sellTaxData.sellBillNo));
 
 													tr
 															.append($(
-																	'<td class="col-md-1"></td>')
+																	'<td></td>')
 																	.html(
 																			sellTaxData.billDate));
 
 													tr
 															.append($(
-																	'<td class="col-md-1" style="text-align:right;"></td>')
+																	'<td style="text-align:right;"></td>')
 																	.html((sellTaxData.bill_amount).toFixed(2)));
 													billTotal = billTotal
 															+ sellTaxData.bill_amount;
 
 													tr
 															.append($(
-																	'<td class="col-md-1" style="text-align:right;"></td>')
+																	'<td style="text-align:right;"></td>')
 																	.html((sellTaxData.tax_amount).toFixed(2)));
 													taxTotal = taxTotal
 															+ sellTaxData.tax_amount;
 
 													tr
 															.append($(
-																	'<td class="col-md-1" style="text-align:right;"></td>')
+																	'<td style="text-align:right;"></td>')
 																	.html((sellTaxData.tax_per).toFixed(2)));
 
 													tr
 															.append($(
-																	'<td class="col-md-1" style="text-align:right;"></td>')
+																	'<td style="text-align:right;"></td>')
 																	.html((sellTaxData.igst).toFixed(2)));
 
 													igstTotal = igstTotal
@@ -295,21 +294,21 @@
 
 													tr
 															.append($(
-																	'<td class="col-md-1" style="text-align:right;"></td>')
+																	'<td style="text-align:right;"></td>')
 																	.html((sellTaxData.cgst).toFixed(2)));
 													cgstTotal = cgstTotal
 															+ sellTaxData.cgst;
 
 													tr
 															.append($(
-																	'<td class="col-md-1" style="text-align:right;"></td>')
+																	'<td style="text-align:right;"></td>')
 																	.html((sellTaxData.sgst).toFixed(2)));
 													sgstTotal = sgstTotal
 															+ sellTaxData.sgst;
 
 													tr
 															.append($(
-																	'<td class="col-md-1" style="text-align:right;"></td>')
+																	'<td style="text-align:right;"></td>')
 																	.html((sellTaxData.cess).toFixed(2)));
 													cessTotal = cessTotal
 															+ sellTaxData.cess;

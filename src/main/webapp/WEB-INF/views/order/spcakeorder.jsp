@@ -108,6 +108,9 @@ select {
 	padding-top: 1px;
 }
 </style>
+
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 </head>
 <body onload="onLoad()">
 
@@ -154,8 +157,9 @@ select {
 								method="post" class="form-horizontal" name="form"
 								id="searchform" onsubmit="return validateForm()">
 
-								<div class="fullform">
-									<div class="cackleft2">Item Code</div>
+								<div class="colOuter">
+									<div class="col1">
+									<div class="col1title">Item Code</div></div>
 									<div class="cackrighttexbox">
 										<input class="texboxitemcode" id="sp_code"
 											value="${specialCake.spCode}" name="sp_code" type="text"
@@ -498,15 +502,16 @@ select {
 									<div class="col1">
 										<div class="col1title">Special Instructions</div>
 									</div>
-
+									<div class="col2full">
 									<div class="col1full" id="marathiDiv">
-										<textarea id="transliterateTextarea" name="sp_inst1" cols=""
-											rows="" style="width: 250px; height: 60px; resize:none;" maxlength="300"></textarea>
+										<textarea id="transliterateTextarea" class="texboxitemcode" name="sp_inst1" cols=""
+											rows="" style="height: 60px; resize:none;" ></textarea>
 									</div>
 
-									<div class="col1full" id="englishDiv" style="display: none;">
+									<div class="col1full" id="englishDiv" class="texboxitemcode" style="display: none;">
 										<textarea id="textarea" name="sp_inst2" cols="" rows=""
-											style="width: 200px; height: 90px" maxlength="300"></textarea>
+											style="height: 90px" ></textarea>
+									</div>
 									</div>
 								</div>
 

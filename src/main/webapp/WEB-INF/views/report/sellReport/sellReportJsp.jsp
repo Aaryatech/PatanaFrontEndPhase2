@@ -98,16 +98,22 @@ jQuery(document).ready(function(){
 
 			<!-- Place Actual content of page inside this div -->
 			<div class="sidebarright">
-
-
-				<div class="row">
-					<div class="col-md-12">
-						<h3 class="pageTitle">Daily Sales Report</h3>
+			
+				<div class="title_row_one marg_top_btm">
+					<div class="left_title">
+						<h2 class="pageTitle"><i class="fa fa-file-o"></i> Daily Sales Report</h2>
 					</div>
-				</div>
-				<input type="button"
+					<div class="on_off_row extra_margin_topten">
+						<input type="button" class="buttonsaveorder"
 					onclick="tableToExcel('rep', 'name', 'RoyaltySummaryReport.xls')"
 					value="Export to Excel">
+					</div>
+					<div class="clr"></div>
+				</div>
+
+
+				
+				
  
 <table id="rep" class="table table-striped table-bordered">
 								<tr>

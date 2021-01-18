@@ -45,48 +45,52 @@ table, th, td {
 
 			<!--rightSidebar-->
 			<div class="sidebarright">
-				<div class="order-left">
-					<h2 class="pageTitle">GVN Headers</h2>
-
-				</div>
-				<form id="validation-form">
+			
+				<div class="title_row_one">
+					<div class="left_title">
+						<h2 class="pageTitle"><i class="fa fa-file-pdf-o"></i>  GVN Headers</h2>
+					</div>
+					
+					
+					<div class="right_content">
+					<form id="validation-form">
 					<input type="hidden" value="${gstType}" name="type" id="type" />
 					<input type="hidden" class="form-control" id="headeIdText"
 								name="headeIdText" value="0" style="width: 120px;" />
-					<div class="colOuter">
-						<!-- copy div kalpesh -->
-
-						<div class="calender-title">From</div>
-						<div class="col-md-2">
-							<input id="datepicker" class="texboxitemcode texboxcal"
+						
+					<div class="date_sear">
+							<div class="date_sear_txt">From Date:-</div>
+							<div class="date_sear_int">
+								<input id="datepicker" class="texboxitemcode texboxcal"
 								value="${cDate}" name="from_Date" type="text">
-						</div>
-
-						<div class="calender-title">TO</div>
-						<div class="col-md-2">
-							<input id="datepicker2" class="texboxitemcode texboxcal"
+							</div>
+						</div>			
+						
+						
+						<div class="date_sear">
+							<div class="date_sear_txt">To Date:-</div>
+							<div class="date_sear_int">
+								<input id="datepicker2" class="texboxitemcode texboxcal"
 								value="${cDate}" name="to_Date" type="text">
+							</div>
 						</div>
-
-
-
-						<!-- <div class="col-sm-2">
-							<label>OR Gvn Sr No</label> -->
-							<!-- <input type="checkbox" class="form-control" id="headerCheckBox"
-						 name="headerCheckBox" id="headerCheckBox"
-							/> -->
-						<!-- </div> -->
-						<!-- <div class="col-md-1">
-							
+						
+						
+						
+						<div class="date_btn">
+							<button type="button" class="buttonsaveorder" onclick="searchGRN()">Search</button>							
 						</div>
-						<div class="col-md-1"></div> -->
-						<div class="col-md-1">
-
-							<button type="button" class="btn  buttonsaveorder"
-								onclick="searchGRN()">Search</button>
-						</div>
-
+						
+						
 					</div>
+				</div>
+			
+			
+			
+			
+				
+				
+					
 
 
 					<!--tabNavigation-->
@@ -96,8 +100,8 @@ table, th, td {
 						<!--tabMenu-->
 
 
-						<div id="table-scroll" class="table-scroll">
-							<div id="faux-table" class="faux-table" aria="hidden">
+						
+							<!-- <div id="faux-table" class="faux-table" aria="hidden">
 								<table id="table_grid1" class="main-table">
 									<thead>
 										<tr class="bgpink">
@@ -121,9 +125,9 @@ table, th, td {
 
 									</thead>
 								</table>
-							</div>
-							<div class="table-wrap">
-								<table id="table_grid" class="main-table">
+							</div> -->
+							<div class="tableFixHead">
+								<table id="table_grid">
 									<thead>
 										<tr class="bgpink">
 											<th class="col-md-2" style="text-align: center;">GvnSr
@@ -246,7 +250,7 @@ table, th, td {
 
 								</table>
 							</div>
-						</div>
+						
 
 
 

@@ -54,59 +54,62 @@
 				<!-- Place Actual content of page inside this div -->
 				<div class="sidebarright">
 				
+				<div class="title_row_one marg_top_btm">
+					<div class="left_title">
+						<h2 class="pageTitle"><i class="fa fa-file-o"></i> View GVN Report</h2>
+					</div>
+					
+					<div class="on_off_row extra_margin">
+						
+						
+						
+						
+					    
+					    <div class="pop_one">
+							<div class="pop_one_txt margin_tp"> From  </div>
+							<div class="pop_one_inp">
+							<input id="fromdatepicker" class="texboxitemcode texboxcal " autocomplete="off"  placeholder="Delivery Date"  name="from_Date" type="text">								
+								
+							</div>
+					    </div>
+					    
+					    <div class="pop_one">
+							<div class="pop_one_txt margin_tp"> To  </div>
+							<div class="pop_one_inp">
+							<input id="todatepicker" class="texboxitemcode texboxcal " autocomplete="off"  placeholder="Delivery Date"  name="to_Date" type="text">
+							
+								
+							</div>
+					    </div>
+					    
+					   <input type="hidden" name="frId" id="frId" value="${frId}">
+					   <input type="hidden" name="frName" id="frName" value="${frName}">
+					   
+					   <div class="buttons_right">
+						<button class="buttonsaveorder" onclick="searchSellBill()" >HTML View </button>		
+		  <button class="buttonsaveorder" value="PDF" id="PDFButton" onclick="genPdf()">PDF</button>
+						</div>
+						
+					</div>
+				</div>
+				
 
-<div class="row">
-	    <div class="col-md-12"><h2 class="pageTitle">View GVN Report</h2></div>
-	</div>
+
 	
-<div class="colOuter">
-		<div align="center" >
-		<div class="col1"><div class="col1title"><b>From&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
-		<input id="fromdatepicker" autocomplete="off"  placeholder="Delivery Date"  name="from_Date" type="text" size="35" >
-		</div></div>
-		<div class="col2"><div class="col1title"><b>TO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
-		<input id="todatepicker" autocomplete="off"  placeholder="Delivery Date"  name="to_Date" type="text" size="35" >
-		</div></div>
-										<input type="hidden" name="frId" id="frId" value="${frId}">
-										<input type="hidden" name="frName" id="frName" value="${frName}">
-		
-	</div>
- 
-	
- 	<div align="center"> 
-		    <button class="btn search_btn" onclick="searchSellBill()" >HTML View </button>
-		<%--   &nbsp;&nbsp;&nbsp;
-		    	     <a href='${pageContext.request.contextPath}/pdf?reportURL=showSellTaxBillwiseReportpPdf' id="btn_pdf" class="btn search_btn" style="display: none">PDF</a> --%>
-		  <button class="btn btn-primary" value="PDF" id="PDFButton" onclick="genPdf()">PDF</button>
-		<br>
-    </div>
-	</div>
+
 	<div class="row">
 		<div class="col-md-12">
 		<!--table-->
 			<div class="clearfix"></div>
 
 
-				<div id="table-scroll" class="table-scroll">
-					<div id="faux-table" class="faux-table" aria="hidden">
+				<div id="table-scroll">
+					<!-- <div id="faux-table" class="faux-table" aria="hidden">
 					<table id="table_grid1"  class="main-table" border="1">
 							<thead>
 								<tr class="bgpink">
 
-										<!-- 					
-								
-									<th class="col-md-1" style="text-align:center;">Sr.No</th> 
-									<th class="col-md-1" style="text-align:center;">Grn Gvn Date</th>
-									<th class="col-md-1" style="text-align:center;">Item_Name</th>
-									<th class="col-md-1" style="text-align:center;">Tax Rate</th>
-									<th class="col-md-1" style="text-align:center;">Taxable Amt</th>
-									<th class="col-md-1" style="text-align:center;">Total Tax</th>
-									<th class="col-md-1" style="text-align:center;">Grn Gvn Amt</th> 
-									<th class="col-md-1" style="text-align:center;">Aprv. Taxable Amt</th>
-									<th class="col-md-1" style="text-align:center;">Aprv. CGST Amt</th>
-									<th class="col-md-1" style="text-align:center;">Aprv. SGST Amt</th>
-									<th class="col-md-1" style="text-align:center;">Aprv. IGST Amt</th> 
-								 	<th class="col-md-1" style="text-align:center;">Total</th>   -->
+									
 								  </tr>
 								</thead>
 								
@@ -115,26 +118,26 @@
 								</tbody>
 								  
 								</table>
-					</div>
-					<div class="table-wrap">
-						<table id="table_grid"  class="main-table" border="1">
+					</div> -->
+					<div class="tableFixHead">
+						<table id="table_grid">
 							<thead>
 								<tr class="bgpink">
 
 															
 								
-									<th class="col-md-1" style="text-align:center;">Sr.No.</th> 
-									<th class="col-md-1" style="text-align:center;">Grn Gvn Date</th>
-									<th class="col-md-1" style="text-align:center;">Item_Name</th>
-									<th class="col-md-1" style="text-align:center;">Tax Rate</th>
-									<th class="col-md-1" style="text-align:center;">Taxable Amt</th>
-									<th class="col-md-1" style="text-align:center;">Total Tax</th>
-									<th class="col-md-1" style="text-align:center;">Grn Gvn Amt</th> 
-									<th class="col-md-1" style="text-align:center;">Aprv. Taxable Amt</th>
-									<th class="col-md-1" style="text-align:center;">Aprv. CGST Amt</th>
-									<th class="col-md-1" style="text-align:center;">Aprv. SGST Amt</th>
-									<th class="col-md-1" style="text-align:center;">Aprv. IGST Amt</th> 
-								 	<th class="col-md-1" style="text-align:center;">Total</th>  
+									<th style="text-align:center;">Sr.No.</th> 
+									<th style="text-align:center;">Grn Gvn Date</th>
+									<th style="text-align:center;">Item_Name</th>
+									<th style="text-align:center;">Tax Rate</th>
+									<th style="text-align:center;">Taxable Amt</th>
+									<th style="text-align:center;">Total Tax</th>
+									<th style="text-align:center;">Grn Gvn Amt</th> 
+									<th style="text-align:center;">Aprv. Taxable Amt</th>
+									<th style="text-align:center;">Aprv. CGST Amt</th>
+									<th style="text-align:center;">Aprv. SGST Amt</th>
+									<th style="text-align:center;">Aprv. IGST Amt</th> 
+								 	<th style="text-align:center;">Total</th>  
 								  </tr>
 								</thead>
 								
@@ -150,8 +153,8 @@
 								 
 											 
 											 
-											<div class="col-sm-3  controls">
-											 <input type="button" id="expExcel" class="btn btn-primary" value="EXPORT TO Excel" onclick="exportToExcel();" disabled="disabled">
+											<div class="col-sm-12 controls" style="margin: 15px 0;">
+											 <input type="button" id="expExcel" class="buttonsaveorder" value="EXPORT TO Excel" onclick="exportToExcel();" disabled="disabled">
 											</div>
 											</div>
 			</div>
@@ -231,25 +234,25 @@
 									
 									var tr = $('<tr></tr>');
 
-								  	tr.append($('<td class="col-md-1"></td>').html(key+1));
-								  	tr.append($('<td class="col-md-1" style="font-size:14px;"></td>').html(list.grnGvnDate));
-								  	tr.append($('<td class="col-md-1"></td>').html(list.itemName)); 
-								  	tr.append($('<td class="col-md-1" style="text-align:right"></td>').html(list.taxRate)); 
-								  	tr.append($('<td class="col-md-1" style="text-align:right"></td>').html(list.taxableAmt.toFixed(2)));
+								  	tr.append($('<td></td>').html(key+1));
+								  	tr.append($('<td style="font-size:14px;"></td>').html(list.grnGvnDate));
+								  	tr.append($('<td ></td>').html(list.itemName)); 
+								  	tr.append($('<td style="text-align:right"></td>').html(list.taxRate)); 
+								  	tr.append($('<td style="text-align:right"></td>').html(list.taxableAmt.toFixed(2)));
 								  	taxableTotal=taxableTotal+list.taxableAmt;
-								  	tr.append($('<td class="col-md-1" style="text-align:right"></td>').html(list.totalTax.toFixed(2)));
+								  	tr.append($('<td style="text-align:right"></td>').html(list.totalTax.toFixed(2)));
 								  	taxTotal=taxTotal+list.totalTax;
-								   	tr.append($('<td class="col-md-1" style="text-align:right"></td>').html(list.grnGvnAmt.toFixed(2)));
+								   	tr.append($('<td style="text-align:right"></td>').html(list.grnGvnAmt.toFixed(2)));
 								   	grnGvnAmt=grnGvnAmt+list.grnGvnAmt;
-									tr.append($('<td class="col-md-1" style="text-align:right"></td>').html(list.aprTaxableAmt.toFixed(2)));
+									tr.append($('<td style="text-align:right"></td>').html(list.aprTaxableAmt.toFixed(2)));
 									aprTaxableTotal=aprTaxableTotal+list.aprTaxableAmt;
-									tr.append($('<td class="col-md-1" style="text-align:right"></td>').html(list.aprCgstRs.toFixed(2)));
+									tr.append($('<td style="text-align:right"></td>').html(list.aprCgstRs.toFixed(2)));
 									cgstTotal=cgstTotal+list.aprCgstRs;
-									tr.append($('<td class="col-md-1" style="text-align:right"></td>').html(list.aprSgstRs.toFixed(2)));
+									tr.append($('<td style="text-align:right"></td>').html(list.aprSgstRs.toFixed(2)));
 									sgstTotal=sgstTotal+list.aprSgstRs;
-								  	tr.append($('<td class="col-md-1" style="text-align:right"></td>').html(list.aprIgstRs.toFixed(2)));
+								  	tr.append($('<td style="text-align:right"></td>').html(list.aprIgstRs.toFixed(2)));
 								  	igstTotal=igstTotal+list.aprIgstRs;
-									tr.append($('<td class="col-md-1" style="text-align:right"></td>').html(list.aprGrandTotal.toFixed(2)));
+									tr.append($('<td style="text-align:right"></td>').html(list.aprGrandTotal.toFixed(2)));
 									grandTotal=grandTotal+list.aprGrandTotal;
 									$('#table_grid tbody').append(tr);
 

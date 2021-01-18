@@ -22,6 +22,8 @@
 <!--datepicker-->
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
+	
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 
 <script>
 	$(function() {
@@ -50,15 +52,29 @@
 				</jsp:include>
 		<form name="frm_search" id="frm_search" method="get"	action="showGrnItem">
 				<div class="sidebarright">
-		<div class="">
-	<br>
-		<div class="col1" style="width: 10%;">
-		   Search By: 
-		</div>
-		<c:set var="sts1" value=""/><c:set var="sts2" value=""/>
-	   <div class="col1" style="width: 15.333333%">
-		   <select name="searchType" style="width: 150px;" required="required" id="searchType" onchange="onTypeChange(this.value)"
-			class="chosen-select" data-rule-required="true" data-show-subtext="true" data-live-search="true">
+				
+				
+				<div class="title_row_one">
+					<div class="left_title">
+						<h2 class="pageTitle"><i class="fa fa-refresh" aria-hidden="true"></i>  GVN Headers</h2>
+					</div>
+					
+					
+					<div class="right_content">
+					<form id="validation-form">
+					<input type="hidden" value="${gstType}" name="type" id="type" />
+					<input type="hidden" class="form-control" id="headeIdText"
+								name="headeIdText" value="0"  />
+								
+						
+						
+						<div class="date_sear flt_right">
+							<div class="date_sear_txt"> Search By:</div>
+							
+							<c:set var="sts1" value=""/><c:set var="sts2" value=""/>
+							<div class="date_sear_int">
+								<select name="searchType" style="width:100% !important;" required="required" id="searchType" onchange="onTypeChange(this.value)"
+			class="chosen-select ddOutOfVision" data-rule-required="true" data-show-subtext="true" data-live-search="true">
 			<option selected value="">Select Type</option>
 			<c:choose>
 			<c:when test="${searchType==1}">
@@ -80,9 +96,12 @@
 			</c:choose>
 			 
 		    </select>
-		</div>
-		<div class="col1" id="items" style="${sts2}">
-			 	<select name="itemId" id="itemId" style=" width:450px;" multiple="multiple"  class="chosen-select"  data-show-subtext="true" data-live-search="true">
+							</div>
+							</div>
+							
+							
+							<div class="date_sear_one  mob_marg" id="items" style="${sts2}">
+			 	<select name="itemId" id="itemId" multiple="multiple"  class="chosen-select"  data-show-subtext="true" data-live-search="true">
 								<option value=""style="text-align:left;">Select Items</option>
 								
 	                            <c:forEach items="${itemList}" var="item" varStatus="count">
@@ -96,20 +115,35 @@
 	                            </c:forEach>
 					</select>
 		</div>
-		<div class="col1" id="expDate" style="${sts1}">
-		<input id="fromdatepicker"  class="texboxitemcode texboxcal " style=" width:250px;" autocomplete="off" placeholder="Expiry Date"  name="expiry_date" type="text" value="${expiryDate}" >	 
+		
+		<div class="date_sear_one mob_marg" id="expDate" style="${sts1}">
+		<input id="fromdatepicker"  class="texboxitemcode texboxcal " autocomplete="off" placeholder="Expiry Date"  name="expiry_date" type="text" value="${expiryDate}" >	 
 		</div>
-		 <div class="col1">
-			<input type="submit" name="" class="buttonsaveorder" value="Search" >
-							</div>
-         </div>
+		
+		<div class="date_btn left_btn">
+						<input type="submit" name="" class="buttonsaveorder" value="Search" >
+													
+						</div>
+							
+						
+						
+						
+						
+						
+					</div>
+				</div>
+				
+				
+				
+				
+				
+		
 					<div class="cd-tabs">
 					<div class="clearfix"></div>
-				<div id="table-scroll" class="table-scroll">
-					<div id="faux-table" class="faux-table" aria="hidden">
-						 </div>
-							<div class="table-wrap">
-						<table id="table_grid" class="main-table" >
+				<div id="table-scroll">
+					
+							<div class="tableFixHead">
+						<table id="table_grid">
 							<thead>
 								<tr class="bgpink">
 												    <th width="138" style="width: 18px" align="left">No</th>
@@ -202,7 +236,7 @@ function onTypeChange(type)
 			{
 			 $("#items").show();
 			 $("#expDate").hide();
-			  document.getElementById("itemId_chosen").style="width:250px";
+			  document.getElementById("itemId_chosen").style="";/* width:250px */
 			}else {
 				  $("#expDate").hide();
 				  $("#items").hide();

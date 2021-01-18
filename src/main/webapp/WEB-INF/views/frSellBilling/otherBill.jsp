@@ -189,6 +189,9 @@ body {
 	});
 </script>
 
+link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+
 </head>
 <body id="myBodyId" onload="setCursor()">
 
@@ -234,46 +237,54 @@ body {
 
 				<!------------ Place Actual content of page inside this div ----------->
 				<div class="sidebarright">
-					<form name="frm_search" id="frm_search" method="post"
+				
+				<div class="title_row_one">
+					<div class="left_title">					
+						<h2 class="pageTitle marg_dic"><i class="fa fa-file-pdf-o"></i> Other Purchase Bill</h2>
+					</div>
+					<div class="on_off_row">
+						<form name="frm_search" id="frm_search" method="post"
 						action="${pageContext.request.contextPath}/submitOtherBill">
-						<div class="order-left">
-							<h2 class="pageTitle">Other Purchase Bill</h2>
-
-						</div>
-						<br>
-						<div class="order-right" align="right">
-							<c:if test="${info.accessRight==1  }">
-								<a href="${pageContext.request.contextPath}/showOthItemStock"><input
-									type="button" value="Other Stock" class="btn btn-info">
+						
+						<c:if test="${info.accessRight==1  }">
+								<a class="mob_marg" href="${pageContext.request.contextPath}/showOthItemStock"><input
+									type="button" value="Other Stock" class="buttonsaveorder">
 								</a>
-								<a href="${pageContext.request.contextPath}/toOtherStock"><input
-									type="button" value="Other Op Stock" class="btn btn-info">
+								<a class="mob_marg" href="${pageContext.request.contextPath}/toOtherStock"><input
+									type="button" value="Other Op Stock" class="buttonsaveorder">
 								</a>
-								<a href="${pageContext.request.contextPath}/addSupplier"><input
-									type="button" value="Add Supplier" class="btn btn-info">
+								<a class="mob_marg" href="${pageContext.request.contextPath}/addSupplier"><input
+									type="button" value="Add Supplier" class="buttonsaveorder">
 								</a>
-								<a href="${pageContext.request.contextPath}/viewOtherBill"><input
+								<a class="mob_marg" href="${pageContext.request.contextPath}/viewOtherBill"><input
 									type="button" value="List Of Other Purchase Bill"
-									class="btn btn-info"> </a>
+									class="buttonsaveorder"> </a>
 							</c:if>
 							<c:if test="${info.accessRight==2 or info.accessRight==3 }">
-								<a href="${pageContext.request.contextPath}/addSupplier"><input
-									type="button" value="Add Supplier" class="btn btn-info">
+								<a class="mob_marg" href="${pageContext.request.contextPath}/addSupplier"><input
+									type="button" value="Add Supplier" class="buttonsaveorder">
 								</a>
-								<a href="${pageContext.request.contextPath}/viewOtherBill"><input
+								<a class="mob_marg" href="${pageContext.request.contextPath}/viewOtherBill"><input
 									type="button" value="List Of Other Purchase Bill"
-									class="btn btn-info"> </a>
+									class="buttonsaveorder"> </a>
 							</c:if>
+						
+					</div>
+					<div class="clr"></div>
+				</div>
+				
+				
+				
+					
+						
+						<div class="order-right" align="right">
+							
 						</div>
 
 						<!--tabNavigation-->
 						<div class="cd-tabs">
 							<!--tabMenu-->
-							<nav>
-								<ul class="cd-tabs-navigation">
-
-								</ul>
-							</nav>
+							
 							<!--tabMenu-->
 							<ul class="cd-tabs-content">
 								<!--tab1-->
@@ -281,25 +292,39 @@ body {
 									<div class="row">
 										<div class="col-md-9">
 											<div class="control-label">
-
+												<div class="row_btm_marg">
 												<div class="row">
 													<div class="col-md-4">
-														<h4 class="col-md-7">
-															<b>Invoice No:-</b>
+													
+													<div class="inve_one">
+														<div class="invoice_lft">
+															<b class="total_til">Invoice No:-</b>
+														</div>
+														<div class="invoice_rght">
+															<input type="text" class="form-control"
+															placeholder="Enter Invoice No" name="invoiceNo"
+															id="invoiceNo" required>
+														</div>
+													</div>
+													
+													
+														<!-- <h4 class="col-md-7">
+															<b class="total_til">Invoice No:-</b>
 														</h4>
 														<input type="text" class="form-control"
 															placeholder="Enter Invoice No" name="invoiceNo"
-															id="invoiceNo" required><br>
+															id="invoiceNo" required><br> -->
 													</div>
 
 
 
 													<div class="col-md-4">
-														<h4 class="col-md-8" style="margin-top: 5px">
-															<b>Select Supplier:-</b>
-														</h4>
-
-														<select class="form-control" data-live-search="true"
+													<div class="inve_one">
+														<div class="invoice_lft">
+															<b class="total_til"> Supplier:-</b> <!-- Select -->
+														</div>
+														<div class="invoice_rght">
+															<select class="form-control" data-live-search="true"
 															title="Please Select Item" name="suppId" id="suppId"
 															required>
 															<option value="">Select Supplier</option>
@@ -308,15 +333,25 @@ body {
 															</c:forEach>
 
 														</select>
+														</div>
+													
+													
+														
+
+														</div>
 													</div>
 													<div class="col-md-4">
-														<h4 class="col-md-8" style="margin-top: 5px">
-															<b>Select Bill Date:-</b>
-														</h4>
-														<div class="col-md-8">
+													<div class="inve_one">
+													<div class="invoice_lft">
+															<b class="total_til">Bill Date :-</b>
+														</div>
+														<div class="invoice_rght">
 															<input id="datepicker" placeholder="Bill Date"
 																class="texboxitemcode texboxcal" name="billDate"
 																type="text" autocomplete="off" required>
+														</div>
+													
+													
 														</div>
 													</div>
 
@@ -324,22 +359,26 @@ body {
 
 
 												</div>
+												</div>
 
 												<div>
-													<div class="shInnerwidth">
+													<div class="tableFixHead">
 														<table width="100%" border="0" cellspacing="0"
-															cellpadding="0" class="table">
+															cellpadding="0">
 															<tr>
 																<td align="center" valign="middle" style="padding: 0px;">
 																	<table width="100%" border="0" cellspacing="0"
 																		cellpadding="0">
+																		<thead>
 																		<tr class="bgpink">
-																			<td>Item Code</td>
-																			<td>Item Name</td>
-																			<td>Qty</td>
-																			<td>Rate</td>
-																			<td>Discount</td>
+																			<th>Item Code</th>
+																			<th>Item Name</th>
+																			<th>Qty</th>
+																			<th>Rate</th>
+																			<th>Discount</th>
+																			<th>&nbsp;</th>
 																		</tr>
+																		</thead>
 																		<tr>
 																			<td><input type="text" class="form-control"
 																				id="barcode1" name="barcode1"
@@ -399,17 +438,17 @@ body {
 
 
 
-									<div id="table-scroll" class="table-scroll">
-										<div id="faux-table" class="faux-table" aria="hidden">
-											<table id="table_grid1" class="main-table small-td">
+									<div id="table-scroll" class="tableFixHead">
+										<!-- <div id="faux-table" class="faux-table" aria="hidden">
+											<table id="table_grid1">
 												<tr class="bgpink">
 													<th class="col-sm-1">Sr no.</th>
 													<th class="col-md-1">Item Code</th>
 													<th class="col-md-2">Item Name</th>
 													<th class="col-md-1">Qty</th>
-													<!-- <th class="col-md-1">Rate</th>
+													<th class="col-md-1">Rate</th>
 														<th class="col-md-1">Disc%</th>
-														<th class="col-md-1">Disc Amt</th> -->
+														<th class="col-md-1">Disc Amt</th>
 													<th class="col-md-1">Amount</th>
 													<th class="col-md-1">Tax%</th>
 													<th class="col-md-1">Tax Amt</th>
@@ -417,9 +456,9 @@ body {
 													<th class="col-md-1">Action</th>
 												</tr>
 											</table>
-										</div>
-										<div class="table-wrap table-wrap-custbill">
-											<table id="table_grid1" class="main-table small-td">
+										</div> -->
+										
+											<table id="table_grid1">
 												<thead>
 													<tr class="bgpink">
 														<th class="col-sm-1">Sr no.</th>
@@ -441,64 +480,68 @@ body {
 												</tbody>
 
 											</table>
-										</div>
+										
 									</div>
-
-
-
-
-									<div class="row">
-										<div class="col-md-4">
-											<h4 class="col-md-7">
-												<b>Amount:-</b>
-											</h4>
-											<h4 class="col-md-5" id="totalSum">00</h4>
+						
+						
+						
+						<div class="row_one_l">
+							<!-- 1 -->
+							<div class="row_total_l">
+										<div class="row_total_left">
+											<b class="total_til">Amount:-</b>
+										</div>
+										<div class="row_total_right">
+											<h4 class="total_til" id="totalSum">00</h4>
 											<input type="hidden" class="form-control" id="totalSumText"
 												name="totalSumText">
 										</div>
-
-										<div class="col-md-4">
-											<h4 class="col-md-7" style="margin-top: 5px">
-												<b>Discount(%):-</b>
-											</h4>
-											<div class="col-md-5">
-												<h4 class="col-md-5" id="discTotal">00</h4>
+									</div>
+									
+									<!-- 1 -->
+							<div class="row_total_l">
+										<div class="row_total_left">
+											<b class="total_til">Discount(%):-</b>
+										</div>
+										<div class="row_total_right">
+											<h4 class="total_til" id="discTotal">00</h4>
 												<input type="hidden" class="form-control" id="discTotalText"
 													name="discTotalText">
-											</div>
 										</div>
-
-										<div class="col-md-4">
-											<h4 class="col-md-7" style="margin-top: 5px">
-												<b>Grand Total:-</b>
-											</h4>
-
-											<h4 class="col-md-5" id="grandTotal">00</h4>
+									</div>
+									
+									<!-- 1 -->
+							<div class="row_total_l">
+										<div class="row_total_left">
+											<b class="total_til">Grand Total:-</b>
+										</div>
+										<div class="row_total_right">
+											<h4 class="total_til" id="grandTotal">00</h4>
 											<input type="hidden" class="form-control" id="grandTotalText"
 												name="grandTotalText">
 										</div>
-
-										<div class="clearfix"></div>
-
-										<div class="col-md-4">
-											<h4 class="col-md-7" style="margin-top: 5px">
-												<b>Tax Total:-</b>
-											</h4>
-
-											<h4 class="col-md-5" id="taxtotal">00</h4>
+									</div>
+									
+									<!-- 1 -->
+							<div class="row_total_l">
+										<div class="row_total_left">
+											<b class="total_til">Tax Total:-</b>
+										</div>
+										<div class="row_total_right">
+											<h4 class="total_til" id="taxtotal">00</h4>
 											<input type="hidden" class="form-control" id="taxtotalText"
 												name="taxtotalText">
 										</div>
-										<div class="clearfix"></div>
-
-
-
-
 									</div>
+						</div>
+
+
+
+									
 
 
 									<center>
-										<input type="submit" class="btn additem_btn" id="insert"
+										<input type="submit" class="buttonsaveorder" id="insert"
 											value="Submit" disabled>
 
 									</center>
@@ -681,10 +724,10 @@ body {
 																.append($(
 																		'<td ></td>')
 																		.html(
-																				'<h4 id="total'+key+'" >'
+																				'<div id="total'+key+'" >'
 																						+ itemList.taxableAmt
 																								.toFixed(2)
-																						+ '</h4> '));
+																						+ '</div> '));
 														total = total
 																+ itemList.taxableAmt;
 														taxAmt = taxAmt
@@ -695,26 +738,26 @@ body {
 																.append($(
 																		'<td></td>')
 																		.html(
-																				'<input type="hidden" value="'+itemList.itemTax3+'" id="taxRate'+key+'" class="form-control" disabled="true"><h4>'
+																				'<input type="hidden" value="'+itemList.itemTax3+'" id="taxRate'+key+'" class="form-control" disabled="true"><div>'
 																						+ itemList.itemTax3
 																								.toFixed(2)
-																						+ '</h4>'));
+																						+ '</div>'));
 														tr
 																.append($(
 																		'<td></td>')
 																		.html(
-																				'<h4 id="taxRs'+key+'" >'
+																				'<div id="taxRs'+key+'" >'
 																						+ itemList.itemTax3rs
 																								.toFixed(2)
-																						+ '</h4>'));
+																						+ '</div>'));
 														tr
 																.append($(
 																		'<td></td>')
 																		.html(
-																				'<h4 id="grndTotal'+key+'" >'
+																				'<div id="grndTotal'+key+'" >'
 																						+ itemList.grandTotal
 																								.toFixed(2)
-																						+ '</h4>'));
+																						+ '</div>'));
 														tr
 																.append($(
 																		'<td></td>')

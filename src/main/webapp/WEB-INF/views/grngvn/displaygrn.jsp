@@ -32,35 +32,23 @@
 			<!--leftNav-->
 			<!--rightSidebar-->
 			<div class="sidebarright">
-				<div class="order-left">
-					<h2 class="pageTitle">GRN Details</h2>
-
-				</div>
-				<div class="colOuter">
-					<!-- copy div kalpesh -->
-					<div class="calender-title"></div>
-
-
-					<div class="col-md-6">
+				
+				<div class="title_row_one marg_zero">
+					<div class="left_title">
+						<h2 class="pageTitle"><i class="fa fa-file-pdf-o"></i> GRN Details</h2>
+					</div>
+					<div class="on_off_row extra_margin_topten">
 						<form action="" id="grnForm" method="get">
-
-							<table border="1">
-								<tr bgcolor="orange">
-									<th width="30%" align="left">Grn Date</th>
-									<th width="40%" align="left">Grn SrNo</th>
-									<th width="30%" align="left">Aprroved Amt</th>
-								</tr>
-								<tbody>
-									<tr>
-										<td align="center">${grnDate}</td>
-										<td align="center">${grnSrNo}</td>
-										<td align="center">${aprAmt}</td>
-									</tr>
-								</tbody>
-							</table>
+							<div class="gvn_l">Grn Date : <span>${grnDate}</span></div>
+							<div class="gvn_l">Grn SrNo : <span>${grnSrNo}</span></div>
+							<div class="gvn_l">Aprroved Amt : <span>${aprAmt}</span></div>
 						</form>
 					</div>
-				</div>
+				</div>			
+			
+			
+				
+				
 
 				<!--tabNavigation-->
 				<div class="cd-tabs">

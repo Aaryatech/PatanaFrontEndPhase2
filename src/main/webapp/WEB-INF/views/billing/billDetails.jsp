@@ -19,6 +19,8 @@
 	type="image/x-icon" />
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.min.js"></script>
+	
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 
 <!--rightNav-->
 
@@ -129,11 +131,43 @@ However, delay the fade out process for 2.5 seconds */
 				<!--rightSidebar-->
 				<div class="sidebarright">
 					
-		<div class="sidebarright">
-		<br>
+		<div><!--  class="sidebarright" -->
+		
+		<div class="without_titl">
+			<div class="invoice_titl">Invoice No :- <span>${invoiceNo}</span></div>
+			<div class="invoice_titl">Bill Date:- <span>${billDate}</span></div>
+			<div class="invoice_titl">Grand Total:- <span>${grandTotal}</span></div>
+			<div class="invoice_titl">Bill Status:- <span><input type="hidden" value="${billStatus}" name="billstatus" id="billstatus"> <c:choose>
+																	<c:when test="${billStatus==1}">
+																		<b><label  id="status1">Pending</label></b>
+																	</c:when>
+																	<c:when test="${billStatus==2}">
+																		<b><label  id="status2">Received</label></b>
+																		
+																	</c:when>
+																	<c:when test="${billStatus== 3}">
+																		<b><label  id="status3">GVN Apply</label></b>
+																	</c:when>
+																	<c:when test="${billStatus== 4}">
+																		<b><label  id="status4">GVN Approve</label></b>
+																	</c:when>
+																	<c:when test="${billStatus== 5}">
+																		<b><label  id="status5">GRN Apply</label></b>
+																	</c:when>
+																		<c:when test="${billStatus== 6}">
+																		<b><label  id="status6">GRN Approve</label></b>
+																	</c:when>
+																		<c:when test="${billStatus== 7}">
+							 									<b><label  id="status7">Closed</label></b>
+																	</c:when>
+
+																</c:choose></span></div>
+			<div class="invoice_button"><input name="" class="buttonsaveorder" value="Received"
+									type="button" id="updateStatus" onclick="updateStatus(${billNo})"></div>													
+		</div>
 	
-		<div class=" col-md-2">
-		    <h2 class=" pull-left">Invoice No:-  <b>${invoiceNo}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></h2>
+		<%-- <div class=" col-md-2">
+		    <h2 class=" pull-left">Invoice No :-  <b>${invoiceNo}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></h2>
 		</div>
 	
 		<div class="col-md-2">
@@ -168,12 +202,12 @@ However, delay the fade out process for 2.5 seconds */
 																	</c:when>
 
 																</c:choose></h2>
-		</div>
+		</div> --%>
 		
-		 <div class="col-md-2 ">
+		 <%-- <div class="col-md-2 ">
 								<input name="" class="buttonsaveorder" value="Received"
 									type="button" id="updateStatus" onclick="updateStatus(${billNo})">
-							</div>
+							</div> --%>
     </div>
 					<div id="snackbar" style="background:pink;">Order Received</div>
 
@@ -185,12 +219,10 @@ However, delay the fade out process for 2.5 seconds */
 					<div class="clearfix"></div>
 
 
-				<div id="table-scroll" class="table-scroll">
-					<div id="faux-table" class="faux-table" aria="hidden">
-<!-- 					<div class="table-wrap">
- -->						 </div>
-							<div class="table-wrap">
-						<table id="table_grid" class="main-table">
+				<div id="table-scroll">
+
+							<div class="tableFixHead">
+						<table id="table_grid" >
 							<thead>
 								
 											<tr class="bgpink">
@@ -272,12 +304,14 @@ However, delay the fade out process for 2.5 seconds */
 						</table>
 					</div></div>
 				</div>
-
-					</div><br>
-					<div align="center">
+				
+				<div align="center" style="margin:0 0 20px 0 ; display: inline-block; width: 100%;">
 								<a href="${pageContext.request.contextPath}/showBill"><input name="" class="buttonsaveorder" value="Go Back"
 									  align="center" type="button"></a><!-- onclick="goBack()" -->
 							</div>
+
+					</div>
+					
 					 
 					<!--tabNavigation-->
 

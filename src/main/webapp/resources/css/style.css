@@ -54,11 +54,13 @@
 
 
 .table th{
-	padding:10px;
+	/* padding:10px; */
+	padding: 5px 3px;
 }
 
 .table td{
-	padding:10px;
+	/* padding:10px; */
+	padding: 5px 3px;
 }
 
 .buttonsaveorder:hover {
@@ -144,20 +146,28 @@ min-height: 90px;
 	border-spacing: 0;
 }
 
-.table-scroll th{
+/* .table-scroll th{
 	padding: 22px 0px;
 	vertical-align: top;
 	background: #ec268f !important;
 color: #fff !important;
 font-size: 16px;
-}
+} */
 
-.table-scroll th, .table-scroll td {
+.table-scroll th {
+	padding:5px 3px /* 8px 3px */; vertical-align:middle;
+	/* vertical-align: top; */
+	text-align: left;
+	font-size: 16px; font-weight: 600; border: 1px solid #ddd !important;
+	vertical-align: top;
+	background: #ec268f !important;
+color: #fff !important;
+}
+.table-scroll td {color:#333;
 	padding:3px 3px /* 8px 3px */; vertical-align:middle;
 	/* vertical-align: top; */
 	text-align: left;
-	font-size: 18px;
-	
+	font-size: 15px; font-weight: 400;	border: 1px solid #ddd;
 }
 .faux-table table {
 	position: absolute;
@@ -197,7 +207,7 @@ font-size: 16px;
 }
 .faux-table thead, .faux-table tfoot, .faux-table thead th, .faux-table tfoot th, .faux-table tfoot td {
 	position:relative;
-	z-index:2;
+	z-index:2 /* 2 */;
 }
 
 .ui-widget.ui-widget-content {
@@ -222,12 +232,12 @@ font-size: 16px;
 .userimg img {
     max-width: 60px;
     height: 40px;
-    width:40px;
+    width:40px; margin: 6px 0 0 0;
  }
  
  .userimg {
-    height: 60px;
-    line-height: 60px;
+    height: 50px /* 60px */;
+    line-height: 50px /* 60px */;
 }
 
 .usericon {
@@ -269,12 +279,12 @@ font-size: 16px;
  -ms-flex-align:center;
  align-items:center;
  height:45px;
- margin-bottom:10px;
-background-color: #343690 !important;
+ /* margin-bottom:10px; */
+background-color:#fd54a0 /* #343690 */ !important;
 }
 .ibox .ibox-head .ibox-title {
- font-size:20px;
- font-weight:600;
+ font-size:16px /* 20px */;
+ font-weight:500;
  color: #fff;
 }
 .ibox .ibox-head .ibox-title small {
@@ -292,6 +302,9 @@ width: 100%;
 display: block;
 padding: 10px 22px;
 }
+
+.ibox.txt_icn a{position: relative; padding-left:40px; font-size: 14px;}
+.ibox.txt_icn i{position: absolute; left:16px; top:10px;} 
 
 .ibox a:hover{
 color: #ec268f !important;
@@ -324,7 +337,7 @@ font-size: 18px !important;
 }
 
 .main-table tr:nth-child(2n+1) {
-    background: #e1e1e1;
+    background: #f5f5f5 /* #e1e1e1 */;
 }
 
 .sidebarhome ul {
@@ -418,6 +431,8 @@ width:100px
     display: none;
 }
 
+.mob_tbl{overflow-x:auto; width: 100%;}
+
 @media screen and (max-width:1305px) {
 .table-wrap {
     width: 100%;
@@ -437,6 +452,18 @@ width:100px
 
 }
 
+
+@media screen and (max-width:1024px){
+	.table-scroll th,.table-scroll td{font-size: 14px;}
+	.usericon{font-size: 14px;}
+	
+}
+@media screen and (max-width:768px){
+table {border-collapse: collapse; border-spacing: 0; width: 100%; border: 1px solid #ddd;}
+/* .table-scroll{display: block;} */
+.mob_tbl{overflow-x:auto; width: 150%;}
+.cd-tabs-navigation a{padding: 3px 6px;}
+}
 
 
 

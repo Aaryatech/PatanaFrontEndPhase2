@@ -229,22 +229,51 @@ jQuery(document).ready(function(){
 
 			<!--rightSidebar-->
 			<div class="sidebarright">
-				<div class="order-left">
-					<h2 class="pageTitle">Order History</h2>
-					<!--<h3 class="pageTitle2">Order Date : 22-02-2017 </h3>-->
-				</div>
-
-				<form name="frm_search" id="frm_search" method="post"
+			
+				<div class="title_row_one">
+					<div class="left_title">
+						<h2 class="pageTitle"><i class="fa fa-file-text-o"></i> Order History</h2>
+					</div>
+					<div class="right_content extra_margin">
+					<form name="frm_search" id="frm_search" method="post"
 					action="itemHistory">
 					<input type="hidden" name="mod_ser" id="mod_ser"
 						value="search_result">
-
-					<div class="colOuter">
-						<div class="col-md-1">
-							<div class="col1title">Category :</div>
+						
+						
+						
+						<div class="date_sear three_bx">
+							<div class="date_sear_txt">From Date :-</div>
+							<div class="date_sear_int inpt_width">
+								<input id="datepicker" class="texboxitemcode texboxcal"
+								placeholder="Date" required autocomplete="off" name="datepicker"
+								type="text" value="${spDeliveryDt}">
+							</div>
 						</div>
-						<div class="col-md-2">
-							<select name="catId" id="catId" required>
+						
+						<div class="date_sear three_bx">
+							<div class="date_sear_txt">Search By :-</div>
+							<div class="date_sear_int inpt_width">
+								<select name="searchBy" id="searchBy" required>
+								<c:choose>
+									<c:when test="${searchBy==2}">
+										<option value="1">Delivery Date</option>
+										<option value="2" selected>Order Date</option>
+									</c:when>
+									<c:otherwise>
+										<option value="1" selected>Delivery Date</option>
+										<option value="2">Order Date</option>
+									</c:otherwise>
+								</c:choose>
+
+							</select>
+							</div>
+						</div>
+						
+						<div class="date_sear three_bx">
+							<div class="date_sear_txt">Category :</div>
+							<div class="date_sear_int inpt_width">
+								<select name="catId" id="catId" required>
 								<option value="">Select Type</option>
 
 								<c:forEach items="${catList}" var="catList">
@@ -293,46 +322,26 @@ jQuery(document).ready(function(){
 									</c:otherwise>
 								</c:choose>
 							</select>
-						</div>
-						<!-- 	</div> -->
-						<div class="col-md-1">
-							<div class="col1title">Search By :</div>
-						</div>
-						<div class="col-md-2">
-							<select name="searchBy" id="searchBy" required>
-								<c:choose>
-									<c:when test="${searchBy==2}">
-										<option value="1">Delivery Date</option>
-										<option value="2" selected>Order Date</option>
-									</c:when>
-									<c:otherwise>
-										<option value="1" selected>Delivery Date</option>
-										<option value="2">Order Date</option>
-									</c:otherwise>
-								</c:choose>
-
-							</select>
-						</div>
-						<!-- <div class="colOuter"> -->
-						<div class="col-md-1">
-							<div class="col1title">Date :</div>
-						</div>
-						<div class="col-md-2">
-							<input id="datepicker" class="texboxitemcode texboxcal"
-								placeholder="Date" required autocomplete="off" name="datepicker"
-								type="text" value="${spDeliveryDt}">
-						</div>
-						<!-- </div> -->
-
-						<!-- <div class="colOuter">
- -->
-						<div class="col-md-2">
+							</div>
+						</div>	
+						
+						<div class="date_btn marg_lft">
 							<input name="" class="buttonsaveorder" value="Search"
 								type="submit" onclick="Print()">
 						</div>
+						
 					</div>
+					<div class="clr"></div>
+				</div>
+			
+			
+			
+				<div class="order-left">
+					
+					<!--<h3 class="pageTitle2">Order Date : 22-02-2017 </h3>-->
+				</div>
 
-				</form>
+				
 
 				<!--tabNavigation-->
 				<div class="cd-tabs">
@@ -349,9 +358,9 @@ jQuery(document).ready(function(){
 							<div class="clearfix"></div>
 
 
-							<div id="table-scroll" class="table-scroll">
-								<div id="faux-table" class="faux-table" aria="hidden">
-									<table id="table_grid1" class="main-table">
+							<div id="table-scroll" class="tableFixHead">
+								<%-- <div id="faux-table" class="faux-table" aria="hidden">
+									<table id="table_grid1">
 										<thead>
 											<tr class="bgpink">
 												<th class="col-md-2" style="text-align: center;">Item
@@ -376,9 +385,9 @@ jQuery(document).ready(function(){
 											</tr>
 										</thead>
 									</table>
-								</div>
-								<div class="table-wrap">
-									<table id="table_grid" class="main-table">
+								</div> --%>
+								
+									<table id="table_grid">
 										<thead>
 											<tr class="bgpink">
 
@@ -450,7 +459,7 @@ jQuery(document).ready(function(){
 										</tbody>
 
 									</table>
-								</div>
+								
 							</div>
 
 

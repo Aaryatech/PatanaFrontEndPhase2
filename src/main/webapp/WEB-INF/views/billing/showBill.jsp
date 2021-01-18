@@ -108,10 +108,54 @@
 					<!-- <div class="col-md-3"></div> -->
 					<div class="colOuter">
 						<div class="col1title" align="left">
-							<div class="col-md-2">
-								<h3>View Purchase Bills</h3>
+						
+						<div class="title_row_one">
+							<div class="left_title">
+								<h3 class="pageTitle"><i class="fa fa-money"></i> View Purchase Bills</h3>
 							</div>
-							<div class="col-md-1">
+							
+							<div class="right_content">
+							
+							<div class="date_sear">
+								<div class="date_sear_txt">From Date :</div>
+								<div class="date_sear_int"><input id="fromdatepicker" class="texboxitemcode texboxcal"
+									placeholder="From Date" name="from_datepicker" type="text"
+									value="${fromDate}"></div>
+								<div class="clr"></div>
+							</div>
+							
+							<div class="date_sear">
+								<div class="date_sear_txt">To Date :</div>
+								<div class="date_sear_int"><input id="todatepicker" class="texboxitemcode texboxcal "
+									placeholder="To Date" name="to_datepicker" type="text"
+									value="${toDate}"></div>
+								<div class="clr"></div>
+							</div>
+							
+							
+							
+							<div class="date_btn">
+								<input name="" class="buttonsaveorder" value="Search"
+									type="submit" align="center">
+							</div>
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							</div>
+							<div class="clr"></div>
+						</div>
+						
+							<!-- <div class="col-md-2">
+							
+								<h3 class="pageTitle"><i class="fa fa-money"></i> View Purchase Bills</h3>
+							</div> -->
+							<%-- <div class="col-md-1">
 								<div class="col1title">From Date :</div>
 							</div>
 							<div class="col-md-2">
@@ -119,10 +163,10 @@
 									placeholder="From Date" name="from_datepicker" type="text"
 									value="${fromDate}">
 
-							</div>
+							</div> --%>
 
 
-							<div class="col-md-1">
+							<%-- <div class="col-md-1">
 								<div class="col1title">To Date :</div>
 							</div>
 							<div class="col-md-2">
@@ -130,12 +174,12 @@
 									placeholder="To Date" name="to_datepicker" type="text"
 									value="${toDate}">
 
-							</div>
-							<div class="col-md-1">
+							</div> --%>
+							<!-- <div class="col-md-1">
 								<input name="" class="buttonsaveorder" value="Search"
 									type="submit" align="center">
 							</div>
-							<div align="center"></div>
+							<div align="center"></div> -->
 						</div>
 
 					</div>
@@ -157,10 +201,10 @@
 
 
 				<div class="clearfix"></div>
-				<div id="table-scroll" class="table-scroll">
-					<div id="faux-table" class="faux-table" aria="hidden"></div>
-					<div class="table-wrap">
-						<table id="table_grid" class="main-table" border="1px">
+				<div id="table-scroll">
+					
+					<div class="tableFixHead">
+						<table id="table_grid">
 
 							<thead>
 								<tr class="bgpink">
@@ -173,7 +217,7 @@
 									<th class="col-md-1" style="text-align: center;">Total</th>
 									<th class="col-md-1" style="text-align: center;">Status</th>
 									<!-- <th class="col-md-1">Bill Date Time</th> -->
-									<th class="col-md-1" style="text-align: center;">Remark</th>
+									<!-- <th class="col-md-1" style="text-align: center;">Remark</th> -->
 									<th class="col-md-1" style="text-align: center;">Action</th>
 								</tr>
 							</thead>
@@ -199,31 +243,31 @@
 										<%-- 	<td><c:out value="${billHeader.status}" /></td> --%>
 										<c:choose>
 											<c:when test="${billHeader.status==1}">
-												<td class="col-md-1"><c:out value="Pending"></c:out></td>
+												<td class="col-md-1"style="text-align: center;"><c:out value="Pending"></c:out></td>
 											</c:when>
 											<c:when test="${billHeader.status==2}">
-												<td class="col-md-1"><c:out value="Received"></c:out></td>
+												<td class="col-md-1"style="text-align: center;"><c:out value="Received"></c:out></td>
 											</c:when>
 											<c:when test="${billHeader.status==3}">
-												<td class="col-md-1"><c:out value="GVN Apply"></c:out></td>
+												<td class="col-md-1"style="text-align: center;"><c:out value="GVN Apply"></c:out></td>
 											</c:when>
 											<c:when test="${billHeader.status==4}">
 												<td class="col-md-1"><c:out value="GVN Approve"></c:out></td>
 											</c:when>
 											<c:when test="${billHeader.status==5}">
-												<td class="col-md-1"><c:out value="GRN Apply"></c:out></td>
+												<td class="col-md-1"style="text-align: center;"><c:out value="GRN Apply"></c:out></td>
 											</c:when>
 											<c:when test="${billHeader.status==6}">
-												<td class="col-md-1"><c:out value="GRN Approve"></c:out></td>
+												<td class="col-md-1"style="text-align: center;"><c:out value="GRN Approve"></c:out></td>
 											</c:when>
 											<c:when test="${billHeader.status==7}">
-												<td class="col-md-1"><c:out value="Closed"></c:out></td>
+												<td class="col-md-1" style="text-align: center;"><c:out value="Closed"></c:out></td>
 											</c:when>
 
 										</c:choose>
 										<%-- <td class="col-md-1"><c:out
 												value="${billHeader.billDateTime}" /></td> --%>
-										<td class="col-md-1"><c:out value="${billHeader.remark}" /></td>
+										<%-- <td class="col-md-1"><c:out value="${billHeader.remark}" /></td> --%>
 										<td class="col-md-1" style="text-align: center;"><div>
 												<a
 													href="${pageContext.request.contextPath}/showBillDetailProcess/?billNo=${billHeader.billNo}&billDate=${billHeader.billDate}&billStatus=${billHeader.status}&grandTotal=${billHeader.grandTotal}&Inv=${billHeader.invoiceNo}"

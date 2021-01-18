@@ -101,59 +101,60 @@ jQuery(document).ready(function(){
 
 			<!-- Place Actual content of page inside this div -->
 			<div class="sidebarright">
-
-
-				<div class="row">
-					<div class="col-md-12">
-						<h2 class="pageTitle">Billwise Purchase Report</h2>
-					</div>
+			
+			<div class="title_row_one marg_top_btm">
+				<div class="left_title">
+					<h2 class="pageTitle"><i class="fa fa-file-o"></i> Billwise Purchase Report</h2>
 				</div>
-
-				<div class="row">
-					<input type="hidden" name="frId" id="frId" value="${frId}">
-
-					<div class="col-md-2 from_date">
-						<h4 class="pull-left">From Date:-</h4>
-					</div>
-					<div class="col-md-2 ">
-						<input id="fromdatepicker" autocomplete="off"
+				<div class="on_off_row extra_margin">
+					<input type="hidden" name="frId" id="frId" value="${frId}">		
+					
+					<div class="pop_one">
+						<div class="pop_one_txt margin_tp">From </div>
+						<div class="pop_one_inp">
+							<input id="fromdatepicker" autocomplete="off"
 							class="texboxitemcode texboxcal" placeholder="DD-MM-YYYY"
 							name="fromDate" type="text">
-					</div>
-					<div class="col-md-1">
-						<h4 class="pull-left">To Date:-</h4>
-					</div>
-					<div class="col-md-2 ">
-						<input id="todatepicker" autocomplete="off"
+						</div>
+					</div>			
+					
+					<div class="pop_one">
+						<div class="pop_one_txt margin_tp">To </div>
+						<div class="pop_one_inp">
+							<input id="todatepicker" autocomplete="off"
 							class="texboxitemcode texboxcal" placeholder="DD-MM-YYYY"
 							name="toDate" type="text">
+						</div>
+					</div>				
+					
+					
+					<div class="buttons_right">
+						<button class="buttonsaveorder" onclick="billWisePurchaseReport()">Search</button>						
+						<button class="buttonsaveorder" value="PDF" id="PDFButton" onclick="genPdf()">PDF</button>
 					</div>
-					<div class="col-md-2">
-						<button class="btn search_btn pull-left"
-							onclick="billWisePurchaseReport()">Search</button>
-						<%-- 		  &nbsp;&nbsp;&nbsp;   <a href='${pageContext.request.contextPath}/pdf?reportURL=showPurchaseBillwiseReportPdf' id="btn_pdf" class="btn search_btn" style="display: none">PDF</a>
- --%>
-						<button class="btn btn-primary" value="PDF" id="PDFButton"
-							onclick="genPdf()">PDF</button>
-
-					</div>
-
+					
 				</div>
+				<div class="clr"></div>
+			</div>
 
-				<div class="row">
+
+				
+				
+
+				
 					<div class="clearfix"></div>
 
 
-					<div id="table-scroll" class="table-scroll">
-						<div id="faux-table" class="faux-table" aria="hidden">
+					<div id="table-scroll">
+						<!-- <div id="faux-table" class="faux-table" aria="hidden">
 							<table id="table_grid1" class="main-table" border="1">
 								<thead>
 									<tr class="bgpink">
 
 										<th class="col-sm-1">Sr.No.</th>
-										<!-- <th class="col-md-1">Party Name</th> -->
-										<!-- 									<th class="col-md-1">GSTIN</th>
- -->
+										<th class="col-md-1">Party Name</th>
+																			<th class="col-md-1">GSTIN</th>
+
 										<th class="col-sm-1" style="text-align: center;">Invoice
 											No</th>
 										<th class="col-sm-2" style="text-align: center;">Bill
@@ -163,7 +164,7 @@ jQuery(document).ready(function(){
 										<th class="col-md-1" style="text-align: center;">IGST Amt</th>
 										<th class="col-md-1" style="text-align: center;">CGST Amt</th>
 										<th class="col-md-1" style="text-align: center;">SGST Amt</th>
-										<!-- <th class="col-md-1" style="text-align: center;">R.off</th> -->
+										<th class="col-md-1" style="text-align: center;">R.off</th>
 										<th class="col-md-2" style="text-align: center;">Bill
 											Amount</th>
 									</tr>
@@ -171,27 +172,27 @@ jQuery(document).ready(function(){
 								</thead>
 								<tbody>
 							</table>
-						</div>
-						<div class="table-wrap">
-							<table id="table_grid" class="main-table" border="1">
+						</div> -->
+						<div class="tableFixHead">
+							<table id="table_grid">
 								<thead>
 									<tr class="bgpink">
 
-										<th class="col-sm-1" style="text-align: center;">Sr.No.</th>
+										<th style="text-align: center;">Sr.No.</th>
 										<!-- <th class="col-md-1">Party Name</th> -->
 										<!-- 									<th class="col-md-1">GSTIN</th>
  -->
-										<th class="col-sm-1" style="text-align: center;">Invoice
+										<th  style="text-align: center;">Invoice
 											No</th>
-										<th class="col-sm-2" style="text-align: center;">Bill
+										<th  style="text-align: center;">Bill
 											Date</th>
-										<th class="col-md-2" style="text-align: center;">Taxable
+										<th style="text-align: center;">Taxable
 											Amt</th>
-										<th class="col-md-1" style="text-align: center;">IGST Amt</th>
-										<th class="col-md-1" style="text-align: center;">CGST Amt</th>
-										<th class="col-md-1" style="text-align: center;">SGST Amt</th>
+										<th style="text-align: center;">IGST Amt</th>
+										<th style="text-align: center;">CGST Amt</th>
+										<th style="text-align: center;">SGST Amt</th>
 									<!-- 	<th class="col-md-1" style="text-align: center;">R.off</th> -->
-										<th class="col-md-2" style="text-align: center;">Bill
+										<th style="text-align: center;">Bill
 											Amount</th>
 									</tr>
 
@@ -203,15 +204,15 @@ jQuery(document).ready(function(){
 
 					</div>
 					<!--table end-->
-					<br>
+					
 					<div class="form-group" style="display: none;" id="range">
-						<div class="col-sm-3  controls">
-							<input type="button" id="expExcel" class="btn btn-primary"
+						<div class="col-sm-12  controls">
+							<input type="button" id="expExcel" class="buttonsaveorder"
 								value="EXPORT TO Excel" onclick="exportToExcel();"
 								disabled="disabled">
 						</div>
 					</div>
-				</div>
+				
 			</div>
 
 
@@ -291,7 +292,7 @@ jQuery(document).ready(function(){
 
 													tr
 															.append($(
-																	'<td class="col-md-1"></td>')
+																	'<td></td>')
 																	.html(
 																			key + 1));
 													/* 	tr.append($('<td class="col-md-1" ></td>').html(partyname));
@@ -300,40 +301,40 @@ jQuery(document).ready(function(){
 													 */
 													tr
 															.append($(
-																	'<td class="col-md-1"></td>')
+																	'<td ></td>')
 																	.html(
 																			billWisePurchaseData.invoiceNo));
 
 													tr
 															.append($(
-																	'<td class="col-md-2" style="text-align:center;"></td>')
+																	'<td style="text-align:center;"></td>')
 																	.html(
 																			billWisePurchaseData.billDate));
 
 													tr
 															.append($(
-																	'<td class="col-md-1" style="text-align:right"></td>')
+																	'<td style="text-align:right"></td>')
 																	.html(
 																			(billWisePurchaseData.taxableAmt)
 																					.toFixed(2)));
 
 													tr
 															.append($(
-																	'<td class="col-md-1" style="text-align:right"></td>')
+																	'<td style="text-align:right"></td>')
 																	.html(
 																			(billWisePurchaseData.igstRs)
 																					.toFixed(2)));
 
 													tr
 															.append($(
-																	'<td class="col-md-1" style="text-align:right"></td>')
+																	'<td style="text-align:right"></td>')
 																	.html(
 																			(billWisePurchaseData.cgstRs)
 																					.toFixed(2)));
 
 													tr
 															.append($(
-																	'<td class="col-md-1" style="text-align:right"></td>')
+																	'<td style="text-align:right"></td>')
 																	.html(
 																			(billWisePurchaseData.sgstRs)
 																					.toFixed(2)));
@@ -347,7 +348,7 @@ jQuery(document).ready(function(){
 
 													tr
 															.append($(
-																	'<td class="col-md-1" style="text-align:right"></td>')
+																	'<td style="text-align:right"></td>')
 																	.html(
 																			(billWisePurchaseData.grandTotal)
 																					.toFixed(2)));
@@ -374,34 +375,34 @@ jQuery(document).ready(function(){
 
 								var tr = $('<tr></tr>');
 
-								tr.append($('<td class="col-md-1"></td>').html(
+								tr.append($('<td ></td>').html(
 										""));
 
-								tr.append($('<td class="col-md-1"></td>').html(
+								tr.append($('<td ></td>').html(
 										""));
 
 								tr
 										.append($(
-												'<td class="col-md-2" style="font-weight:bold;"></td>')
+												'<td style="font-weight:bold;"></td>')
 												.html("Total"));
 
 								tr
 										.append($(
-												'<td class="col-md-1" style="text-align:right"></td>')
+												'<td style="text-align:right"></td>')
 												.html((taxTotal).toFixed(2)));
 								tr
 										.append($(
-												'<td class="col-md-1" style="text-align:right"></td>')
+												'<td style="text-align:right"></td>')
 												.html(igstTotal.toFixed(2)));
 
 								tr
 										.append($(
-												'<td class="col-md-1" style="text-align:right"></td>')
+												'<td style="text-align:right"></td>')
 												.html(cgstTotal.toFixed(2)));
 
 								tr
 										.append($(
-												'<td class="col-md-1" style="text-align:right"></td>')
+												'<td style="text-align:right"></td>')
 												.html(sgstTotal.toFixed(2)));
 
 							/* 	tr
@@ -411,7 +412,7 @@ jQuery(document).ready(function(){
 
 								tr
 										.append($(
-												'<td class="col-md-1" style="text-align:right"></td>')
+												'<td style="text-align:right"></td>')
 												.html(billTotal.toFixed(2)));
 
 								$('#table_grid tbody').append(tr);

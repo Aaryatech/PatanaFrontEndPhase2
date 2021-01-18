@@ -97,36 +97,41 @@ jQuery(document).ready(function(){
 
 			<!-- Place Actual content of page inside this div -->
 			<div class="sidebarright">
-
-
-				<div class="row">
-					<div class="col-md-12">
-						<h3 class="pageTitle">Daily Sales Report</h3>
+				
+				<div class="title_row_one marg_top_btm">
+					<div class="left_title">
+						<h2 class="pageTitle"><i class="fa fa-file-o"></i> Daily Sales Report</h2>
 					</div>
-				</div>
-				<div class="colOuter">
-					<div class="col-md-5">
-						<div class="col1title">
-							<b>Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b> <input
-								id="fromdatepicker" autocomplete="off" placeholder="Date"
-								name="date" type="text" size="35">
-						</div>
-					</div>
-
-					<input type="hidden" name="frId" id="frId" value="${frId}">
-
-
-					<div class="col-md-1">
-						<button class="btn btn-primary" value="PDF" id="PDFButton"
+					
+					<div class="on_off_row extra_margin">
+						
+						
+						<input type="hidden" name="frId" id="frId" value="${frId}">
+						<div class="pop_one">
+							<div class="pop_one_txt margin_tp"> Date  </div>
+							<div class="pop_one_inp">
+							<input id="fromdatepicker" autocomplete="off"
+								class="texboxitemcode texboxcal" placeholder="DD-MM-YYYY" placeholder="Delivery Date"
+								name="fromDate" type="text">								
+							</div>
+					    </div>
+					    
+					    
+					    <div class="buttons_right">
+							<button class="buttonsaveorder" value="PDF" id="PDFButton"
 							onclick="genPdf()">PDF</button>
+							<button class="buttonsaveorder" value="Search" id="Search"
+							onclick="genJSP()">Search</button>					
+						</div>
+					    
+						
 					</div>
-
-					<div class="col-md-1">
-						<button class="btn btn-primary" value="Search" id="Search"
-							onclick="genJSP()">Search</button>
-					</div>
-					<br>
 				</div>
+			
+
+
+				
+				
 			</div>
 
 

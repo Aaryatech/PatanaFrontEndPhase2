@@ -340,7 +340,7 @@ button.ui-button::-moz-focus-inner {
 }
 .ui-datepicker .ui-datepicker-prev:hover,
 .ui-button:focus {
-	background:url(../images/leftarow.png) no-repeat; width:16px; height:16px;
+	background:url(../images/leftarow.png) no-repeat  !important; width:16px; height:16px;
 }
 
 .ui-datepicker .ui-datepicker-next {
@@ -349,6 +349,8 @@ button.ui-button::-moz-focus-inner {
 .ui-datepicker .ui-datepicker-prev-hover {
 	right:3px;background:url(../images/rightarow.png) no-repeat; width:16px; height:16px;
 }
+.ui-widget-header .ui-state-hover
+{background:url(../images/rightarow.png) no-repeat !important; border: none !important;}
 .ui-datepicker .ui-datepicker-next-hover {
 	right:3px;
 }

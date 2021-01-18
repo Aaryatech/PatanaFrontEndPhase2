@@ -186,7 +186,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
   .cd-tabs-navigation a {
     width: auto;
     text-align: center;
-    font-size:18px;
+    font-size:16px /* 18px */; font-weight:400;
     padding:10px 30px;
 	text-decoration:none;
 	}
@@ -258,4 +258,11 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
   100% {
     opacity: 1;
   }
+}
+
+@media screen and (max-width:1024px){
+	.cd-tabs-navigation a{font-size: 14px; font-weight: 500;}
+}
+@media screen and (max-width:768px){
+.cd-tabs-navigation a{margin-right: -1px;}
 }

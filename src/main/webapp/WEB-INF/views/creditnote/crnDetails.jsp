@@ -103,70 +103,77 @@
 
 			<!--rightSidebar-->
 			<div class="sidebarright">
+			
+			<div class="title_row_one marg_top_btm">
+					<div class="left_title">
+						<h2 class="pageTitle"><i class="fa fa-file-o"></i>
+							Credit Note Details List for Credit
+							Note Id : ${creditNoteHeaders.crnId}
+						</h2>
+					</div>
+					
+					
+				</div>
 
 
 
 				<!--slider-->
 				<!--slider thum size : width:850px height:350px-->
-				<div class="row">
-					<div class="col-md-12">
-						<h2 class="pageTitle">Credit Note Details List for Credit
-							Note Id : ${creditNoteHeaders.crnId}</h2>
-					</div>
-				</div>
+				
 				<div id="owl-example" class="owl-carousel"></div>
 				<!--slider-->
-
-				<table style="width: 100%; border: 1px dashed; font-size: 14px;">
+				
+				<div class="tableFixHead">
+				<table >
 					<tbody>
 						<tr>
-							<td style="border: 1px dashed; font-weight: bold;">&nbsp;CREDIT
+							<td style="font-weight: 500;">&nbsp;CREDIT
 								NOTE NO:</td>
-							<td style="border: 1px dashed;">&nbsp; <b>
+							<td style="font-weight: 500;">&nbsp; <b>
 									${creditNoteHeaders.crnNo} </b></td>
-							<td style="border: 1px dashed; font-weight: bold;">&nbsp;DATE:</td>
-							<td style="border: 1px dashed;"><b> <input
+							<td style="font-weight: 500;">&nbsp;DATE:</td>
+							<td style="font-weight: 500;"><b> <input
 									class="form-control date-picker" id="date" size="19"
 									style="width: 170px;" placeholder="dd-mm-yyyy" type="text"
 									name="date" value="${creditNoteHeaders.crnDate}" required />
 							</b></td>
 						</tr>
-						<tr style="border: 1px dashed;">
-							<td style="border: 1px dashed; font-weight: bold;">&nbsp;INVOICE
+						<tr>
+							<td style="font-weight: 500;">&nbsp;INVOICE
 								NO:</td>
-							<td style="border: 1px dashed;">&nbsp;<b>
+							<td style="font-weight: 500;">&nbsp;<b>
 									${creditNoteHeaders.exVarchar1} </b></td>
-							<td style="border: 1px dashed; font-weight: bold;">&nbsp;FRANCHISEE
+							<td style="font-weight: 500;">&nbsp;FRANCHISEE
 								NAME:</td>
-							<td style="border: 1px dashed;">&nbsp;<b>
+							<td style="font-weight: 500;">&nbsp;<b>
 									${creditNoteHeaders.frName} </b></td>
 						</tr>
 						<tr>
-							<td style="border: 1px dashed; font-weight: bold;">&nbsp;TAXABLE
+							<td style="font-weight: 500;">&nbsp;TAXABLE
 								AMOUNT:</td>
-							<td style="border: 1px dashed;">&nbsp;<b>
+							<td style="font-weight: 500;">&nbsp;<b>
 									${creditNoteHeaders.crnTaxableAmt} </b></td>
-							<td style="border: 1px dashed; font-weight: bold;">&nbsp;TAX
+							<td style="font-weight: 500;">&nbsp;TAX
 								AMOUNT:</td>
-							<td style="border: 1px dashed;">&nbsp;<b>
+							<td style="font-weight: 500;">&nbsp;<b>
 									${creditNoteHeaders.crnTotalTax} </b></td>
 						</tr>
 						<tr>
-							<td colspan="2" style="border: 1px dashed;">&nbsp;</td>
-							<td style="border: 1px dashed; font-weight: bold;">&nbsp;TOTAL:</td>
-							<td style="border: 1px dashed;">&nbsp;<b>
+							<td colspan="2" style="font-weight: 500;">&nbsp;</td>
+							<td style="font-weight: 500;">&nbsp;TOTAL:</td>
+							<td style="font-weight: 500;">&nbsp;<b>
 									${creditNoteHeaders.crnGrandTotal}</b></td>
 						</tr>
 
 					</tbody>
 				</table>
+				</div>
 				<br> <br>
 
-				<div class="table-responsive" style="border: 0">
+				<div class="tableFixHead" style="border: 0">
 					<table width="100%"
-						class="table table-advance table-responsive table-position"
 						id="table2">
-						<thead style="background-color: #f3b5db;">
+						<thead>
 							<tr>
 
 								<th>Sr No</th>

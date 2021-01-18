@@ -32,6 +32,8 @@
 	type="image/x-icon" />
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.min.js"></script>
+	
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">	
 
 <!--autocomplete-->
 <link rel="stylesheet"
@@ -337,17 +339,23 @@ label:before {
 
 				<!------------ Place Actual content of page inside this div ----------->
 				<div class="sidebarright">
-
-					<div class="order-left">
-						<h2 class="pageTitle">Customer Bill</h2>
-
+				
+				<div class="title_row_one">
+					<div class="left_title">
+						<h2 class="pageTitle"><i class="fa fa-file-pdf-o"></i> Customer Bill</h2>
 					</div>
-					<br>
-					<div class="order-right" align="right">
+					<div class="on_off_row marg_top_btn">
+						
 						<a href="${pageContext.request.contextPath}/viewBill"><button
-								class="btn btn-success">View Bill</button></a>
+								class="buttonsaveorder">View Bill</button></a>
+					
+						
 					</div>
+				</div>
+				
 
+					
+					
 					<!--tabNavigation-->
 					<div class="cd-tabs">
 						<!--tabMenu-->
@@ -370,8 +378,8 @@ label:before {
 									onclick="onloadTab(7)">Token 7</a></li>
 
 								<li><span
-									style="padding-top: 0px; float: left; margin-top: 13px; margin-left: 13px; font-size: 16px;">
-										SMS:<i class="fa fa-envelope-o" style="color: yellow"></i>
+									style="padding-top: 0px; float: left; margin:8px 10px 0 13px; font-size: 14px;">
+										<i class="fa fa-envelope-o" style="font-size: 17px; color: #343690; margin: 0 2px 0 0;"></i> SMS:
 								</span> <label class="switch"> <input type="checkbox"
 										name='isSMS' id='isSMS' /> <span class="slider round"></span>
 								</label></li>
@@ -386,20 +394,22 @@ label:before {
 										<div class="control-label">
 
 											<div>
-												<div class="shInnerwidth">
+												<div class="tableFixHead">
 													<table width="100%" border="0" cellspacing="0"
-														cellpadding="0" class="table">
+														cellpadding="0">
+														<thead>
 														<tr>
 															<td align="center" valign="middle" style="padding: 0px;">
 																<table width="100%" border="0" cellspacing="0"
 																	cellpadding="0">
 																	<tr class="bgpink">
-																		<td>Barcode</td>
-																		<td>Item Name</td>
-																		<td>Qty</td>
-																		<td>Rate</td>
+																		<th>Barcode</th>
+																		<th>Item Name</th>
+																		<th>Qty</td>
+																		<th>Rate</th>
 
 																	</tr>
+																	</thead>
 																	<tr>
 																		<td><input type="text" class="form-control"
 																			id="barcode1" name="barcode1"
@@ -468,7 +478,7 @@ label:before {
 									</div>
 									<div class="col-md-3">
 										<span
-											style="padding-top: 0px; float: left; margin-top: 13px; margin-left: 13px; font-size: 16px;">B2B:</span>
+											style="padding-top: 0px; float: left; margin:8px 10px 0 13px ; font-size: 14px;">B2B:</span>
 										<label class="switch"> <input type="checkbox"
 											name='isb2b' id='is_b2b' /> <span class="slider round"></span>
 										</label>
@@ -481,10 +491,10 @@ label:before {
 
 
 
-								<div id="table-scroll" class="table-scroll">
-									<div id="faux-table" class="faux-table" aria="hidden"></div>
-									<div class="table-wrap table-wrap-custbill">
-										<table id="table_grid1" class="main-table small-td">
+								<div id="table-scroll"><!--  class="table-scroll" -->
+									<!-- <div id="faux-table" class="faux-table" aria="hidden"></div> -->
+									<div class="tableFixHead "><!-- table-wrap table-wrap-custbill -->
+										<table id="table_grid1" ><!-- class="main-table small-td" -->
 											<thead>
 												<tr class="bgpink">
 													<th class="col-sm-1">Sr no.</th>
@@ -507,43 +517,44 @@ label:before {
 
 
 
-								<div class="row">
-									<div class="col-md-4">
-										<h4 class="col-md-7">
-											<b>Total:-</b>
-										</h4>
-										<h4 class="col-md-5" id="total1">00</h4>
+								<div><!--  class="row" -->
+								
+								<div class="row_one_l">
+									<div class="row_total_l">
+										<div class="row_total_left">
+											<b class="total_til">Total:-</b>
+										</div>
+										<div class="row_total_right">
+											<h4 class="col-md-5 total_til" id="total1">00</h4>
 										<input type="hidden" class="form-control" id="tot1">
+										</div>
 									</div>
-
-									<div class="col-md-4">
-										<h4 class="col-md-7" style="margin-top: 5px">
-											<b>Discount(%):-</b>
-										</h4>
-										<div class="col-md-5">
+									<div class="row_total_l">
+										<div class="row_total_left">
+											<b class="total_til">Discount(%):-</b>
+										</div>
+										<div class="row_total_right">
 											<input type="text" class="form-control" id="discount1"
 												onkeyup="disMinusTotal(1)"
 												onkeypress="return allowOnlyNumber(event);" value="0">
 										</div>
 									</div>
-
-									<div class="col-md-4">
-										<h4 class="col-md-7" style="margin-top: 5px">
-											<b>Grand Total:-</b>
-										</h4>
-
-										<h4 class="col-md-5" id="grandtotal1">00</h4>
+									<div class="row_total_l">
+										<div class="row_total_left">
+											<b class="total_til">Grand Total:-</b>
+										</div>
+										<div class="row_total_right">
+											<h4 class="col-md-5 total_til" id="grandtotal1">00</h4>
 										<input type="hidden" class="form-control" id="grandtot1">
+										</div>
 									</div>
-
-									<div class="clearfix"></div>
-
-									<div class="col-md-4">
-
-										<h4 class="col-md-7">
-											<b>Payment Mode:-</b>
-										</h4>
-										<div class="col-md-5">
+									
+									
+									<div class="row_total_l">
+										<div class="row_total_left">
+											<b class="total_til">Payment Mode:-</b>
+										</div>
+										<div class="row_total_right">
 											<select data-placeholder="Enter Payment Mode"
 												name="paymentMode1" class="form-control" tabindex="-1"
 												id="paymentMode1" data-rule-required="true">
@@ -553,71 +564,81 @@ label:before {
 												<option value="3">Other</option>
 
 											</select>
-
 										</div>
 									</div>
-
-									<div class="col-md-4">
-										<h4 class="col-md-7">
-											<b>Paid Amount:-</b>
-										</h4>
-										<div class="col-md-5">
+									
+									<div class="row_total_l">
+										<div class="row_total_left">
+											<b class="total_til">Paid Amount:-</b>
+										</div>
+										<div class="row_total_right">
 											<input type="text" class="form-control" id="paidAmount1"
 												onkeyup="paidAmt(1)" value="0">
 										</div>
-
 									</div>
-
-									<div class="col-md-4">
-										<h4 class="col-md-7" style="margin-top: 5px">
-											<b>Remaining Amt:-</b>
-										</h4>
-
-
-
-										<h4 class="col-md-5" id="remAmt1">00</h4>
-										<input type="hidden" class="form-control" id="remAmount1">
-									</div>
-
-									<div class="clearfix"></div>
-
-
-									<hr />
-									<div class="col-md-12 control-label">
-
-										<div class="col-md-4">
-											<h4>Phone No:-</h4>
-											<input type="text" maxlength=10 class="form-control"
-												placeholder="Enter phone No." name="phoneNo1" id="phoneNo1">
+									
+									<div class="row_total_l">
+										<div class="row_total_left">
+											<b class="total_til">Remaining Amt:-</b>
 										</div>
-										<div class="col-md-4">
-											<h4>GST No:-</h4>
+										<div class="row_total_right">
+											<h4 class="col-md-5 total_til" id="remAmt1">00</h4>
+										<input type="hidden" class="form-control" id="remAmount1">
+										</div>
+									</div>
+								</div>
+								
+								
+								
+									
+
+									
+
+									
+
+									
+									
+
+								<hr>	
+
+								<div class="row_one_l">
+									<div class="frm_row_1">
+										<h4 class="total_til">Phone No:-</h4>
+										<input type="text" maxlength=10 class="form-control"
+										placeholder="Enter phone No." name="phoneNo1" id="phoneNo1">
+									</div>
+									<div class="frm_row_1">
+										<h4 class="total_til">GST No:-</h4>
 											<input type="text" class="form-control"
 												placeholder="Enter GST No." name="gstNo1" id="gstNo1">
-										</div>
-
-
-										<div class="col-md-4">
-											<h4>Customer name:-</h4>
+									</div>
+									<div class="frm_row_1">
+										<h4 class="total_til">Customer name:-</h4>
 											<input type="text" class="form-control"
 												placeholder="Enter Name" name="custName1" id="custName1"
 												value="Cash">
-										</div>
 									</div>
+								</div>
+								
+									
+									
+									
+									
 
 								</div>
 
-
+							<div class=btn_mrg>
 								<center>
-									<button class="btn additem_btn" id="generateBill1"
+									<button class="buttonsaveorder" id="generateBill1"
 										onclick="generateSellBill(1)">Generate Bill</button>
 
-									<button class="btn additem_btn" id="pdfBtn1"
+									<button class="buttonsaveorder" id="pdfBtn1"
 										onclick="pdfBtn(1)">Print Bill</button>
-									<button class="btn additem_btn" id="clear1"
+									<button class="buttonsaveorder" id="clear1"
 										onclick="clearData(1)">Clear</button>
 								</center> <input type="hidden" class="form-control" id="sellBillNo1"
 								value="" />
+								</div>
 
 							</li>
 							<!--tab1-->
@@ -629,19 +650,21 @@ label:before {
 										<div class="control-label">
 
 											<div>
-												<div class="shInnerwidth">
+												<div class="tableFixHead">
 													<table width="100%" border="0" cellspacing="0"
-														cellpadding="0" class="table">
+														cellpadding="0" >
 														<tr>
 															<td align="center" valign="middle" style="padding: 0px;">
 																<table width="100%" border="0" cellspacing="0"
 																	cellpadding="0">
+																	<thead>
 																	<tr class="bgpink">
-																		<td>Barcode</td>
-																		<td>Item Name</td>
-																		<td>Qty</td>
-																		<td>Rate</td>
+																		<th>Barcode</th>
+																		<th>Item Name</th>
+																		<th>Qty</th>
+																		<th>Rate</th>
 																	</tr>
+																	</thead>
 																	<tr>
 																		<td><input type="text" class="form-control"
 																			id="barcode2" name="barcode2"
@@ -758,15 +781,15 @@ label:before {
 								<div class="row">
 									<div class="col-md-4">
 										<h4 class="col-md-7">
-											<b>Total:-</b>
+											<b class="total_til">Total:-</b>
 										</h4>
-										<h4 class="col-md-5" id="total2">00</h4>
+										<h4 class="col-md-5 total_til" id="total2">00</h4>
 										<input type="hidden" class="form-control" id="tot2">
 									</div>
 
 									<div class="col-md-4">
 										<h4 class="col-md-7" style="margin-top: 5px">
-											<b>Discount(%):-</b>
+											<b class="total_til">Discount(%):-</b>
 										</h4>
 										<div class="col-md-5">
 											<input type="text" class="form-control" id="discount2"
@@ -777,10 +800,10 @@ label:before {
 
 									<div class="col-md-4">
 										<h4 class="col-md-7" style="margin-top: 5px">
-											<b>Grand Total:-</b>
+											<b class="total_til">Grand Total:-</b>
 										</h4>
 
-										<h4 class="col-md-5" id="grandtotal2">00</h4>
+										<h4 class="col-md-5 total_til" id="grandtotal2">00</h4>
 										<input type="hidden" class="form-control" id="grandtot2">
 									</div>
 
@@ -789,7 +812,7 @@ label:before {
 									<div class="col-md-4">
 
 										<h4 class="col-md-7">
-											<b>Payment Mode:-</b>
+											<b class="total_til">Payment Mode:-</b>
 										</h4>
 										<div class="col-md-5">
 											<select data-placeholder="Enter Payment Mode"
@@ -808,7 +831,7 @@ label:before {
 
 									<div class="col-md-4">
 										<h4 class="col-md-7">
-											<b>Paid Amount:-</b>
+											<b class="total_til">Paid Amount:-</b>
 										</h4>
 										<div class="col-md-5">
 											<input type="text" class="form-control" id="paidAmount2"
@@ -819,12 +842,12 @@ label:before {
 
 									<div class="col-md-4">
 										<h4 class="col-md-7" style="margin-top: 5px">
-											<b>Remaining Amt:-</b>
+											<b class="total_til">Remaining Amt:-</b>
 										</h4>
 
 
 
-										<h4 class="col-md-5" id="remAmt2">00</h4>
+										<h4 class="col-md-5 total_til" id="remAmt2">00</h4>
 										<input type="hidden" class="form-control" id="remAmount2">
 									</div>
 
@@ -835,19 +858,19 @@ label:before {
 									<div class="col-md-12 control-label">
 
 										<div class="col-md-4">
-											<h4>Phone No:-</h4>
+											<h4 class="total_til">Phone No:-</h4>
 											<input type="text" class="form-control" maxlength=10
 												placeholder="Enter phone No." name="phoneNo2" id="phoneNo2">
 										</div>
 										<div class="col-md-4">
-											<h4>GST No:-</h4>
+											<h4 class="total_til">GST No:-</h4>
 											<input type="text" class="form-control"
 												placeholder="Enter GST No." name="gstNo2" id="gstNo2">
 										</div>
 
 
 										<div class="col-md-4">
-											<h4>Customer name:-</h4>
+											<h4 class="total_til">Customer name:-</h4>
 											<input type="text" class="form-control"
 												placeholder="Enter Name" name="custName2" id="custName2"
 												value="Cash">
@@ -857,16 +880,17 @@ label:before {
 
 								</div>
 
-
-								<center>
-									<button class="btn additem_btn" id="generateBill2"
+							<div class=btn_mrg>
+								<center >
+									<button class="buttonsaveorder" id="generateBill2"
 										onclick="generateSellBill(2)">Generate Bill</button>
-									<button class="btn additem_btn" id="pdfBtn2"
+									<button class="buttonsaveorder" id="pdfBtn2"
 										onclick="pdfBtn(2)">Print Bill</button>
-									<button class="btn additem_btn" id="clear2"
+									<button class="buttonsaveorder" id="clear2"
 										onclick="clearData(2)">Clear</button>
 								</center> <input type="hidden" class="form-control" id="sellBillNo2"
 								value="" />
+								</div>
 							</li>
 							<!--tab2-->
 
@@ -877,19 +901,21 @@ label:before {
 										<div class="control-label">
 
 											<div>
-												<div class="shInnerwidth">
+												<div class="tableFixHead">
 													<table width="100%" border="0" cellspacing="0"
-														cellpadding="0" class="table">
+														cellpadding="0">
 														<tr>
 															<td align="center" valign="middle" style="padding: 0px;">
 																<table width="100%" border="0" cellspacing="0"
 																	cellpadding="0">
+																	<thead>
 																	<tr class="bgpink">
-																		<td>Barcode</td>
-																		<td>Item Name</td>
-																		<td>Qty</td>
-																		<td>Rate</td>
+																		<th>Barcode</th>
+																		<th>Item Name</th>
+																		<th>Qty</th>
+																		<th>Rate</th>
 																	</tr>
+																	</thead>
 																	<tr>
 																		<td><input type="text" class="form-control"
 																			id="barcode3" name="barcode3"
@@ -1007,15 +1033,15 @@ label:before {
 								<div class="row">
 									<div class="col-md-4">
 										<h4 class="col-md-7">
-											<b>Total:-</b>
-										</h4>
-										<h4 class="col-md-5" id="total3">00</h4>
+											<b class="total_til">Total:-</b>
+										</h4> 
+										<h4 class="col-md-5 total_til" id="total3">00</h4>
 										<input type="hidden" class="form-control" id="tot3">
 									</div>
 
 									<div class="col-md-4">
 										<h4 class="col-md-7" style="margin-top: 5px">
-											<b>Discount(%):-</b>
+											<b class="total_til">Discount(%):-</b>
 										</h4>
 										<div class="col-md-5">
 											<input type="text" class="form-control" id="discount3"
@@ -1026,10 +1052,10 @@ label:before {
 
 									<div class="col-md-4">
 										<h4 class="col-md-7" style="margin-top: 5px">
-											<b>Grand Total:-</b>
+											<b class="total_til">Grand Total:-</b>
 										</h4>
 
-										<h4 class="col-md-5" id="grandtotal3">00</h4>
+										<h4 class="col-md-5 total_til" id="grandtotal3">00</h4>
 										<input type="hidden" class="form-control" id="grandtot3">
 									</div>
 
@@ -1038,7 +1064,7 @@ label:before {
 									<div class="col-md-4">
 
 										<h4 class="col-md-7">
-											<b>Payment Mode:-</b>
+											<b class="total_til">Payment Mode:-</b>
 										</h4>
 										<div class="col-md-5">
 											<select data-placeholder="Enter Payment Mode"
@@ -1057,7 +1083,7 @@ label:before {
 
 									<div class="col-md-4">
 										<h4 class="col-md-7">
-											<b>Paid Amount:-</b>
+											<b class="total_til">Paid Amount:-</b>
 										</h4>
 										<div class="col-md-5">
 											<input type="text" class="form-control" id="paidAmount3"
@@ -1068,12 +1094,12 @@ label:before {
 
 									<div class="col-md-4">
 										<h4 class="col-md-7" style="margin-top: 5px">
-											<b>Remaining Amt:-</b>
+											<b class="total_til">Remaining Amt:-</b>
 										</h4>
 
 
 
-										<h4 class="col-md-5" id="remAmt3">00</h4>
+										<h4 class="col-md-5 total_til" id="remAmt3">00</h4>
 										<input type="hidden" class="form-control" id="remAmount3">
 									</div>
 
@@ -1086,19 +1112,19 @@ label:before {
 										<div class="col-md-4">
 
 
-											<h4>Phone No:-</h4>
+											<h4 class="total_til">Phone No:-</h4>
 											<input type="text" class="form-control" maxlength=10
 												placeholder="Enter phone No." name="phoneNo3" id="phoneNo3">
 										</div>
 										<div class="col-md-4">
-											<h4>GST No:-</h4>
+											<h4 class="total_til">GST No:-</h4>
 											<input type="text" class="form-control"
 												placeholder="Enter GST No." name="gstNo3" id="gstNo3">
 										</div>
 
 
 										<div class="col-md-4">
-											<h4>Customer name:-</h4>
+											<h4 class="total_til">Customer name:-</h4>
 											<input type="text" class="form-control"
 												placeholder="Enter Name" name="custName3" id="custName3"
 												value="Cash">
@@ -1108,16 +1134,17 @@ label:before {
 
 								</div>
 
-
+								<div class=btn_mrg>
 								<center>
-									<button class="btn additem_btn" id="generateBill3"
+									<button class="buttonsaveorder" id="generateBill3"
 										onclick="generateSellBill(3)">Generate Bill</button>
-									<button class="btn additem_btn" id="pdfBtn3"
+									<button class="buttonsaveorder" id="pdfBtn3"
 										onclick="pdfBtn(3)">Print Bill</button>
-									<button class="btn additem_btn" id="clear3"
+									<button class="buttonsaveorder" id="clear3"
 										onclick="clearData(3)">Clear</button>
 								</center> <input type="hidden" class="form-control" id="sellBillNo3"
 								value="" />
+								</div>
 							</li>
 							<!--tab4-->
 							<li data-content="tab4" class=" ">
@@ -1126,19 +1153,21 @@ label:before {
 										<div class="control-label">
 
 											<div>
-												<div class="shInnerwidth">
+												<div class="tableFixHead">
 													<table width="100%" border="0" cellspacing="0"
-														cellpadding="0" class="table">
+														cellpadding="0" >
 														<tr>
 															<td align="center" valign="middle" style="padding: 0px;">
 																<table width="100%" border="0" cellspacing="0"
 																	cellpadding="0">
+																	<thead>
 																	<tr class="bgpink">
-																		<td>Barcode</td>
-																		<td>Item Name</td>
-																		<td>Qty</td>
-																		<td>Rate</td>
+																		<th>Barcode</th>
+																		<th>Item Name</th>
+																		<th>Qty</th>
+																		<th>Rate</th>
 																	</tr>
+																	</thead>
 																	<tr>
 																		<td><input type="text" class="form-control"
 																			id="barcode4" name="barcode4"
@@ -1256,15 +1285,15 @@ label:before {
 								<div class="row">
 									<div class="col-md-4">
 										<h4 class="col-md-7">
-											<b>Total:-</b>
+											<b class="total_til">Total:-</b>
 										</h4>
-										<h4 class="col-md-5" id="total2">00</h4>
+										<h4 class="col-md-5 total_til" id="total2">00</h4>
 										<input type="hidden" class="form-control" id="tot4">
 									</div>
 
 									<div class="col-md-4">
 										<h4 class="col-md-7" style="margin-top: 5px">
-											<b>Discount(%):-</b>
+											<b class="total_til">Discount(%):-</b>
 										</h4>
 										<div class="col-md-5">
 											<input type="text" class="form-control" id="discount4"
@@ -1275,10 +1304,10 @@ label:before {
 
 									<div class="col-md-4">
 										<h4 class="col-md-7" style="margin-top: 5px">
-											<b>Grand Total:-</b>
+											<b class="total_til">Grand Total:-</b>
 										</h4>
 
-										<h4 class="col-md-5" id="grandtotal4">00</h4>
+										<h4 class="col-md-5 total_til" id="grandtotal4">00</h4>
 										<input type="hidden" class="form-control" id="grandtot4">
 									</div>
 
@@ -1287,7 +1316,7 @@ label:before {
 									<div class="col-md-4">
 
 										<h4 class="col-md-7">
-											<b>Payment Mode:-</b>
+											<b class="total_til">Payment Mode:-</b>
 										</h4>
 										<div class="col-md-5">
 											<select data-placeholder="Enter Payment Mode"
@@ -1306,7 +1335,7 @@ label:before {
 
 									<div class="col-md-4">
 										<h4 class="col-md-7">
-											<b>Paid Amount:-</b>
+											<b class="total_til">Paid Amount:-</b>
 										</h4>
 										<div class="col-md-5">
 											<input type="text" class="form-control" id="paidAmount4"
@@ -1317,12 +1346,12 @@ label:before {
 
 									<div class="col-md-4">
 										<h4 class="col-md-7" style="margin-top: 5px">
-											<b>Remaining Amt:-</b>
+											<b class="total_til">Remaining Amt:-</b>
 										</h4>
 
 
 
-										<h4 class="col-md-5" id="remAmt4">00</h4>
+										<h4 class="col-md-5 total_til" id="remAmt4">00</h4>
 										<input type="hidden" class="form-control" id="remAmount4">
 									</div>
 
@@ -1335,19 +1364,19 @@ label:before {
 										<div class="col-md-4">
 
 
-											<h4>Phone No:-</h4>
+											<h4 class="total_til">Phone No:-</h4>
 											<input type="text" class="form-control" maxlength=10
 												placeholder="Enter phone No." name="phoneNo4" id="phoneNo4">
 										</div>
 										<div class="col-md-4">
-											<h4>GST No:-</h4>
+											<h4 class="total_til">GST No:-</h4>
 											<input type="text" class="form-control"
 												placeholder="Enter GST No." name="gstNo4" id="gstNo4">
 										</div>
 
 
 										<div class="col-md-4">
-											<h4>Customer name:-</h4>
+											<h4 class="total_til">Customer name:-</h4>
 											<input type="text" class="form-control"
 												placeholder="Enter Name" name="custName4" id="custName4"
 												value="Cash">
@@ -1356,16 +1385,17 @@ label:before {
 
 								</div>
 
-
+							<div class=btn_mrg>
 								<center>
-									<button class="btn additem_btn" id="generateBill4"
+									<button class="buttonsaveorder" id="generateBill4"
 										onclick="generateSellBill(4)">Generate Bill</button>
-									<button class="btn additem_btn" id="pdfBtn4"
+									<button class="buttonsaveorder" id="pdfBtn4"
 										onclick="pdfBtn(4)">Print Bill</button>
-									<button class="btn additem_btn" id="clear4"
+									<button class="buttonsaveorder" id="clear4"
 										onclick="clearData(4)">Clear</button>
 								</center> <input type="hidden" class="form-control" id="sellBillNo4"
 								value="" />
+								</div>
 							</li>
 							<!--tab5-->
 							<li data-content="tab5" class=" ">
@@ -1374,19 +1404,21 @@ label:before {
 										<div class="control-label">
 
 											<div>
-												<div class="shInnerwidth">
+												<div class="tableFixHead">
 													<table width="100%" border="0" cellspacing="0"
-														cellpadding="0" class="table">
+														cellpadding="0">
 														<tr>
 															<td align="center" valign="middle" style="padding: 0px;">
 																<table width="100%" border="0" cellspacing="0"
 																	cellpadding="0">
+																	<thead>
 																	<tr class="bgpink">
-																		<td>Barcode</td>
-																		<td>Item Name</td>
-																		<td>Qty</td>
-																		<td>Rate</td>
+																		<th>Barcode</th>
+																		<th>Item Name</th>
+																		<th>Qty</th>
+																		<th>Rate</th>
 																	</tr>
+																	</thead>
 																	<tr>
 																		<td><input type="text" class="form-control"
 																			id="barcode5" name="barcode5"
@@ -1494,15 +1526,15 @@ label:before {
 								<div class="row">
 									<div class="col-md-4">
 										<h4 class="col-md-7">
-											<b>Total:-</b>
+											<b class="total_til">Total:-</b>
 										</h4>
-										<h4 class="col-md-5" id="total5">00</h4>
+										<h4 class="col-md-5 total_til" id="total5">00</h4>
 										<input type="hidden" class="form-control" id="tot5">
 									</div>
 
 									<div class="col-md-4">
 										<h4 class="col-md-7" style="margin-top: 5px">
-											<b>Discount(%):-</b>
+											<b class="total_til">Discount(%):-</b>
 										</h4>
 										<div class="col-md-5">
 											<input type="text" class="form-control" id="discount5"
@@ -1513,10 +1545,10 @@ label:before {
 
 									<div class="col-md-4">
 										<h4 class="col-md-7" style="margin-top: 5px">
-											<b>Grand Total:-</b>
+											<b class="total_til">Grand Total:-</b>
 										</h4>
 
-										<h4 class="col-md-5" id="grandtotal5">00</h4>
+										<h4 class="col-md-5 total_til" id="grandtotal5">00</h4>
 										<input type="hidden" class="form-control" id="grandtot5">
 									</div>
 
@@ -1525,7 +1557,7 @@ label:before {
 									<div class="col-md-4">
 
 										<h4 class="col-md-7">
-											<b>Payment Mode:-</b>
+											<b class="total_til">Payment Mode:-</b>
 										</h4>
 										<div class="col-md-5">
 											<select data-placeholder="Enter Payment Mode"
@@ -1544,7 +1576,7 @@ label:before {
 
 									<div class="col-md-4">
 										<h4 class="col-md-7">
-											<b>Paid Amount:-</b>
+											<b class="total_til">Paid Amount:-</b>
 										</h4>
 										<div class="col-md-5">
 											<input type="text" class="form-control" id="paidAmount5"
@@ -1555,12 +1587,12 @@ label:before {
 
 									<div class="col-md-4">
 										<h4 class="col-md-7" style="margin-top: 5px">
-											<b>Remaining Amt:-</b>
+											<b class="total_til">Remaining Amt:-</b>
 										</h4>
 
 
 
-										<h4 class="col-md-5" id="remAmt5">00</h4>
+										<h4 class="col-md-5 total_til" id="remAmt5">00</h4>
 										<input type="hidden" class="form-control" id="remAmount5">
 									</div>
 
@@ -1571,12 +1603,12 @@ label:before {
 									<div class="col-md-12 control-label">
 
 										<div class="col-md-4">
-											<h4>Phone No:-</h4>
+											<h4 class="total_til">Phone No:-</h4>
 											<input type="text" class="form-control" maxlength=10
 												placeholder="Enter phone No." name="phoneNo5" id="phoneNo5">
 										</div>
 										<div class="col-md-4">
-											<h4>GST No:-</h4>
+											<h4 class="total_til">GST No:-</h4>
 											<input type="text" class="form-control"
 												placeholder="Enter GST No." name="gstNo5" id="gstNo5">
 										</div>
@@ -1585,7 +1617,7 @@ label:before {
 										<div class="col-md-4">
 
 
-											<h4>Customer name:-</h4>
+											<h4 class="total_til">Customer name:-</h4>
 											<input type="text" class="form-control"
 												placeholder="Enter Name" name="custName5" id="custName5"
 												value="Cash">
@@ -1594,16 +1626,17 @@ label:before {
 
 								</div>
 
-
+							<div class=btn_mrg>
 								<center>
-									<button class="btn additem_btn" id="generateBill5"
+									<button class="buttonsaveorder" id="generateBill5"
 										onclick="generateSellBill(5)">Generate Bill</button>
-									<button class="btn additem_btn" id="pdfBtn5"
+									<button class="buttonsaveorder" id="pdfBtn5"
 										onclick="pdfBtn(5)">Print Bill</button>
-									<button class="btn additem_btn" id="clear5"
+									<button class="buttonsaveorder" id="clear5"
 										onclick="clearData(5)">Clear</button>
 								</center> <input type="hidden" class="form-control" id="sellBillNo5"
 								value="" />
+								</div>
 							</li>
 							<!--tab6-->
 							<li data-content="tab6" class=" ">
@@ -1612,19 +1645,21 @@ label:before {
 										<div class="control-label">
 
 											<div>
-												<div class="shInnerwidth">
+												<div class="tableFixHead">
 													<table width="100%" border="0" cellspacing="0"
-														cellpadding="0" class="table">
+														cellpadding="0">
 														<tr>
 															<td align="center" valign="middle" style="padding: 0px;">
 																<table width="100%" border="0" cellspacing="0"
 																	cellpadding="0">
+																	<thead>
 																	<tr class="bgpink">
-																		<td>Barcode</td>
-																		<td>Item Name</td>
-																		<td>Qty</td>
-																		<td>Rate</td>
+																		<th>Barcode</th>
+																		<th>Item Name</th>
+																		<th>Qty</th>
+																		<th>Rate</th>
 																	</tr>
+																	</thead>
 																	<tr>
 																		<td><input type="text" class="form-control"
 																			id="barcode6" name="barcode6"
@@ -1747,15 +1782,15 @@ label:before {
 								<div class="row">
 									<div class="col-md-4">
 										<h4 class="col-md-7">
-											<b>Total:-</b>
+											<b class="total_til">Total:-</b>
 										</h4>
-										<h4 class="col-md-5" id="total2">00</h4>
+										<h4 class="col-md-5 total_til" id="total2">00</h4>
 										<input type="hidden" class="form-control" id="tot6">
 									</div>
 
 									<div class="col-md-4">
 										<h4 class="col-md-7" style="margin-top: 5px">
-											<b>Discount(%):-</b>
+											<b class="total_til">Discount(%):-</b>
 										</h4>
 										<div class="col-md-5">
 											<input type="text" class="form-control" id="discount6"
@@ -1766,10 +1801,10 @@ label:before {
 
 									<div class="col-md-4">
 										<h4 class="col-md-7" style="margin-top: 5px">
-											<b>Grand Total:-</b>
+											<b class="total_til">Grand Total:-</b>
 										</h4>
 
-										<h4 class="col-md-5" id="grandtotal6">00</h4>
+										<h4 class="col-md-5 total_til" id="grandtotal6">00</h4>
 										<input type="hidden" class="form-control" id="grandtot6">
 									</div>
 
@@ -1778,7 +1813,7 @@ label:before {
 									<div class="col-md-4">
 
 										<h4 class="col-md-7">
-											<b>Payment Mode:-</b>
+											<b class="total_til">Payment Mode:-</b>
 										</h4>
 										<div class="col-md-5">
 											<select data-placeholder="Enter Payment Mode"
@@ -1797,7 +1832,7 @@ label:before {
 
 									<div class="col-md-4">
 										<h4 class="col-md-7">
-											<b>Paid Amount:-</b>
+											<b class="total_til">Paid Amount:-</b>
 										</h4>
 										<div class="col-md-5">
 											<input type="text" class="form-control" id="paidAmount6"
@@ -1808,12 +1843,12 @@ label:before {
 
 									<div class="col-md-4">
 										<h4 class="col-md-7" style="margin-top: 5px">
-											<b>Remaining Amt:-</b>
+											<b class="total_til">Remaining Amt:-</b>
 										</h4>
 
 
 
-										<h4 class="col-md-5" id="remAmt6">00</h4>
+										<h4 class="col-md-5 total_til" id="remAmt6">00</h4>
 										<input type="hidden" class="form-control" id="remAmount6">
 									</div>
 
@@ -1826,19 +1861,19 @@ label:before {
 										<div class="col-md-4">
 
 
-											<h4>Phone No:-</h4>
+											<h4 class="total_til">Phone No:-</h4>
 											<input type="text" class="form-control" maxlength=10
 												placeholder="Enter phone No." name="phoneNo6" id="phoneNo6">
 										</div>
 										<div class="col-md-4">
-											<h4>GST No:-</h4>
+											<h4 class="total_til">GST No:-</h4>
 											<input type="text" class="form-control"
 												placeholder="Enter GST No." name="gstNo6" id="gstNo6">
 										</div>
 
 
 										<div class="col-md-4">
-											<h4>Customer name:-</h4>
+											<h4 class="total_til">Customer name:-</h4>
 											<input type="text" class="form-control"
 												placeholder="Enter Name" name="custName6" id="custName6"
 												value="Cash">
@@ -1847,16 +1882,17 @@ label:before {
 
 								</div>
 
-
+							<div class=btn_mrg>
 								<center>
-									<button class="btn additem_btn" id="generateBill6"
+									<button class="buttonsaveorder" id="generateBill6"
 										onclick="generateSellBill(6)">Generate Bill</button>
-									<button class="btn additem_btn" id="pdfBtn6"
+									<button class="buttonsaveorder" id="pdfBtn6"
 										onclick="pdfBtn(6)">Print Bill</button>
-									<button class="btn additem_btn" id="clear6"
+									<button class="buttonsaveorder" id="clear6"
 										onclick="clearData(6)">Clear</button>
 								</center> <input type="hidden" class="form-control" id="sellBillNo6"
 								value="" />
+								</div>
 							</li>
 							<!--tab7-->
 							<li data-content="tab7" class=" ">
@@ -1865,19 +1901,21 @@ label:before {
 										<div class="control-label">
 
 											<div>
-												<div class="shInnerwidth">
+												<div class="tableFixHead">
 													<table width="100%" border="0" cellspacing="0"
 														cellpadding="0" class="table">
 														<tr>
 															<td align="center" valign="middle" style="padding: 0px;">
 																<table width="100%" border="0" cellspacing="0"
 																	cellpadding="0">
+																	<thead>
 																	<tr class="bgpink">
-																		<td>Barcode</td>
-																		<td>Item Name</td>
-																		<td>Qty</td>
-																		<td>Rate</td>
+																		<th>Barcode</th>
+																		<th>Item Name</th>
+																		<th>Qty</th>
+																		<th>Rate</th>
 																	</tr>
+																	</thead>
 																	<tr>
 																		<td><input type="text" class="form-control"
 																			id="barcode7" name="barcode7"
@@ -1982,15 +2020,15 @@ label:before {
 								<div class="row">
 									<div class="col-md-4">
 										<h4 class="col-md-7">
-											<b>Total:-</b>
+											<b class="total_til">Total:-</b>
 										</h4>
-										<h4 class="col-md-5" id="total7">00</h4>
+										<h4  class="col-md-5 total_til" id="total7">00</h4>
 										<input type="hidden" class="form-control" id="tot7">
 									</div>
 
 									<div class="col-md-4">
 										<h4 class="col-md-7" style="margin-top: 5px">
-											<b>Discount(%):-</b>
+											<b class="total_til">Discount(%):-</b>
 										</h4>
 										<div class="col-md-5">
 											<input type="text" class="form-control" id="discount7"
@@ -2001,10 +2039,10 @@ label:before {
 
 									<div class="col-md-4">
 										<h4 class="col-md-7" style="margin-top: 5px">
-											<b>Grand Total:-</b>
+											<b class="total_til">Grand Total:-</b>
 										</h4>
 
-										<h4 class="col-md-5" id="grandtotal7">00</h4>
+										<h4 class="col-md-5 total_til" id="grandtotal7">00</h4>
 										<input type="hidden" class="form-control" id="grandtot7">
 									</div>
 
@@ -2013,7 +2051,7 @@ label:before {
 									<div class="col-md-4">
 
 										<h4 class="col-md-7">
-											<b>Payment Mode:-</b>
+											<b class="total_til">Payment Mode:-</b>
 										</h4>
 										<div class="col-md-5">
 											<select data-placeholder="Enter Payment Mode"
@@ -2032,7 +2070,7 @@ label:before {
 
 									<div class="col-md-4">
 										<h4 class="col-md-7">
-											<b>Paid Amount:-</b>
+											<b class="total_til">Paid Amount:-</b>
 										</h4>
 										<div class="col-md-5">
 											<input type="text" class="form-control" id="paidAmount7"
@@ -2043,12 +2081,12 @@ label:before {
 
 									<div class="col-md-4">
 										<h4 class="col-md-7" style="margin-top: 5px">
-											<b>Remaining Amt:-</b>
+											<b class="total_til">Remaining Amt:-</b>
 										</h4>
 
 
 
-										<h4 class="col-md-5" id="remAmt2">00</h4>
+										<h4 class="col-md-5 total_til" id="remAmt2">00</h4>
 										<input type="hidden" class="form-control" id="remAmount7">
 									</div>
 
@@ -2059,19 +2097,19 @@ label:before {
 									<div class="col-md-12 control-label">
 
 										<div class="col-md-4">
-											<h4>Phone No:-</h4>
+											<h4 class="total_til">Phone No:-</h4>
 											<input type="text" class="form-control" maxlength=10
 												placeholder="Enter phone No." name="phoneNo7" id="phoneNo7">
 										</div>
 										<div class="col-md-4">
-											<h4>GST No:-</h4>
+											<h4 class="total_til">GST No:-</h4>
 											<input type="text" class="form-control"
 												placeholder="Enter GST No." name="gstNo7" id="gstNo7">
 										</div>
 
 
 										<div class="col-md-4">
-											<h4>Customer name:-</h4>
+											<h4 class="total_til">Customer name:-</h4>
 											<input type="text" class="form-control"
 												placeholder="Enter Name" name="custName7" id="custName7"
 												value="Cash">
@@ -2081,16 +2119,17 @@ label:before {
 
 								</div>
 
-
+							<div class=btn_mrg>
 								<center>
-									<button class="btn additem_btn" id="generateBill7"
+									<button class="buttonsaveorder" id="generateBill7"
 										onclick="generateSellBill(7)">Generate Bill</button>
-									<button class="btn additem_btn" id="pdfBtn7"
+									<button class="buttonsaveorder" id="pdfBtn7"
 										onclick="pdfBtn(7)">Print Bill</button>
-									<button class="btn additem_btn" id="clear7"
+									<button class="buttonsaveorder" id="clear7"
 										onclick="clearData(7)">Clear</button>
 								</center> <input type="hidden" class="form-control" id="sellBillNo7"
 								value="" />
+								</div>
 							</li>
 							<!--tab8-->
 						</ul>

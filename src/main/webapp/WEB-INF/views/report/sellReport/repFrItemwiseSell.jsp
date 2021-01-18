@@ -60,44 +60,54 @@ table, th, td {
 				<!-- Place Actual content of page inside this div -->
 				<div class="sidebarright">
 				
-
-<div class="row">
-	    <div class="col-md-12"><h2 class="pageTitle">Categorywise- Itemwise Sale Report</h2></div>
-	</div>
-	
-	<div class="colOuter">
-		<div align="center" >
-		<div class="col1"><div class="col1title"><b>From&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
-		<input id="fromdatepicker"  placeholder="Delivery Date"  name="from_Date" type="text" size="35" autocomplete="off" >
-		</div></div>
-		<div class="col2"><div class="col1title"><b>TO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
-		<input id="todatepicker"  placeholder="Delivery Date"  name="to_Date" type="text" size="35" autocomplete="off">
-		</div></div>
-												<input type="hidden" name="frId" id="frId" value="${frId}"/>
+				<div class="title_row_one marg_top_btm">
+					<div class="left_title">
+							<h2 class="pageTitle"><!-- Categorywise- --> <i class="fa fa-birthday-cake" aria-hidden="true"></i> Itemwise Sale Report</h2>
+						</div>
+						
+					<div class="on_off_row extra_margin">
+						
+						<div class="pop_one">
+								<div class="pop_one_txt margin_tp">From :</div>
+								<div class="pop_one_inp">
+								<input id="fromdatepicker" class="texboxitemcode texboxcal" placeholder="Delivery Date"  name="from_Date" type="text" autocomplete="off"  style="width:100%;">
+								</div>
+							</div>
+							
+						<div class="pop_one">
+								<div class="pop_one_txt margin_tp">To :</div>
+								<div class="pop_one_inp">
+								<input id="todatepicker" class="texboxitemcode texboxcal" placeholder="Delivery Date"  name="to_Date" type="text" size="35" autocomplete="off" style="width:100%;"> 
+								
+								</div>
+								<input type="hidden" name="frId" id="frId" value="${frId}"/>
 		                                        <input type="hidden" name="catId" id="catId"/>
-	</div>
- 
-	
- 	<div align="left">
-		     <button class="btn search_btn" onclick="searchSellBill()" >HTML View </button>
-		    <button class="btn search_btn" onclick="showChart()" >Graph</button>
-		    	
-		</div>
-	</div>
+							</div>
+							
+						<div class="buttons_right">
+							<button class="buttonsaveorder" onclick="searchSellBill()" >HTML View </button>
+		    				<button class="buttonsaveorder" onclick="showChart()" >Graph</button>	
+						</div>
+								
+					</div>
+						
+				</div>
+				
+
 		 
 	
 	
 	<div class="row" id="table" style="display: none">
-								<div id="table-scroll" class="table-scroll">
+								<!-- <div id="table-scroll" class="table-scroll">
 									<div id="faux-table" class="faux-table" aria="hidden">
 											
 										<table id="table_grid" class="main-table">
 											<thead>
 													<tr class="bgpink">
 									<th style="text-align:center;" class="col-md-1">Sr no.</th>
-									<!-- <th align="center">Bill No</th> -->
+									<th align="center">Bill No</th>
 									<th style="text-align:center;"class="col-md-2">Item Name</th>
-								<!-- 	<th style="text-align:center;"class="col-sm-1">Item Id</th> -->
+									<th style="text-align:center;"class="col-sm-1">Item Id</th>
 									<th style="text-align:center;"class="col-md-1">Group Name</th>
 								 	<th style="text-align:center;"class="col-md-1">Quantity</th>
 									<th style="text-align:center;"class="col-md-1">Amount</th> 
@@ -108,9 +118,10 @@ table, th, td {
 
 						</table>
 				
-							</div></div><div id="table-scroll" class="table-scroll">
-									<div class="table-wrap">
-										<table id="table_grid" class="main-table">
+							</div></div> -->
+							<div id="table-scroll">
+									<div class="tableFixHead">
+										<table id="table_grid">
 											<thead>
 													<tr class="bgpink">
 									<th style="text-align:center;" class="col-md-1">Sr no.</th>
@@ -134,12 +145,10 @@ table, th, td {
     
 
     <div id="menuTable" >
-								<div id="table-scroll" class="table-scroll">
-									<div id="faux-table" class="faux-table" aria="hidden">
+								<div id="table-scroll">
 									
-									</div>
-									<div class="table-wrap">
-										<table id="table_menu" class="main-table">
+									<div class="tableFixHead">
+										<table id="table_menu">
 											<thead>
 												<tr class="bgpink">
 									<th style="text-align:center;" >Sr no.</th>
@@ -165,20 +174,25 @@ table, th, td {
 								 
 											 
 											 
-											<div class="col-sm-3  controls">
-											 <input type="button" id="expExcel" class="btn btn-primary" value="EXPORT TO Excel" onclick="exportToExcel();" disabled="disabled">
+											<div class="col-sm-12  controls">
+											 <input type="button" id="expExcel" class="buttonsaveorder" value="EXPORT TO Excel" onclick="exportToExcel();" disabled="disabled">
 											</div>
 																								    <button id="btn_pdf" class="btn btn-primary" onclick="genPdf()"  style="display: none">PDF </button>
 											
 											</div>
 											
-	<div id="chart" style="display: none"><br><br><br>
-		 <hr><div  >
-	 
-			<div  id="chart_div" style="width:60%; height:300; float:left;" style="overflow-y: scroll;"></div> 
+	<div id="chart" style="display: none">
+		 <hr>
 		 
-			<div   id="Piechart" style="width:40%%; height:300; float: right;" ></div> 
-			<div   id="PieAmtchart" style="width:40%%; height:300; float: right;" ></div> 
+		 <div class="svg_bx" >
+		 	<div id="chart_div" class="svg_l" style="overflow-y: scroll;"></div>
+		 	
+		 	<div class="svg_r">
+		 		<div id="Piechart" class="chart_1"></div>
+		 		<div id="PieAmtchart" class="chart_1"></div>
+		 	</div>
+		 	<div class="clr"></div>
+			
 			</div>
 			 
 			<div class="colOuter" >
@@ -492,7 +506,7 @@ function showChart(){
 							 function drawStuff() {
  
 							   var chartDiv = document.getElementById('chart_div');
-							   document.getElementById("chart_div").style.border = "thin dotted red";
+							   document.getElementById("chart_div").style.border = "1px solid #CCC";/* thin dotted red */
 						       var dataTable = new google.visualization.DataTable();
 						       
 						       dataTable.addColumn('string', 'Category'); // Implicit domain column.
@@ -571,7 +585,7 @@ function showChart(){
 								 var options = {'title':'Sell Qauntity per Category',
 					                       'width':400,
 					                       'height':250};
-									   document.getElementById("Piechart").style.border = "thin dotted red";
+									   document.getElementById("Piechart").style.border = "1px solid #CCC";/* thin dotted red */
 								 var chart = new google.visualization.PieChart(document.getElementById('Piechart'));
 							        function selectQtyHandler() {
 							          var selectedItem = chart.getSelection()[0];
@@ -608,7 +622,7 @@ function showChart(){
 								 var options = {'title':'Sell Amount per Category',
 					                       'width':400,
 					                       'height':250};
-									   document.getElementById("PieAmtchart").style.border = "thin dotted red";
+									   document.getElementById("PieAmtchart").style.border = "1px solid #CCC";/* thin dotted red */
 								 var chart = new google.visualization.PieChart(document.getElementById('PieAmtchart'));
 							        function selectAmtHandler() {
 							          var selectedItem = chart.getSelection()[0];

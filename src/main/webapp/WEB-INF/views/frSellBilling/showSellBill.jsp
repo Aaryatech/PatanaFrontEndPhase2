@@ -129,18 +129,41 @@ jQuery(document).ready(function(){
 
 				<!-- Place Actual content of page inside this div -->
 				<div class="sidebarright">
-
-
-					<div class="row">
-						<div class="col-md-12">
-							<h2 class="pageTitle">View Bills</h2>
-						</div>
+				<div class="colOuter">
+				<div class="title_row_one">
+					<div class="left_title">
+						<h2 class="pageTitle"><i class="fa fa-file-pdf-o"></i>  View Bills </h2>
 					</div>
-					<%
+					<div class="right_content">
+						<div class="date_btn">
+							<button class="buttonsaveorder" onclick="searchSellBill()">Search</button>
+						</div>
+						
+						<%
 						String frmDate = session.getAttribute("fromSellBillDate").toString();
 						String tDate = session.getAttribute("toSellBillDate").toString();
 					%>
-					<div class="row">
+						<div class="date_sear">
+							<div class="date_sear_txt">To Date:-</div>
+							<div class="date_sear_int">
+								<input id="todatepicker" class="texboxitemcode texboxcal"
+								placeholder="DD-MM-YYYY" name="toDate" type="text"
+								value="<%=tDate%>">
+							</div>
+						</div>
+						
+						<div class="date_sear">
+							<div class="date_sear_txt">From Date:-</div>
+							<div class="date_sear_int"><input id="fromdatepicker" class="texboxitemcode texboxcal"
+								placeholder="DD-MM-YYYY" name="fromDate" type="text"
+								value="<%=frmDate%>"></div>
+						</div>
+					</div>
+				</div>
+</div>
+
+					
+					<%-- <div class="row">
 
 						<div class="col-md-2 from_date">
 							<h4 class="pull-left">From Date:-</h4>
@@ -150,20 +173,20 @@ jQuery(document).ready(function(){
 								placeholder="DD-MM-YYYY" name="fromDate" type="text"
 								value="<%=frmDate%>">
 						</div>
-						<div class="col-md-2">
+						 <div class="col-md-2">
 							<h4 class="pull-left">To Date:-</h4>
 						</div>
 						<div class="col-md-2 ">
 							<input id="todatepicker" class="texboxitemcode texboxcal"
 								placeholder="DD-MM-YYYY" name="toDate" type="text"
 								value="<%=tDate%>">
-						</div>
+						</div> 
 						<div class="col-md-2">
 							<button class="btn search_btn pull-left"
 								onclick="searchSellBill()">Search</button>
-						</div>
+						</div> 
 
-					</div>
+					</div> --%>
 
 					<div class="row">
 						<div class="col-md-12">

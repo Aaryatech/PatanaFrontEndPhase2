@@ -55,7 +55,16 @@
 <link href="${pageContext.request.contextPath}/resources/css/style.css"
 	rel="stylesheet" type="text/css" />
 
+<style type="text/css">
+.topSlide2 {
+    padding: 0 !important;
+}
+</style>
+
 </head>
+
+
+
 <body>
 <c:url var="checkUserAuthority" value="/checkUserAuthority"/>
 <c:url var="updateUserPasswords" value="/updateUserPasswords"/>
@@ -210,10 +219,11 @@
 						
                         <div class="profile">
 							<div class="profilefildset">Edit Admin Password</div>
-							<div class="col2">
+							<div class="profileinput mardis"><!-- col2 -->
 								<input class="texboxitemcode" placeholder="Enter new Password"
 									name="fr_password" type="password" onChange="checkPasswordMatch();"    value="${frDetails.frPassword}" id="txtNewPassword" disabled="disabled"
-									style="font-size: 16pt; height: 33px; width:130px; background-color:LightGrey;">
+									style="background-color:LightGrey;">
+									<!-- style="font-size: 16pt; height: 33px; width:130px; background-color:LightGrey;" -->
 							</div>
 						</div>  
 						 <%-- <div class="profile">
@@ -227,10 +237,11 @@
 						</div> --%>
 						  <div class="profile">
 							<div class="profilefildset">Captain Password</div>
-							<div class="col2">
+							<div class="profileinput mardis"><!-- col2 -->
 								<input class="texboxitemcode" placeholder="Captain Password"
 									name="user2_password" type="password"  value="${frSup.pass2}" id="user2_password" 
-									style="font-size: 16pt; height: 33px; width:130px; background-color:LightGrey;" disabled="disabled">
+									style="background-color:LightGrey;" disabled="disabled">
+									<!-- font-size: 16pt; height: 33px; width:130px;  -->
 								
 							</div>
 						</div>
@@ -317,14 +328,15 @@
 							<div class="col2">
 								<input class="texboxitemcode" placeholder="Confirm new Password"
 									name="fr_password" type="password"  value="${frDetails.frPassword}" id="txtConfirmPassword" onChange="checkPasswordMatch();" disabled="disabled"
-									style="font-size: 16pt; height: 33px; width:130px; background-color:LightGrey;">
+									style=" background-color:LightGrey;">
+									<!-- font-size: 16pt; height: 33px; width:130px; -->
 								
 							</div>
 						
 							<div class="form-group">
 						
-								<input name="" class="btn additem_btn" value="Change Admin Password"
-									type="button" id="changePwd1" onclick="showDiv()" style="margin: 0px; padding: 6px 7px; display: block;">
+								<input name="" class="btn additem_btn" value="Change  Password"
+									type="button" id="changePwd1" onclick="showDiv()" style="margin: 0px; padding:6px 7px !important; display: block;">
 							
 						</div>	
 							<div  class="update FormAlert" id="divCheckPasswordMatch">
@@ -337,12 +349,13 @@
 							<div class="col2">
 								<input class="texboxitemcode" placeholder="CSP Password"
 									name="user3_password" type="password"  value="${frSup.pass3}" id="user3_password" 
-									style="font-size: 16pt; height: 33px; width:130px; background-color:LightGrey;"disabled="disabled">
+									style="background-color:LightGrey;"disabled="disabled">
+									<!-- font-size: 16pt; height: 33px; width:130px;  -->
 								
 							</div>
 							<div class="form-group">
 								<input name="" class="btn additem_btn" value="Change Password"
-									type="button" id="changePwd2" onclick="showDiv1()" style="margin: 0px; padding: 6px 7px; display: block;">
+									type="button" id="changePwd2" onclick="showDiv1()" style="margin: 0px; padding: 6px 7px !important; display: block;">
 						</div>	
 						
 						</div>
@@ -351,13 +364,13 @@
 							<div class="col2">
 								<input class="texboxitemcode" placeholder="Enter Admin Password"
 									name="admin_password" type="password" value="" id="admin_password"
-									style="font-size: 8pt; height: 30px; width:130px; ">
+									><!-- style="font-size: 8pt; height: 30px; width:130px; " -->
 							</div>
 						 
 						 <div class="form-group">
 						
-								<input name="" class="btn btn-info" value="Submit"
-									type="button" id="btnupdate_profile"style="font-size: 13pt; height: 33px; width:75px; "onclick="return checkAuthority()">
+								<input name="" class="btn additem_btn" value="Submit"
+									type="button" id="btnupdate_profile" style="margin: 0px; padding: 6px 7px !important; display: block;" onclick="return checkAuthority()">
 							
 						</div>
 						
@@ -398,7 +411,7 @@
 					
 					<div class="single_line_btn">
 							
-								<input name="" class="btn additem_btn" value="SUBMIT"
+								<input name="" class="buttonsaveorder" value="SUBMIT"
 									type="submit" id="btnupdate_profile">
 							
 						</div>

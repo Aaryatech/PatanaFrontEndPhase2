@@ -98,61 +98,62 @@ jQuery(document).ready(function(){
 
 			<!-- Place Actual content of page inside this div -->
 			<div class="sidebarright">
-
-
-				<div class="row">
-					<div class="col-md-12">
-						<h2 class="pageTitle">View Sell Tax Date wise Report</h2>
-					</div>
+			
+				<div class="title_row_one marg_top_btm">
+				<div class="left_title">
+					<h2 class="pageTitle"><i class="fa fa-file-o"></i> View Sell Tax Date wise Report</h2>
 				</div>
-
-				<div class="colOuter">
-					<div align="center">
-						<div class="col1">
-							<div class="col1title">
-								<b>From&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b> <input
+				<div class="on_off_row extra_margin">
+					    
+					 <div class="pop_one">
+							<div class="pop_one_txt margin_tp"> From  </div>
+							<div class="pop_one_inp"> 
+								<input class="texboxitemcode texboxcal"
 									id="fromdatepicker" autocomplete="off"
-									placeholder="Delivery Date" name="from_Date" type="text"
-									size="35">
+									placeholder="Delivery Date" name="from_Date" type="text">
 							</div>
-						</div>
-						<div class="col2">
-							<div class="col1title">
-								<b>TO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b> <input id="todatepicker"
+					    </div> 
+					    
+					<div class="pop_one">
+							<div class="pop_one_txt margin_tp"> To  </div>
+							<div class="pop_one_inp">
+								<input id="todatepicker" class="texboxitemcode texboxcal"
 									autocomplete="off" placeholder="Delivery Date" name="to_Date"
-									type="text" size="35">
+									type="text">
 							</div>
-						</div>
-						<input type="hidden" name="frId" id="frId" value="${frId}">
-
+					    </div>					    
+					    
+					    <input type="hidden" name="frId" id="frId" value="${frId}">
+					    
+					    <div class="buttons_right">
+						<button class="buttonsaveorder" onclick="searchSellBill()">HTML View</button>
+						<button class="buttonsaveorder" onclick="showChart()">Graph</button>						
+						<button class="buttonsaveorder" value="PDF" id="PDFButton"onclick="genPdf()">PDF</button>
+							
+						
 					</div>
+					
+				</div>		
+			</div>
 
 
-					<div align="center">
-						<button class="btn search_btn" onclick="searchSellBill()">HTML
-							View</button>
-						<button class="btn search_btn" onclick="showChart()">Graph</button>
-						<%-- 		    	   <a href='${pageContext.request.contextPath}/pdf?reportURL=showSellTaxDatewiseReportpPdf' id="btn_pdf" class="btn search_btn" style="display: none" >PDF</a>
- --%>
-						<button class="btn btn-primary" value="PDF" id="PDFButton"
-							onclick="genPdf()">PDF</button>
-						<br>
-					</div>
-				</div>
+				
+
+				
 				<div class="row" id="table">
 					<div class="col-md-12">
 						<!--table-->
 						<div class="clearfix"></div>
 
 
-						<div id="table-scroll" class="table-scroll">
-							<div id="faux-table" class="faux-table" aria="hidden">
-								<table id="table_grid1" class="main-table" border="1">
+						<div id="table-scroll">
+							<!-- <div id="faux-table" class="faux-table" aria="hidden">
+								<table id="table_grid1">
 									<thead>
 										<tr class="bgpink">
 
 											<th class="col-md-1">Sr.No.</th>
-											<!-- <th class="col-md-1">Bill No</th> -->
+											<th class="col-md-1">Bill No</th>
 											<th class="col-md-1" style="text-align: center;">Date</th>
 											<th class="col-md-1" style="text-align: center;">Tax
 												Rate</th>
@@ -169,23 +170,23 @@ jQuery(document).ready(function(){
 									</tbody>
 
 								</table>
-							</div>
-							<div class="table-wrap">
-								<table id="table_grid" class="main-table" border="1">
+							</div> -->
+							<div class="tableFixHead">
+								<table id="table_grid">
 									<thead>
 										<tr class="bgpink">
 
-											<th class="col-md-1">Sr.No.</th>
+											<th>Sr.No.</th>
 											<!-- <th class="col-md-1">Bill No</th> -->
-											<th class="col-md-1" style="text-align: center;">Date</th>
-											<th class="col-md-1" style="text-align: center;">Tax
+											<th style="text-align: center;">Date</th>
+											<th  style="text-align: center;">Tax
 												Rate</th>
-											<th class="col-md-1" style="text-align: center;">Taxable
+											<th style="text-align: center;">Taxable
 												Amt</th>
-											<th class="col-md-1" style="text-align: center;">IGST</th>
-											<th class="col-md-1" style="text-align: center;">CGST</th>
-											<th class="col-md-1" style="text-align: center;">SGST</th>
-											<th class="col-md-1" style="text-align: center;">CESS</th>
+											<th style="text-align: center;">IGST</th>
+											<th style="text-align: center;">CGST</th>
+											<th style="text-align: center;">SGST</th>
+											<th style="text-align: center;">CESS</th>
 										</tr>
 									</thead>
 
@@ -199,8 +200,8 @@ jQuery(document).ready(function(){
 
 
 
-								<div class="col-sm-3  controls">
-									<input type="button" id="expExcel" class="btn btn-primary"
+								<div class="col-sm-12 controls" style="margin: 15px 0;">
+									<input type="button" id="expExcel" class="buttonsaveorder"
 										value="EXPORT TO Excel" onclick="exportToExcel();"
 										disabled="disabled">
 								</div>
@@ -210,10 +211,12 @@ jQuery(document).ready(function(){
 
 					</div>
 				</div>
+				
+				
+				
 
 				<div id="chart">
-					<br> <br> <br>
-					<hr>
+					
 
 
 					<div id="chart_div" style="width: 100%; height: 500px;"></div>
@@ -294,19 +297,19 @@ jQuery(document).ready(function(){
 
 													tr
 															.append($(
-																	'<td class="col-md-1" style="text-align:center;"></td>')
+																	'<td style="text-align:center;"></td>')
 																	.html(
 																			sellTaxData.billDate));
 
 													tr
 															.append($(
-																	'<td class="col-md-1" style="text-align:right;"></td>')
+																	'<td style="text-align:right;"></td>')
 																	.html(
 																			sellTaxData.tax_per));
 
 													tr
 															.append($(
-																	'<td class="col-md-1"  style="text-align:right;"></td>')
+																	'<td style="text-align:right;"></td>')
 																	.html(
 																			(sellTaxData.tax_amount)
 																					.toFixed(2)));
@@ -315,7 +318,7 @@ jQuery(document).ready(function(){
 
 													tr
 															.append($(
-																	'<td class="col-md-1"  style="text-align:right;"></td>')
+																	'<td style="text-align:right;"></td>')
 																	.html(
 																			(sellTaxData.igst)
 																					.toFixed(2)));
@@ -324,7 +327,7 @@ jQuery(document).ready(function(){
 
 													tr
 															.append($(
-																	'<td class="col-md-1"  style="text-align:right;"></td>')
+																	'<td style="text-align:right;"></td>')
 																	.html(
 																			(sellTaxData.cgst)
 																					.toFixed(2)));
@@ -333,7 +336,7 @@ jQuery(document).ready(function(){
 
 													tr
 															.append($(
-																	'<td class="col-md-1"  style="text-align:right;"></td>')
+																	'<td style="text-align:right;"></td>')
 																	.html(
 																			(sellTaxData.sgst)
 																					.toFixed(2)));
@@ -342,7 +345,7 @@ jQuery(document).ready(function(){
 
 													tr
 															.append($(
-																	'<td class="col-md-1"  style="text-align:right;"></td>')
+																	'<td style="text-align:right;"></td>')
 																	.html(
 																			(sellTaxData.cess)
 																					.toFixed(2)));
@@ -454,7 +457,7 @@ jQuery(document).ready(function(){
 
 									var chartDiv = document
 											.getElementById('chart_div');
-									document.getElementById("chart_div").style.border = "thin dotted red";
+									document.getElementById("chart_div").style.border = "1px solid rgb(204, 204, 204)";
 									var dataTable = new google.visualization.DataTable();
 
 									dataTable.addColumn('string',

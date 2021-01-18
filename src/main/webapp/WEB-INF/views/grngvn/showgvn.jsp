@@ -59,88 +59,45 @@ table, th, td {
 
 			<!-- Place Actual content of page inside this div -->
 			<div class="sidebarright">
-
-				<div class="row">
-					<div class="col-md-2">
-						<h2 class="pageTitle">Request GVN</h2>
+			
+				<div class="title_row_one">
+					<div class="left_title">
+						<h2 class="pageTitle"><i class="fa fa-file-pdf-o"></i> Request GVN</h2>
 					</div>
-					<br>
-
-
-					<!-- <div class="col-md-3">
-						<br> <select name="view_opt" id="view_opt"
-							class="form-control"
-							style="width: 250px; background-color: white; height: 40px"
-							onchange="showDate()">
-							<option value="0">Select From Bill</option>
-
-							<option value="1">Select From Date</option>
-
-						</select>
-					</div>
-
-					<br> -->
-					<form action="${pageContext.request.contextPath}/showGvn"
-						name="grn" id="grn" method="get">
-						<div class="col-md-2">
-							<input id="datepicker" class="texboxitemcode texboxcal"
+					<div class="right_content">
+						
+						
+						<div class="date_sear">
+							<div class="date_sear_txt">From Date:-</div>
+							<div class="date_sear_int">
+								<input id="datepicker" class="texboxitemcode texboxcal"
 								placeholder="From Date" class="form-control" name="from_date"
 								type="text" value="${fromDate}">
+							</div>
 						</div>
-						<div class="col-md-2">
-							<input id="datepicker2" class="texboxitemcode texboxcal"
+						
+						<div class="date_sear">
+						<form action="${pageContext.request.contextPath}/showGvn"
+						name="grn" id="grn" method="get">
+							<div class="date_sear_txt">To Date:-</div>
+							<div class="date_sear_int">
+								<input id="datepicker2" class="texboxitemcode texboxcal"
 								placeholder="To Date" class="form-control" name="todate"
 								type="text" value="${toDate}">
+							</div>
 						</div>
-
-
-						<div class="col-md-1">
-
-							<button type="button" class="buttonsaveorder" id='searchButton'
-								onclick="getViewOption()">Search</button>
-							<!--<button type="button" class="btn">Cancel</button>-->
-
+						
+						<div class="date_btn">
+							<button type="button" class="buttonsaveorder" id='searchButton' onclick="getViewOption()">Search</button>
 						</div>
-						<div class="col-md-2">
-							<select name="bill_no" id="bill_no" class="form-control"
-								style="width: 250px; background-color: white; height: 40px">
-
-
-								<c:forEach items="${frBillList}" var="frBillList">
-									<c:choose>
-
-										<c:when test="${selctedBillNo == frBillList.billNo}">
-											<option selected value="${frBillList.billNo}">Invoice
-												No- ${frBillList.invoiceNo} Bill Date-
-												${frBillList.billDate}</option>
-										</c:when>
-
-										<c:otherwise>
-											<option value="${frBillList.billNo}">Invoice No-
-												${frBillList.invoiceNo} Bill Date- ${frBillList.billDate}</option>
-										</c:otherwise>
-
-									</c:choose>
-								</c:forEach>
-
-							</select>
-
-						</div>
-
-						<!-- <div class="form-group"> -->
-						<div class="col-md-1">
-
-							<button type="submit" class="buttonsaveorder">Bill
-								Detail</button>
-							<!--<button type="button" class="btn">Cancel</button>-->
-
-						</div>
-					</form>
+						
+						
+					</div>
 				</div>
 
-				<br />
+					
 
-				<div class="row">
+				<div style="display: inline-block; width: 100%; margin: 15px 0 0 0;">
 
 					<form action="${pageContext.request.contextPath}/addTempGvn"
 						name="grn_add" id="grn_add" method="post"
@@ -157,9 +114,9 @@ table, th, td {
 
 						<div class="clearfix"></div>
 
-						<div id="table-scroll" class="table-scroll">
-							<div id="faux-table" class="faux-table" aria="hidden">
-								<table id="table_grid1" class="main-table">
+						
+							<!-- <div id="faux-table" class="tableFixHead" aria="hidden">
+								<table id="table_grid1">
 									<thead>
 										<tr class="bgpink">
 											<th width="5%" style="text-align: center;">SELECT</th>
@@ -183,9 +140,9 @@ table, th, td {
 
 
 
-							</div>
-							<div class="table-wrap">
-								<table id="table_grid" class="main-table">
+							</div> -->
+							<div class="tableFixHead">
+								<table id="table_grid">
 									<thead>
 										<tr class="bgpink">
 											<!-- 	<th class="col-md-1">Sr No.</th>
@@ -249,7 +206,7 @@ table, th, td {
 
 								</table>
 							</div>
-						</div>
+						
 
 						<br>
 						<div class="form-group">

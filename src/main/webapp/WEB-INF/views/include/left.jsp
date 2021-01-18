@@ -475,19 +475,22 @@
 				<ul>
 					<li class="small-box">
 
-						<div class="ibox">
+						<div class="ibox txt_icn">
 							<div class="ibox-head">
 								<div class="ibox-title">Punching Based Reports</div>
 							</div>
 							<a href="${pageContext.request.contextPath}/viewBillwiseSell"><i
-								class="fa fa-files-o icon"></i>Billwise Sale Report</a> <a
-								href="${pageContext.request.contextPath}/viewDatewiseSellBill"><i
-								class="fa fa-calendar-o icon"></i>Datewise Sale Report</a> <a
+								class="fa fa-files-o icon"></i>Billwise Sale Report</a> 
+							<a href="${pageContext.request.contextPath}/viewDatewiseSellBill"><i
+								class="fa fa-calendar-o icon"></i>Datewise Sale Report</a> 
+							<a
 								href="${pageContext.request.contextPath}/viewMonthwiseSellBill"><i
-								class="fa fa-calendar-o  icon"></i>Monthwise Sale Report</a> <a
+								class="fa fa-calendar-o  icon"></i>Monthwise Sale Report</a> 
+							<a
 								href="${pageContext.request.contextPath}/viewItemwiseSellBill"><i
 								class="fa fa-chevron-circle-down icon"></i>Categorywise-
-								Itemwise Sale Report</a> <a
+								Itemwise Sale Report</a> 
+							<a
 								href="${pageContext.request.contextPath}/viewDateItemwiseSellBill">
 								<i class="fa fa-chevron-circle-down icon"></i>Datewise-Itemwise
 								Sale Report
@@ -500,7 +503,7 @@
 
 					<li class="small-box">
 
-						<div class="ibox">
+						<div class="ibox txt_icn">
 							<div class="ibox-head">
 								<div class="ibox-title">Purchase Reports</div>
 							</div>
@@ -537,7 +540,7 @@
 					<li class="small-box">
 
 
-						<div class="ibox">
+						<div class="ibox txt_icn">
 							<div class="ibox-head">
 								<div class="ibox-title">Tax Report</div>
 							</div>
@@ -562,7 +565,7 @@
 
 					<li class="small-box">
 
-						<div class="ibox">
+						<div class="ibox txt_icn">
 							<div class="ibox-head">
 								<div class="ibox-title">Other Reports</div>
 							</div>

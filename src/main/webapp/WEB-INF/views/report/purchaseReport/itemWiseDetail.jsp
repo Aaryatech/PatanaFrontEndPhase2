@@ -14,8 +14,7 @@ table, th, td {
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
 
 <title>Monginis</title>
 
@@ -104,25 +103,36 @@ jQuery(document).ready(function(){
 
 			<!-- Place Actual content of page inside this div -->
 			<div class="sidebarright">
-
-
-				<div class="row">
-					<div class="col-md-12">
-						<h2 class="pageTitle">Itemwise-Billwise-Datewise Purchase
-							Report</h2>
+			
+			<div class="title_row_one">
+<h2 class="pageTitle"><i class="fa fa-file-o"></i> Itemwise-Billwise-Datewise Purchase Report</h2>
+			</div>
+			
+			<div class="single_row">
+				
+				<input type="hidden" name="frId" id="frId" value="${frId}">
+				
+				<div class="date_sear four_bx">
+					<div class="date_sear_txt">From Date</div>
+					<div class="date_sear_int inpt_width">
+						<input id="fromdatepicker" class="texboxitemcode texboxcal"
+							placeholder="DD-MM-YYYY" name="fromDate" type="text">
 					</div>
 				</div>
-
-
-
-				<div class="row">
-
-					<div class="col-md-2">
-						<div class="pull-left">
-							<b>Group</b>
-						</div>
+				
+				<div class="date_sear four_bx">
+					<div class="date_sear_txt">To Date</div>
+					<div class="date_sear_int inpt_width">
+						<input id="todatepicker" class="texboxitemcode texboxcal"
+							placeholder="DD-MM-YYYY" name="toDate" type="text">
 					</div>
-					<div class="col-md-5">
+				</div>
+				
+				
+				
+				<div class="date_sear four_bx">
+					<div class="date_sear_txt">Select Group</div>
+					<div class="date_sear_int inpt_width">
 						<select name="catId" id="catId" class="form-control chosen"
 							required>
 							<option value="" selected>Select Group</option>
@@ -133,49 +143,24 @@ jQuery(document).ready(function(){
 						</select>
 					</div>
 				</div>
-
-				</br>
-
-
-
-				<div class="row">
-					<input type="hidden" name="frId" id="frId" value="${frId}">
-
-					<div class="col-md-2 from_date">
-						<h4 class="pull-left">From Date:-</h4>
-					</div>
-					<div class="col-md-3 ">
-						<input id="fromdatepicker" class="texboxitemcode texboxcal"
-							placeholder="DD-MM-YYYY" name="fromDate" type="text">
-					</div>
-					<div class="col-md-2">
-						<h4 class="pull-left">To Date:-</h4>
-					</div>
-					<div class="col-md-3 ">
-						<input id="todatepicker" class="texboxitemcode texboxcal"
-							placeholder="DD-MM-YYYY" name="toDate" type="text">
-					</div>
-					<div class="col-md-2">
-						<button class="btn search_btn pull-left"
-							onclick="itemWiseTaxReport()">Search</button>
-						<%-- 		   &nbsp;&nbsp;&nbsp; <a href='${pageContext.request.contextPath}/pdf?reportURL=showPurchaseItemwiseDetailPdf' id="btn_pdf" class="btn search_btn" style="display: none">PDF</a>
- --%>
-						<button class="btn btn-primary" value="PDF" id="PDFButton"
-							onclick="genPdf()">PDF</button>
-					</div>
-
+				
+				<div class="date_btn">
+					<button class="buttonsaveorder" onclick="itemWiseTaxReport()">Search</button>	
+					<button class="buttonsaveorder" value="PDF" id="PDFButton" onclick="genPdf()">PDF</button>
 				</div>
-
+				
+			</div>
+			
 				<div class="row">
 					<div class="col-md-12">
 						<!--table-->
 						<div class="clearfix"></div>
 
 
-						<div id="table-scroll" class="table-scroll">
-							<div id="faux-table" class="faux-table" aria="hidden"></div>
-							<div class="table-wrap">
-								<table id="table_grid" class="main-table">
+						<div id="table-scroll">
+							<!-- <div id="faux-table" class="faux-table" aria="hidden"></div> -->
+							<div class="tableFixHead">
+								<table id="table_grid">
 									<thead>
 										<tr class="bgpink">
 
@@ -210,8 +195,8 @@ jQuery(document).ready(function(){
 
 
 
-							<div class="col-sm-3  controls">
-								<input type="button" id="expExcel" class="btn btn-primary"
+							<div class="col-sm-12  controls" style="margin: 15px 0;">
+								<input type="button" id="expExcel" class="buttonsaveorder"
 									value="EXPORT TO Excel" onclick="exportToExcel();"
 									disabled="disabled">
 							</div>

@@ -59,92 +59,88 @@ table, th, td {
 
 			<!-- Place Actual content of page inside this div -->
 			<div class="sidebarright">
-
-
-				<div class="row">
-					<div class="col-md-12">
-						<h2 class="pageTitle">Credit Note Report</h2>
+			
+				<div class="title_row_one marg_top_btm">
+					<div class="left_title">
+						<h2 class="pageTitle"><i class="fa fa-file-o"></i> Credit Note Report</h2>
+					</div>
+					
+					<div class="on_off_row extra_margin">
+						<form action="" class="form-horizontal" method="get" id="validation-form">						
+						<input type="hidden" value="${gstType}" name="type" id="type" />
+						
+						<div class="pop_one">
+							<div class="pop_one_txt margin_tp"> From  </div>
+							<div class="pop_one_inp">
+							<input id="fromdatepicker" autocomplete="off"
+								class="texboxitemcode texboxcal" placeholder="DD-MM-YYYY" placeholder="Delivery Date"
+								name="fromDate" type="text">								
+								
+							</div>
+					    </div>
+					    
+					    
+						<div class="pop_one">
+							<div class="pop_one_txt margin_tp"> To  </div>
+							<div class="pop_one_inp">
+							
+							<input id="todatepicker" autocomplete="off"
+								class="texboxitemcode texboxcal" placeholder="DD-MM-YYYY" placeholder="Delivery Date"
+								name="toDate" type="text">
+							
+								
+							</div>
+					    </div>
+					    
+					    
+					    
+					    <div class="buttons_right">
+							<input type="button" value="Search" onclick="searchReport()" class="buttonsaveorder">						
+						</div>
+						</form>
 					</div>
 				</div>
+			
+			
+			
 
-				<div class="row">
-					<form action="" class="form-horizontal" method="get"
-						id="validation-form">
 
-						<div class="col-md-2 from_date">
-							<h4 class="pull-left">From Date:-</h4>
-						</div>
-						<div class="col-md-2 ">
-							<input id="fromdatepicker" autocomplete="off"
-								class="texboxitemcode texboxcal" placeholder="DD-MM-YYYY"
-								name="fromDate" type="text">
-						</div>
-						<div class="col-md-1">
-							<h4 class="pull-left">To Date:-</h4>
-						</div>
-						<div class="col-md-2 ">
-							<input id="todatepicker" autocomplete="off"
-								class="texboxitemcode texboxcal" placeholder="DD-MM-YYYY"
-								name="toDate" type="text">
-						</div>
-						<div class="col-md-2">
-							<!-- <button class="btn search_btn pull-left" onclick="searchReport()">Search</button> -->
-							<input type="button" value="Search" onclick="searchReport()"
-								class="btn btn-primary">
-							<!-- <button class="btn btn-primary" value="PDF" id="PDFButton"
-								onclick="genPdf()">PDF</button> -->
+				
 
-						</div>
-					</form>
+				
+					
 
-				</div>
+						
+						
+						
+						
+						
+					
 
-				<div class="row">
+				
+
+				
 					<div class="clearfix"></div>
 
 
-					<div id="table-scroll" class="table-scroll">
-						<div id="faux-table" class="faux-table" aria="hidden">
-							<!-- <table id="table2" class="main-table" border="1">
-								<thead>
-									<tr class="bgpink">
-										<th>Sr No.</th>
-
-										<th class="col-sm-1"><input type="checkbox"
-											onClick="selectBillNo(this)" /></th>
-										<th class="col-sm-1" style="text-align: center;">Date</th>
-										<th class="col-sm-1" style="text-align: center;">CRN Id</th>
-										<th class="col-md-2" style="text-align: center;">Inv. No
-										</th>
-										<th class="col-md-2" style="text-align: center;">Franchise</th>
-										<th class="col-md-1" style="text-align: center;">Taxable
-											Amt</th>
-										<th class="col-md-2" style="text-align: center;">Tax Amt</th>
-
-										<th class="col-md-2" style="text-align: center;">Amount</th>
-										<th class="col-sm-1">Action</th>
-									</tr>
-
-								</thead>
-								<tbody>
-							</table> -->
-						</div>
-						<div class="table-wrap">
-							<table id="table1" class="main-table" border="1">
+					<div id="table-scroll">
+						
+						<div class="tableFixHead">
+							<table id="table1">
 								<thead>
 									<tr class="bgpink">
 
 										<th><input type="checkbox" onClick="selectBillNo(this)" /></th>
-										<th class="col-sm-1">Sr No.</th>
-										<th class="col-md-1" style="text-align: center;">Date</th>
-										<th class="col-md-1" style="text-align: center;">CRN Id</th>
+										<th >Sr No.</th>
+										<th style="text-align: center;">Date</th>
+										<th style="text-align: center;">CRN Id</th>
 
-										<th class="col-md-3" style="text-align: center;">Franchise</th>
-										<th class="col-md-2" style="text-align: center;">Taxable
+										<th style="text-align: center;">Franchise</th>
+										<th style="text-align: center;">Taxable
 											Amt</th>
-										<th class="col-md-2" style="text-align: center;">Tax Amt</th>
-										<th class="col-md-1" style="text-align: center;">Amount</th>
-										<th class="col-sm-1">Action</th>
+										<th style="text-align: center;">Tax Amt</th>
+										<th style="text-align: center;">Amount</th>
+										<th >Action</th>
 									</tr>
 
 								</thead>
@@ -155,12 +151,12 @@ table, th, td {
 
 					</div>
 					<!--table end-->
-					<br>
-					<div class="col-sm-2 col-lg-2 controls">
+					
+					<div class="col-sm-12 controls" style="margin: 15px 0;">
 						<input type="button" value="Generate PDF For Fr"
-							onclick="genPdf()" class="btn btn-primary">
+							onclick="genPdf()" class="buttonsaveorder">
 					</div>
-				</div>
+				
 			</div>
 
 
@@ -271,50 +267,50 @@ table, th, td {
 															.append($('<td><input class="chk" type=checkbox name="select_to_agree" id="select_to_agree'+key+'"  value='+headers.crnId+'></td>'));
 													tr
 															.append($(
-																	'<td class="col-sm-1"></td>')
+																	'<td></td>')
 																	.html(
 																			key + 1));
 													tr
 															.append($(
-																	'<td class="col-md-1" style="text-align:center"></td>')
+																	'<td style="text-align:center"></td>')
 																	.html(
 																			headers.crnDate));
 
 													tr
 															.append($(
-																	'<td  class="col-md-1" style="text-align:center"></td>')
+																	'<td style="text-align:center"></td>')
 																	.html(
 																			headers.crnId));
 
 													tr
 															.append($(
-																	'<td class="col-md-3" style="text-align:center"></td>')
+																	'<td style="text-align:center"></td>')
 																	.html(
 																			headers.frName));
 
 													tr
 															.append($(
-																	'<td class="col-md-1"  style="text-align:right"></td>')
+																	'<td style="text-align:right"></td>')
 																	.html(
 																			(headers.crnTaxableAmt)
 																					.toFixed()));
 
 													tr
 															.append($(
-																	'<td class="col-md-1"  style="text-align:right"></td>')
+																	'<td style="text-align:right"></td>')
 																	.html(
 																			(headers.crnTotalTax)
 																					.toFixed(2)));
 
 													tr
 															.append($(
-																	'<td class="col-md-1"  style="text-align:right"></td>')
+																	'<td style="text-align:right"></td>')
 																	.html(
 																			(headers.crnGrandTotal)
 																					.toFixed(2)));
 
 													tr
-															.append($('<td class="col-md-2" style="text-align:center"><a href="#" class="action_btn" onclick="getCrnDetail('
+															.append($('<td style="text-align:center"><a href="#" class="action_btn" onclick="getCrnDetail('
 																	+ headers.crnId
 																	+ ')"><abbr title="Detail"><i class="fa fa-list"></i></abbr></a> &nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="genPdfSingle('
 																	+ headers.crnId
