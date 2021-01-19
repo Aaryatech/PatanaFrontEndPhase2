@@ -78,14 +78,14 @@ public class NewOpsCustomerBillController {
 
 		int runningMonth = 0;
 		
-		DateFormat dateFormater = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		Calendar cale = Calendar.getInstance();
+		//DateFormat dateFormater = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		//Calendar cale = Calendar.getInstance();
 		try {
 			
-			System.out.println("In Time"+dateFormater.format(cale.getTime()));
+		//	System.out.println("In Time"+dateFormater.format(cale.getTime()));
 			Customer[] custResp=restTemplate.getForObject(Constant.URL+"getAllCustomer",Customer[].class);
 			custometList=new ArrayList<Customer>(Arrays.asList(custResp));
-			System.err.println("customer List Length="+custometList.size());
+			//System.err.println("customer List Length="+custometList.size());
 			model.addObject("customerList", custometList);
 			
 			
@@ -113,7 +113,7 @@ public class NewOpsCustomerBillController {
 			GetFrMenus getFrMenus = restTemplate.postForObject(Constant.URL + "/getFrConfigMenus", menuMap,
 					GetFrMenus.class);
 
-			System.out.println("Get Fr Menus Response " + getFrMenus.toString());
+			//System.out.println("Get Fr Menus Response " + getFrMenus.toString());
 
 			List<FrMenu> frMenuList = getFrMenus.getFrMenus();
 
@@ -130,7 +130,7 @@ public class NewOpsCustomerBillController {
 			DateFormat yearFormat = new SimpleDateFormat("yyyy");
 
 			Date todaysDate = new Date();
-			System.out.println(dateFormat.format(todaysDate));
+			//System.out.println(dateFormat.format(todaysDate));
 
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(todaysDate);
@@ -139,18 +139,18 @@ public class NewOpsCustomerBillController {
 
 			Date firstDay = cal.getTime();
 
-			System.out.println("First Day of month " + firstDay);
+			//System.out.println("First Day of month " + firstDay);
 
 			String strFirstDay = dateFormat.format(firstDay);
 
-			System.out.println("Year " + yearFormat.format(todaysDate));
+			//System.out.println("Year " + yearFormat.format(todaysDate));
 			boolean isMonthCloseApplicable = false;
 
 			map = new LinkedMultiValueMap<String, Object>();
 
 			DateFormat dateFormat1 = new SimpleDateFormat("dd/MM/yyyy");
 			Date date = new Date();
-			System.out.println(dateFormat1.format(date));
+			//System.out.println(dateFormat1.format(date));
 
 			Calendar cal1 = Calendar.getInstance();
 			cal1.setTime(date);
@@ -158,32 +158,32 @@ public class NewOpsCustomerBillController {
 			int dayOfMonth = cal1.get(Calendar.DATE);
 
 			int calCurrentMonth = cal1.get(Calendar.MONTH) + 1;
-			System.err.println(
-					"Current Cal Month " + calCurrentMonth + "menuList" + menuList.toString() + "itemShow" + items);
+			//System.err.println(
+				//	"Current Cal Month " + calCurrentMonth + "menuList" + menuList.toString() + "itemShow" + items);
 
-			System.out.println("Day Of Month is: " + dayOfMonth);
+			//System.out.println("Day Of Month is: " + dayOfMonth);
 
 			if (runningMonth < calCurrentMonth) {
 
 				isMonthCloseApplicable = true;
-				System.out.println("Day Of Month End ......");
+				//System.out.println("Day Of Month End ......");
 
 			} else if (runningMonth == 12 && calCurrentMonth == 1) {
 				isMonthCloseApplicable = true;
 			}
 
 			if (isMonthCloseApplicable) {
-				System.err.println("### Inside iMonthclose app");
+				//System.err.println("### Inside iMonthclose app");
 				String strDate;
 				int year;
 				if (runningMonth == 12) {
-					System.err.println("running month =12");
+					//System.err.println("running month =12");
 					year = (Calendar.getInstance().getWeekYear() - 1);
-					System.err.println("year value " + year);
+					//System.err.println("year value " + year);
 				} else {
-					System.err.println("running month not eq 12");
+					//System.err.println("running month not eq 12");
 					year = Calendar.getInstance().getWeekYear();
-					System.err.println("year value " + year);
+					//System.err.println("year value " + year);
 				}
 
 				// strDate="01/"+runningMonth+"/"+year;
@@ -221,8 +221,8 @@ public class NewOpsCustomerBillController {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			System.err.println("BillItemsRespList"+BillItemsRespList);
-			System.err.println(jsonStr+"JSO");
+			//System.err.println("BillItemsRespList"+BillItemsRespList);
+		//	System.err.println(jsonStr+"JSO");
 			model.addObject("jsonItemList", jsonStr);
 			model.addObject("ItemList", BillItemsRespList);
 			
@@ -230,7 +230,7 @@ public class NewOpsCustomerBillController {
 
 			SubCategory[] subCatArr = restTemplate.getForObject(Constant.URL + "getAllSubCatList", SubCategory[].class);
 			subCatResp = new ArrayList<SubCategory>(Arrays.asList(subCatArr));
-			System.err.println("Subcat List=" + "\t" + subCatResp);
+			//System.err.println("Subcat List=" + "\t" + subCatResp);
 
 			model.addObject("subCatList", subCatResp);
 			
@@ -245,9 +245,9 @@ public class NewOpsCustomerBillController {
 			// TODO: handle exception
 			e.printStackTrace();
 		} 
-	 dateFormater = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-	cale = Calendar.getInstance();
-		System.out.println("Before Return Time"+dateFormater.format(cale.getTime()));
+	 //dateFormater = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+	//cale = Calendar.getInstance();
+		//System.out.println("Before Return Time"+dateFormater.format(cale.getTime()));
 		return model;
 
 	}
