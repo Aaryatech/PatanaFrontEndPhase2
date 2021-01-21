@@ -44,6 +44,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.monginis.ops.common.Common;
 import com.monginis.ops.common.Firebase;
+import com.monginis.ops.common.SetOrderDataCommon;
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.model.CustomerBillItem;
 import com.monginis.ops.model.FrItemStockConfigure;
@@ -524,12 +525,12 @@ public class ItemController {
 	// --------------------------------------------------------------------------------------------
 	@RequestMapping("/saveOrder")
 	public ModelAndView helloWorld(HttpServletRequest request, HttpServletResponse res) throws IOException {
-
+		System.out.println("Order saveOrder: " );
 		HttpSession session = request.getSession();
 		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 
 		ModelAndView mav = new ModelAndView("redirect:/showSavouries/" + globalIndex);
-
+try {
 		String orderDate = "";
 		String productionDate = "";
 		String deliveryDate = "";
@@ -902,9 +903,21 @@ public class ItemController {
 								order.setOrderRate(frItem.getItemRate3());
 							}
 						}
-
+						try {
+							System.err.println("Here SetOrderDataCommon");
+						SetOrderDataCommon orderDataSetting=new SetOrderDataCommon();
+						System.err.println("1"+ menuList.get(globalIndex) );
+								//System.err.println("2"+Integer.parseInt(menuId));
+									System.err.println("3"+ frDetails.getFrId());
+						order=orderDataSetting.setOrderData(order, menuList.get(globalIndex), menuList.get(globalIndex).getMenuId(),
+								frDetails.getFrId(),
+								order.getOrderQty(), request);
+						System.err.println("Afer call ");
 						orders.add(order);
-
+						System.err.println("Afer");
+						}catch (Exception e) {
+							e.printStackTrace();
+						}
 					}
 
 					String jsonStr = null;
@@ -1077,13 +1090,17 @@ public class ItemController {
 
 				mav.addObject("errorMessage", "Timeout for placing order");
 			}
-
+			System.err.println("Here33");
 		} else
 
 		{ // qty exceed limit
-
+			System.err.println("Here1");
 			// mav.addObject("errorMessage", "You have exceed maximum limit");
 		}
+		System.err.println("Here");
+}catch (Exception e) {
+	e.printStackTrace();
+}
 		return mav;
 
 	}
