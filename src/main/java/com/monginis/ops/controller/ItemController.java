@@ -902,7 +902,7 @@ try {
 							} else {
 								order.setOrderRate(frItem.getItemRate3());
 							}
-						}
+						} 
 						try {
 							System.err.println("Here SetOrderDataCommon");
 						SetOrderDataCommon orderDataSetting=new SetOrderDataCommon();
