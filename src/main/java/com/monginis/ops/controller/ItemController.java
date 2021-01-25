@@ -912,7 +912,7 @@ try {
 						order=orderDataSetting.setOrderData(order, menuList.get(globalIndex), menuList.get(globalIndex).getMenuId(),
 								frDetails.getFrId(),
 								order.getOrderQty(), request);
-						System.err.println("Afer call ");
+						System.err.println("Afer call "+order);
 						orders.add(order);
 						System.err.println("Afer");
 						}catch (Exception e) {

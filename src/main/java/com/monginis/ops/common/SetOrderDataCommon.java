@@ -86,12 +86,6 @@ public class SetOrderDataCommon {
 			//productionDate = todaysDate;
 			productionDate = incrementDate(todaysDate,menu.getProdDays());
 			deliveryDate = incrementDate(todaysDate, menu.getDelDays());
-
-			/* 			int isSameDayApplicable=0;
-			 * if (isSameDayApplicable == 0 || isSameDayApplicable == 2) { deliveryDate =
-			 * incrementDate(todaysDate, 1); } else if (isSameDayApplicable == 1) {
-			 * deliveryDate = todaysDate; }
-			 */
 		} else {
 			if (now.isAfter(fromTimeLocalTime)) {
 				orderDate = todaysDate;
@@ -114,8 +108,8 @@ public class SetOrderDataCommon {
 		}else {
 			mrp=(float) frItemList.get(0).getItemMrp3();
 		}
-		float rate=mrp-((mrp*profitPer)/100);      
-
+		profitPer=menu.getProfitPer();
+		float rate=(mrp-(mrp*profitPer)/100);      
 		order.setDeliveryDate(Common.stringToSqlDate(deliveryDate));
 		order.setOrderDate(Common.stringToSqlDate(orderDate));
 		order.setOrderDatetime(todaysDate);

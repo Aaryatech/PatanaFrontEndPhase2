@@ -354,10 +354,12 @@ public class HomeController {
 
 			// sachin 9 sept showFrontEndMessage
 
-			MessageListResponse messageListResponse = restTemplate.getForObject(Constant.URL + "/showFrontEndMessage",
-					MessageListResponse.class);
-			List<Message> msgList = new ArrayList<Message>();
-			msgList = messageListResponse.getMessage();
+			/*
+			 * MessageListResponse messageListResponse =
+			 * restTemplate.getForObject(Constant.URL + "/showFrontEndMessage",
+			 * MessageListResponse.class); List<Message> msgList = new ArrayList<Message>();
+			 * msgList = messageListResponse.getMessage();
+			 */
 			//System.out.println("messages are " + msgList.toString());
 
 			// Managing session
@@ -366,8 +368,9 @@ public class HomeController {
 
 			session.setAttribute("frDetails", loginResponse.getFranchisee());
 			session.setAttribute("loginInfo", loginResponse.getLoginInfo());
-			session.setAttribute("msgList", msgList);
-			session.setAttribute("schedulerLists", schedulerLists);
+			/*
+			 * session.setAttribute("msgList", msgList);
+			 */			session.setAttribute("schedulerLists", schedulerLists);
 			session.setAttribute("frId", loginResponse.getFranchisee().getFrId());
 			session.setAttribute("info", loginResponse.getLoginInfo());
 			session.setAttribute("frImage", loginResponse.getFranchisee().getFrImage());
@@ -444,18 +447,19 @@ public class HomeController {
 			model = new ModelAndView("home");
 			//System.out.println("fr Image URL " + loginResponse.getFranchisee().getFrImage());
 			model.addObject("schedulerLists", schedulerLists);
-			model.addObject("msgList", msgList);
+			/* model.addObject("msgList", msgList); */
 			model.addObject("isSpDayShow", spDayShow);
 			model.addObject("menuList", filteredFrMenuList);
 			model.addObject("frDetails", loginResponse.getFranchisee());
 			model.addObject("url", Constant.MESSAGE_IMAGE_URL);
 			model.addObject("info", loginResponse.getLoginInfo());
 			
-			if(msgList.size()>0 || schedulerLists.size()>0)
-			return "redirect:/home";
-			else {
+			/*
+			 * if(msgList.size()>0 || schedulerLists.size()>0) return "redirect:/home"; else
+			 * {
+			 */
 				return "redirect:/showExpressBill";
-			}
+			//}
 		}
 		
 
