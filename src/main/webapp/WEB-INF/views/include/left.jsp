@@ -155,8 +155,32 @@
 						</div>
 						<div class="title">
 							Edit <span>Profile</span>
-						</div></a></li>
+						</div>
+						
+				</a></li>
 			</c:if>
+			<li><a
+					href="${pageContext.request.contextPath}/getFromFranchiseeList"><div
+							class="img">
+
+							<i class="fa fa-forward" aria-hidden="true" style="font-size: 22px !important;"></i>
+						</div>
+						<div class="title">
+							Stock <span>Transfer</span>
+						</div>
+						
+				</a></li>
+				<li><a
+					href="${pageContext.request.contextPath}/getToFranchiseeList"><div
+							class="img">
+
+							<i class="fa fa-reply" aria-hidden="true" style="font-size: 22px !important;"></i>
+						</div>
+						<div class="title">
+							Stock <span>Recived</span>
+						</div>
+						
+				</a></li>
 		</ul>
 	</div>
 </div>

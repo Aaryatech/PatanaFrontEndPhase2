@@ -380,6 +380,10 @@ window.onclick = function(event) {
   }
 }
 </script>
+				<div class="center" >
+				<a href="${pageContext.request.contextPath}/showStockExchange" ><input type="button" value="Exchane Stock" class="buttonsaveorder" ></a>
+						</div>
+
 
 					</div>
 				</div>
