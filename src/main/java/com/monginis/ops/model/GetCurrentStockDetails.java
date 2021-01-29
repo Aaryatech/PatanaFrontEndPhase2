@@ -31,8 +31,22 @@ public class GetCurrentStockDetails {
 	private int currentSpStock;
 	
 	private int reOrderQty;
+	
+	private int subCatId;//new for stock match utility --and add sell bill
+	
+	
+	
+	
 
 	
+	public int getSubCatId() {
+		return subCatId;
+	}
+
+	public void setSubCatId(int subCatId) {
+		this.subCatId = subCatId;
+	}
+
 	public int getReOrderQty() {
 		return reOrderQty;
 	}
@@ -161,7 +175,13 @@ public class GetCurrentStockDetails {
 				+ spOpeningStock + ", regTotalPurchase=" + regTotalPurchase + ", spTotalPurchase=" + spTotalPurchase
 				+ ", regTotalGrnGvn=" + regTotalGrnGvn + ", regTotalSell=" + regTotalSell + ", spTotalSell="
 				+ spTotalSell + ", stockHeaderId=" + stockHeaderId + ", currentRegStock=" + currentRegStock
-				+ ", currentSpStock=" + currentSpStock + ", reOrderQty=" + reOrderQty + "]";
+				+ ", currentSpStock=" + currentSpStock + ", reOrderQty=" + reOrderQty + ", subCatId=" + subCatId + "]";
 	}
+
+
+	
+	
+	
+	
 
 }

@@ -343,10 +343,16 @@ public class Franchisee {
 		return "Franchisee [frId=" + frId + ", frName=" + frName + ", frCode=" + frCode + ", frOpeningDate="
 				+ frOpeningDate + ", frRate=" + frRate + ", frImage=" + frImage + ", frRouteId=" + frRouteId
 				+ ", frCity=" + frCity + ", frKg1=" + frKg1 + ", frKg2=" + frKg2 + ", frKg3=" + frKg3 + ", frKg4="
-				+ frKg4 + ", frEmail=" + frEmail + ", frPassword=" + frPassword + ", frMob=" + frMob + ", frOwner="
-				+ frOwner + ", frRateCat=" + frRateCat + ", grnTwo=" + grnTwo + ", delStatus=" + delStatus + ", frRmn1="
-				+ frRmn1 + ", showItems=" + showItems + ", notShowItems=" + notShowItems + ", frOpening=" + frOpening
-				+ ", frPasswordKey=" + frPasswordKey + ", isSameDayApplicable=" + isSameDayApplicable + "]";
+				+ frKg4 + ", frEmail=" + frEmail + ", routeName=" + routeName + ", frPassword=" + frPassword
+				+ ", frMob=" + frMob + ", frOwner=" + frOwner + ", frRateCat=" + frRateCat + ", grnTwo=" + grnTwo
+				+ ", delStatus=" + delStatus + ", frRmn1=" + frRmn1 + ", showItems=" + showItems + ", notShowItems="
+				+ notShowItems + ", frOpening=" + frOpening + ", frPasswordKey=" + frPasswordKey
+				+ ", isSameDayApplicable=" + isSameDayApplicable + ", isSameState=" + isSameState + ", ownerBirthDate="
+				+ ownerBirthDate + ", fbaLicenseDate=" + fbaLicenseDate + ", frAgreementDate=" + frAgreementDate
+				+ ", frGstType=" + frGstType + ", frGstNo=" + frGstNo + ", stockType=" + stockType + ", frAddress="
+				+ frAddress + ", frTarget=" + frTarget + "]";
 	}
+
+
     
 }

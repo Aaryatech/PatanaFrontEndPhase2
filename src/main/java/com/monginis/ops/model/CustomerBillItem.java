@@ -4,6 +4,7 @@ public class CustomerBillItem {
 	
 private int id;
 private String itemId;
+private String hsnCode;//new on 27 Jan 202 Akhiles
 private String itemName;
 private int catId;
 private double mrp;
@@ -135,18 +136,25 @@ public int getQty() {
 public void setQty(int qty) {
 	this.qty = qty;
 }
-
+public String getHsnCode() {
+	return hsnCode;
+}
+public void setHsnCode(String hsnCode) {
+	this.hsnCode = hsnCode;
+}
 @Override
 public String toString() {
-	return "CustomerBillItem [id=" + id + ", itemId=" + itemId + ", itemName=" + itemName + ", catId=" + catId
-			+ ", mrp=" + mrp + ", rate=" + rate + ", qty=" + qty + ", itemTax1=" + itemTax1 + ", itemTax2=" + itemTax2
-			+ ", itemTax3=" + itemTax3 + ", billStockType=" + billStockType + ", totalSpStock=" + totalSpStock
-			+ ", totalRegStock=" + totalRegStock + ", isSpStockGretor=" + isSpStockGretor + ", isSpStockLessthanQty="
-			+ isSpStockLessthanQty + ", isRegOpStockLess=" + isRegOpStockLess + ", isRegOpStockGretor="
-			+ isRegOpStockGretor + ", isCurrentStockOver=" + isCurrentStockOver + "]";
+	return "CustomerBillItem [id=" + id + ", itemId=" + itemId + ", hsnCode=" + hsnCode + ", itemName=" + itemName
+			+ ", catId=" + catId + ", mrp=" + mrp + ", rate=" + rate + ", qty=" + qty + ", itemTax1=" + itemTax1
+			+ ", itemTax2=" + itemTax2 + ", itemTax3=" + itemTax3 + ", billStockType=" + billStockType
+			+ ", totalSpStock=" + totalSpStock + ", totalRegStock=" + totalRegStock + ", isSpStockGretor="
+			+ isSpStockGretor + ", isSpStockLessthanQty=" + isSpStockLessthanQty + ", isRegOpStockLess="
+			+ isRegOpStockLess + ", isRegOpStockGretor=" + isRegOpStockGretor + ", isCurrentStockOver="
+			+ isCurrentStockOver + "]";
 }
 
 
- 
+
+
 
 }

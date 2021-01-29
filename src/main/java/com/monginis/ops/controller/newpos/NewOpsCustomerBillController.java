@@ -141,21 +141,21 @@ public class NewOpsCustomerBillController {
 
 			//System.out.println("First Day of month " + firstDay);
 
-			String strFirstDay = dateFormat.format(firstDay);
+			//String strFirstDay = dateFormat.format(firstDay);
 
 			//System.out.println("Year " + yearFormat.format(todaysDate));
 			boolean isMonthCloseApplicable = false;
 
 			map = new LinkedMultiValueMap<String, Object>();
 
-			DateFormat dateFormat1 = new SimpleDateFormat("dd/MM/yyyy");
+			//DateFormat dateFormat1 = new SimpleDateFormat("dd/MM/yyyy");
 			Date date = new Date();
 			//System.out.println(dateFormat1.format(date));
 
 			Calendar cal1 = Calendar.getInstance();
 			cal1.setTime(date);
 
-			int dayOfMonth = cal1.get(Calendar.DATE);
+			//int dayOfMonth = cal1.get(Calendar.DATE);
 
 			int calCurrentMonth = cal1.get(Calendar.MONTH) + 1;
 			//System.err.println(
