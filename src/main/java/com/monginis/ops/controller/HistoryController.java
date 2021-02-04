@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.monginis.ops.HomeControllerOld;
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.model.AllMenuResponse;
 import com.monginis.ops.model.CategoryList;
@@ -56,14 +55,14 @@ public class HistoryController {
 	List<MCategory> mCategoryList;
 
 	AllMenuResponse allMenuResponse;
-	private static final Logger logger = LoggerFactory.getLogger(HomeControllerOld.class);
+	//private static final Logger logger = LoggerFactory.getLogger(HomeControllerOld.class);
 	List<SpOrderHis> spOrderHistory;
 	List<GetRegSpCakeOrders> regSpHistory;
 
 	@RequestMapping(value = "/orderHistory", method = RequestMethod.GET)
 	public ModelAndView ordersHistory(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView model = new ModelAndView("history/orderhistory");
-		logger.info("/login request mapping.");
+		//logger.info("/login request mapping.");
 		RestTemplate rest = new RestTemplate();
 		allMenuResponse = rest.getForObject(Constant.URL + "/getAllMenu", AllMenuResponse.class);
 
