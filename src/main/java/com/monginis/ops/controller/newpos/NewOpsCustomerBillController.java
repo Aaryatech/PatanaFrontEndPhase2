@@ -62,11 +62,11 @@ public class NewOpsCustomerBillController {
 
 	public int frGstType = 0;
 
-	//List<NewPosBillItem> billItemList = new ArrayList<NewPosBillItem>();
+	// List<NewPosBillItem> billItemList = new ArrayList<NewPosBillItem>();
 
 	List<BillItemList> itemList = new ArrayList<BillItemList>();
 
-	List<Customer> custometList = new ArrayList<Customer>();
+	public List<Customer> custometList = new ArrayList<Customer>();
 	LinkedHashMap<Integer, CustomerBillOnHold> hashMap = new LinkedHashMap<Integer, CustomerBillOnHold>();
 	int key = 0;
 	int tempBillNo = 0;
@@ -89,14 +89,6 @@ public class NewOpsCustomerBillController {
 		try {
 
 			map.add("frId", frDetails.getFrId());
-
-			/*
-			 * Customer[] custResp = restTemplate.postForObject(Constant.URL +
-			 * "getAllCustomerForPos", map, Customer[].class); custometList = new
-			 * ArrayList<Customer>(Arrays.asList(custResp));
-			 */
-
-			model.addObject("customerList", custometList);
 
 			ParameterizedTypeReference<List<PostFrItemStockHeader>> typeRef1 = new ParameterizedTypeReference<List<PostFrItemStockHeader>>() {
 			};
@@ -225,6 +217,11 @@ public class NewOpsCustomerBillController {
 				model.addObject("key", key);
 				model.addObject("tempCust", 0);
 			} else {
+				map.add("frId", frDetails.getFrId());
+				Customer[] custResp = restTemplate.postForObject(Constant.URL + "getAllCustomerForPos", map,
+						Customer[].class);
+				custometList = new ArrayList<Customer>(Arrays.asList(custResp));
+				model.addObject("customerList", custometList);
 				CustomerBillOnHold customerBillOnHold = new CustomerBillOnHold();
 				itemList = new ArrayList<>();
 				customerBillOnHold.setItemList(itemList);
@@ -293,18 +290,21 @@ public class NewOpsCustomerBillController {
 		try {
 
 			int key = Integer.parseInt(request.getParameter("key"));
-			// int custId = Integer.parseInt(request.getParameter("custId"));
-			String holdCustName = request.getParameter("holdCustName");
+			int custId = Integer.parseInt(request.getParameter("holdCustName"));
+			// String holdCustName = request.getParameter("holdCustName");
 
 			if (hashMap.containsKey(key)) {
-				hashMap.get(key).setTempCustomerName(holdCustName);
+				hashMap.get(key).setCustId(custId);
+				hashMap.get(key).setTempCustomerName(
+						custometList.get(custId).getUserName() + " - " + custometList.get(custId).getPhoneNo());
 				hashMap.get(key).setItemList(itemList);
 			} else {
 				CustomerBillOnHold addNew = new CustomerBillOnHold();
 				tempBillNo = tempBillNo + 1;
-				addNew.setCustId(0);
+				addNew.setCustId(custId);
 				addNew.setItemList(itemList);
-				addNew.setTempCustomerName(holdCustName);
+				addNew.setTempCustomerName(
+						custometList.get(custId).getUserName() + " - " + custometList.get(custId).getPhoneNo());
 				hashMap.put(tempBillNo, addNew);
 			}
 			System.out.println(hashMap);
@@ -432,18 +432,17 @@ public class NewOpsCustomerBillController {
 			cust.setUserName(name);
 			cust.setPhoneNo(mob);
 			cust.setGstNo(gst);
-			System.err.println("Before==" + custometList.size());
 			custometList.add(cust);
-			System.err.println("AFter==" + custometList.size());
+
 			flag = 1;
 			info.setError(false);
-			info.setMessage("added");
+			info.setMessage(String.valueOf(custometList.size()));
 		} catch (Exception e) {
 			// TODO: handle exception
 			System.err.println("Exception Occuered In Catach Block Of /addCustomer");
 			flag = 0;
 			info.setError(true);
-			info.setMessage("error");
+			info.setMessage(String.valueOf(0));
 			e.printStackTrace();
 		}
 
@@ -477,8 +476,11 @@ public class NewOpsCustomerBillController {
 	}
 
 	@RequestMapping(value = "/genrateSellBill", method = RequestMethod.POST)
-	public @ResponseBody SellBillHeader genrateSellBill(HttpServletRequest request, HttpServletResponse response) {
-		System.err.println("In genrateSellBill ");
+	public @ResponseBody Info genrateSellBill(HttpServletRequest request, HttpServletResponse response) {
+		// System.err.println("In genrateSellBill ");
+
+		Info info = new Info();
+
 		String cName = "", cPhone = "", cGst = "";
 		HttpSession session = request.getSession();
 		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
@@ -487,24 +489,18 @@ public class NewOpsCustomerBillController {
 
 		try {
 			int index = Integer.parseInt(request.getParameter("key"));
-			String custDetails = request.getParameter("custName");
+			int custDetails = Integer.parseInt(request.getParameter("custName"));
 			// float paidAmt= Float.parseFloat(request.getParameter("paidAmt"));
 			int payMode = Integer.parseInt(request.getParameter("payMode"));
 			// System.err.println(custDetails+"cust");
 			float discountPer = Float.parseFloat(request.getParameter("discPer"));
 			float payableAmount = Float.parseFloat(request.getParameter("payableAmt"));
-			String[] customeDetailArr = custDetails.split("~");
-			for (int i = 0; i < customeDetailArr.length; i++) {
-				if (i == 0) {
-					cName = customeDetailArr[i];
-				}
-				if (i == 1) {
-					cPhone = customeDetailArr[i];
-				}
-				if (i == 2) {
-					cGst = customeDetailArr[2];
-				}
-			}
+
+			cName = custometList.get(custDetails).getUserName();
+
+			cPhone = custometList.get(custDetails).getPhoneNo();
+
+			cGst = custometList.get(custDetails).getGstNo();
 
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 			LocalDate localDate = LocalDate.now();
@@ -666,7 +662,7 @@ public class NewOpsCustomerBillController {
 				map.add("frId", frDetails.getFrId());
 				map.add("sellBillNo", sellBillNo);
 
-				Info info = restTemplate.postForObject(Constant.URL + "updateFrSettingBillNo", map, Info.class);
+				Info info1 = restTemplate.postForObject(Constant.URL + "updateFrSettingBillNo", map, Info.class);
 
 				try {
 					String isSMS = request.getParameter("isSMS");
@@ -680,14 +676,18 @@ public class NewOpsCustomerBillController {
 			}
 			itemList = new ArrayList<BillItemList>();
 			hashMap.remove(index);
+
+			info.setError(false);
+			info.setMessage(String.valueOf(sellBillHeaderRes.getSellBillNo()));
 		} catch (Exception e) {
-			System.out.println("Exception:" + e.getMessage());
+			info.setError(true);
+			info.setMessage("Error while generating bill...");
 			e.printStackTrace();
 		}
 
 		System.out.println("Order Response:" + sellBillHeaderRes.toString());
 
-		return sellBillHeaderRes;
+		return info;
 	}
 
 	public String getInvoiceNo(HttpServletRequest request, HttpServletResponse response) {

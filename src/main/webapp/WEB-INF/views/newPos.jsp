@@ -548,7 +548,7 @@ label:before {
 						<div class="customer_row">
 							<div class="customer_one">Customer</div>
 							<div class="customer_two small_size">
-								<input name="selectCust" list="templates" id="selectCust"
+								<%-- <input name="selectCust" list="templates" id="selectCust"
 									type="text" class="input_add" placeholder="Add Customer"
 									value="${holdBill.tempCustomerName}"
 									onchange="getCustInfo(this.value)" /> <span
@@ -557,7 +557,16 @@ label:before {
 
 								<datalist id="templates">
 
-								</datalist>
+								</datalist> --%>
+
+								<select name="custId" id="custId"
+									data-placeholder="Select Bill No"
+									class="input_add chosen-select">
+									<option value="" disabled="disabled" selected>Select
+										Customer</option>
+
+
+								</select>
 							</div>
 							<div class="customer_three increase_size">
 								<button class="plus_btn addcust_open">
@@ -838,11 +847,11 @@ label:before {
 			<div class="pop_btns">
 				<div class="close_l">
 					<button class="payment_close close_btn" id="closePay">Close</button>
-				</div>
-				<div class="close_l">
+					&nbsp;
 					<button class="payment_close close_btn" onclick="printAndSubmit()"
-						href="#">Print&Submit</button>
+						href="#">Print & Submit</button>
 				</div>
+				<div class="close_l"></div>
 				<div class="close_r">
 					<a onclick="submitPayment()" href="#">Submit</a>
 				</div>
@@ -1062,8 +1071,10 @@ label:before {
 		        outline: true,
 		        vertical: 'top'
 		    }); 
+		 var custId  = '${holdBill.custId}';
+		 //alert(custId)
 		setItemList();
-		getCustomerList();
+		getCustomerList(custId);
 			
 	});
 	
@@ -1487,22 +1498,27 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 			 });*/
 	}
 	
-	function getCustomerList() {
-		//alert(type);
+	function getCustomerList(val) {
+		 //alert(val);
 			$.getJSON('${getCustomerList}', {
 			}, function(data) {
 
 			//alert(data.length);
 
-			$('#templates').find('option').remove().end()
+			$('#custId').find('option').remove().end()
 
 			for (var i = 0; i < data.length; i++) {
  
 				var dataValue=data[i].userName+"~"+data[i].phoneNo+"~"+data[i].gstNo;
 				
-				$("#templates").append($("<option></option>").attr("value",dataValue).text(data[i].phoneNo+data[i].userName));
+				if(val==i){
+					$("#custId").append($("<option selected></option>").attr("value",i).text(dataValue));
+				}else{
+					$("#custId").append($("<option ></option>").attr("value",i).text(dataValue));
+				}
+				
 			}
-			$("#templates").trigger("chosen:updated");
+			$("#custId").trigger("chosen:updated");
 
 		});
 
@@ -1577,10 +1593,10 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 		       success: function(data, textStatus, jqXHR)
 		       {
 		    	   if(data.error==false){
-						getCustomerList();
+						getCustomerList((data.message-1));
 							alertify.success("Customer Addeed");
 							document.getElementById("clsAddCust").click();
-							document.getElementById("selectCust").value=name+"~"+mob+"~"+gst;
+							//document.getElementById("selectCust").value=name+"~"+mob+"~"+gst;
 							document.getElementById("custName").value="";
 							document.getElementById("custMob").value="";
 							document.getElementById("custGst").value="";
@@ -1776,11 +1792,8 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 	 var pAmt=document.getElementById("finalAmount").innerHTML;
 	 //alert(pAmt);
 	 document.getElementById("pAmt").value=pAmt;
-	 var detail =document.getElementById("selectCust").value;
-	if(!detail){
-	 		//$('#error_customer').show()
-		alertify.error("Please Select Customer!!!!!");
-	 	}else{
+	 var detail =document.getElementById("custId").value;
+	 
 	 		
 	 		$('#error_customer').hide()
 	 		$.getJSON('${getItemList}',{ajax:true},function(data){
@@ -1793,22 +1806,19 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 	 			}
 	 		});
 	 		
-	 	}
+	 	 
 	 	
  }
  
  function billClick(){
 	 var pAmt=document.getElementById("finalAmount").innerHTML;
 	 document.getElementById("pAmt").value=pAmt;
-	 var detail =document.getElementById("selectCust").value;
+	 var detail =document.getElementById("custId").value;
 	 document.getElementById("paidAmt").value=pAmt;
 	 
 	 
 	 
-	 if(!detail){
-	 		//$('#error_customer').show()
-	 		alertify.error("Please Select Customer!!!!!");
-	 	}else{
+	 
 	 		$('#error_customer').hide()
 	 		$.getJSON('${getItemList}',{ajax:true},function(data){
 	 			if(data.length<1){
@@ -1821,11 +1831,7 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 	 			}
 	 		});
 	 			//document.getElementById("payment1").click();
-
-	 		
-	 		
-	 	}
-	 	
+ 
 	 
  }
  
@@ -1869,7 +1875,7 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
  
  function submitPayment(){
 	 //alert("payment");
-	 var custName=document.getElementById("selectCust").value;
+	 var custName=document.getElementById("custId").value;
 	var paidAmt=document.getElementById("paidAmt").value;
 	 var payMode=document.getElementById("payMode").value;  
 	 var discPer=document.getElementById("discPer").value;  
@@ -1906,7 +1912,7 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 			fd.append('discPer',discPer);
 			fd.append('isSMS',isSMS);
 			fd.append('key',key);
-			 alert(key)
+			// alert(key)
 			$("#preloader").show();
 			  $("#status").show();
 			$
@@ -1923,7 +1929,13 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 						  $("#status").hide();
 						 cancelBill();
 							//alert("Bill Genrated Successfully!!!");
-							alertify.success('Bill Genrated Successfully!!!');
+							 
+							if(response.error==false){
+								   
+									alertify.success("Bill genrated successfully !!!");
+								}else{
+									alertify.error(response.message);
+								}
 							if(key>0){
 								window.location = "${pageContext.request.contextPath}/newPos/0";
 							}
@@ -1971,7 +1983,7 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 	
 	function printAndSubmit(){
 		//alert("Ok");
-		 var custName=document.getElementById("selectCust").value;
+		 var custName=document.getElementById("custId").value;
 		 var paidAmt=document.getElementById("paidAmt").value;
 		 var payMode=document.getElementById("payMode").value;  
 		 var discPer=document.getElementById("discPer").value;  
@@ -2018,25 +2030,27 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 		    	   
 		    	   $("#preloader").hide();
 					  $("#status").hide();
-		    	   if (data == "") {
-		    		   alertify.error("Order Not Placed !!");
-				 }else 
-				 {
+		    	  
 					// alert("printing else"+JSON.stringify(data));
 					  //var loginWindow = window.open('', 'UserLogin');
 					 
 					 cancelBill();
 						//document.getElementById("li"+token).style.backgroundColor = "white";
-					   window.open('${pageContext.request.contextPath}/pdfSellBillNewPos?billNo='+ data.sellBillNo+'&type=R');
+					  
 					  //  alert("opened");
-						
+					   if(data.error==false){
+						   window.open('${pageContext.request.contextPath}/pdfSellBillNewPos?billNo='+ data.message+'&type=R');
+							alertify.success("Bill genrated successfully !!!");
+						}else{
+							alertify.error(data.message);
+						}
 						
 						if(key>0){
 							window.location = "${pageContext.request.contextPath}/newPos/0";
 						}
 						 //	
 	                
-					}
+					 
 					 },
 		       error: function(jqXHR, textStatus, errorThrown)
 		       {
@@ -2082,15 +2096,10 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 		//alert("PrintBill");
 		 var pAmt=document.getElementById("finalAmount").innerHTML;
 		 document.getElementById("pAmt").value=pAmt;
-		 var detail =document.getElementById("selectCust").value;
+		 var detail =document.getElementById("custId").value;
 		 document.getElementById("paidAmt").value=pAmt;
 		 
-		 
-		 
-		 if(!detail){
-		 		//$('#error_customer').show()
-			 alertify.error("Please Select Customer!!!!!");
-		 	}else{
+		  
 		 		$.getJSON('${getItemList}',{ajax:true},function(data){
 		 			if(data.length<1){
 		 				//$('#empty_itemList').show()
@@ -2101,13 +2110,7 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 		 			}
 		 		});
 		 		
-		 		
-		 		
-		 		//document.getElementById("payment1").click();
-		 	//	$('#error_customer').hide()
-		 		
-		 		
-		 	}
+		 		 
 	}
 	
 	
@@ -2136,7 +2139,8 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 					mainTr);
 			
 				if(val>0){
-					document.getElementById("selectCust").value="";
+					document.getElementById("custId").value=0;
+					$("#custId").trigger("chosen:updated");
 				}
 			 	
 				document.getElementById("totalCnt").innerHTML="";
@@ -2166,13 +2170,13 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 		   
 		var key =  $('#key').val() ;
 		//var custId =  $('#cust').val() ;
-		var custId =document.getElementById("selectCust").value;
+		var custId =document.getElementById("custId").value;
 		var rowcount = $('#itemTable tr').length;
 		 
 		//alert(rowcount)
 	 if(rowcount>1){
 		 
-		// alert(custId)
+		  
 		 if(custId!=""){
 			 submitBillOnHold();
 		 }else{
@@ -2205,7 +2209,7 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 	function submitBillOnHold() {
 		   
 		var key =  $('#key').val() ;
-		var custId =document.getElementById("selectCust").value;
+		var custId =document.getElementById("custId").value;
 			 
 				if(custId!="" || key>0 ){
 					  
