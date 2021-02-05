@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.ItemList;
+import org.springframework.context.annotation.Scope;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -56,11 +57,12 @@ import com.monginis.ops.model.newpos.ItemListForCustomerBill;
 import com.monginis.ops.model.newpos.NewPosBillItem;
 
 @Controller
+@Scope("session")
 public class NewOpsCustomerBillController {
 
 	public int frGstType = 0;
 
-	List<NewPosBillItem> billItemList = new ArrayList<NewPosBillItem>();
+	//List<NewPosBillItem> billItemList = new ArrayList<NewPosBillItem>();
 
 	List<BillItemList> itemList = new ArrayList<BillItemList>();
 
@@ -72,7 +74,7 @@ public class NewOpsCustomerBillController {
 	@RequestMapping(value = "/newPos/{type}", method = RequestMethod.GET)
 	public ModelAndView displayNewPOs1(@PathVariable int type, HttpServletRequest request,
 			HttpServletResponse response) {
-		itemList.clear();
+		itemList = new ArrayList<BillItemList>();
 		RestTemplate restTemplate = new RestTemplate();
 		ModelAndView model = new ModelAndView("newPos");
 		List<SubCategory> subCatResp = new ArrayList<SubCategory>();
@@ -214,8 +216,11 @@ public class NewOpsCustomerBillController {
 
 			model.addObject("subCatList", subCatResp);
 
+			model.addObject("holdingList", hashMap);
+
 			if (type == 1) {
 				model.addObject("holdBill", hashMap.get(key));
+				System.out.println(hashMap.get(key));
 				itemList = hashMap.get(key).getItemList();
 				model.addObject("key", key);
 				model.addObject("tempCust", 0);
@@ -237,6 +242,27 @@ public class NewOpsCustomerBillController {
 
 		return model;
 
+	}
+
+	@RequestMapping(value = "/revertHoldBillOnCurrent", method = RequestMethod.POST)
+	@ResponseBody
+	public Info revertHoldBillOnCurrent(HttpServletRequest request, HttpServletResponse responsel) {
+
+		Info info = new Info();
+
+		try {
+
+			int index = Integer.parseInt(request.getParameter("key"));
+			key = index;
+
+			info.setError(false);
+			info.setMessage("Successfully");
+		} catch (Exception e) {
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage("failed");
+		}
+		return info;
 	}
 
 	@RequestMapping(value = "/cancelFromHoldBill", method = RequestMethod.POST)
@@ -267,21 +293,21 @@ public class NewOpsCustomerBillController {
 		try {
 
 			int key = Integer.parseInt(request.getParameter("key"));
-			int custId = Integer.parseInt(request.getParameter("custId"));
+			// int custId = Integer.parseInt(request.getParameter("custId"));
 			String holdCustName = request.getParameter("holdCustName");
 
 			if (hashMap.containsKey(key)) {
-				hashMap.get(key).setCustId(custId);
+				hashMap.get(key).setTempCustomerName(holdCustName);
 				hashMap.get(key).setItemList(itemList);
 			} else {
 				CustomerBillOnHold addNew = new CustomerBillOnHold();
 				tempBillNo = tempBillNo + 1;
-				addNew.setCustId(custId);
+				addNew.setCustId(0);
 				addNew.setItemList(itemList);
 				addNew.setTempCustomerName(holdCustName);
 				hashMap.put(tempBillNo, addNew);
 			}
-			// System.out.println(hashMap);
+			System.out.println(hashMap);
 			info.setError(false);
 			info.setMessage("Successfully");
 		} catch (Exception e) {
@@ -460,7 +486,7 @@ public class NewOpsCustomerBillController {
 		SellBillHeader sellBillHeaderRes = new SellBillHeader();
 
 		try {
-
+			int index = Integer.parseInt(request.getParameter("key"));
 			String custDetails = request.getParameter("custName");
 			// float paidAmt= Float.parseFloat(request.getParameter("paidAmt"));
 			int payMode = Integer.parseInt(request.getParameter("payMode"));
@@ -653,6 +679,7 @@ public class NewOpsCustomerBillController {
 
 			}
 			itemList = new ArrayList<BillItemList>();
+			hashMap.remove(index);
 		} catch (Exception e) {
 			System.out.println("Exception:" + e.getMessage());
 			e.printStackTrace();
@@ -810,9 +837,8 @@ public class NewOpsCustomerBillController {
 
 	@RequestMapping(value = "/cancelBill", method = RequestMethod.GET)
 	public @ResponseBody List<BillItemList> cancelBill(HttpServletRequest request, HttpServletResponse response) {
-		System.err.println("In cancelBill" + itemList.size());
-		itemList.clear();
-		System.err.println(itemList.size());
+
+		itemList = new ArrayList<BillItemList>();
 
 		return itemList;
 

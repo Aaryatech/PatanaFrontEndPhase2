@@ -205,6 +205,7 @@ label:before {
 	<c:url value="/cancelBill" var="cancelBill"></c:url>
 	<c:url var="cancelFromHoldBill" value="/cancelFromHoldBill" />
 	<c:url var="billOnHold" value="/billOnHold" />
+	<c:url var="revertHoldBillOnCurrent" value="/revertHoldBillOnCurrent" />
 	<div style="display: none;">
 		<a href="${pageContext.request.contextPath}/newPos" id="relod"></a>
 	</div>
@@ -241,8 +242,7 @@ label:before {
 								</c:otherwise>
 							</c:choose>
 						</c:forEach>
-						<option value="1" style="text-align: left;" selected>1111</option>
-						<option value="2" style="text-align: left;" selected>2222</option>
+
 					</select>
 				</div>
 				<div class="clr"></div>
@@ -550,6 +550,7 @@ label:before {
 							<div class="customer_two small_size">
 								<input name="selectCust" list="templates" id="selectCust"
 									type="text" class="input_add" placeholder="Add Customer"
+									value="${holdBill.tempCustomerName}"
 									onchange="getCustInfo(this.value)" /> <span
 									id="error_customer" style="display: none; color: red">Please
 									Select Customer</span>
@@ -596,14 +597,12 @@ label:before {
 											<c:set var="totalItemCount" value="${totalItemCount+1}"></c:set>
 											<tr>
 												<td>${count.index+1}</td>
-												<td style="">${itemList.itemName}</td>
+												<td style=""><div
+														style="width: 100%; white-space: normal;">${itemList.itemName}</div></td>
 												<td style="text-align: right;"
 													onclick="opnItemPopup('${itemList.itemId}','${itemList.itemName}','${itemList.catId}','${itemList.aviableQty}','${itemList.itemTax}','${itemList.itemTax}','${itemList.itemMrp}','${itemList.itemUom}',0)">
 
-													<fmt:formatNumber type="number" groupingUsed="false"
-														value="${itemList.itemQty}" maxFractionDigits="2"
-														minFractionDigits="2" />
-												</td>
+													${itemList.itemQty}</td>
 												<td style="text-align: right;"><fmt:formatNumber
 														type="number" groupingUsed="false"
 														value="${itemList.itemMrp}" maxFractionDigits="2"
@@ -618,8 +617,9 @@ label:before {
 											</tr>
 											<c:set var="totalTaxableAmt"
 												value="${totalTaxableAmt+itemList.payableAmt}"></c:set>
-											<c:set var="totalTaxAmt" value="${totalTaxAmt+itemList.tax}"></c:set>
-											<c:set var="totalAmt" value="${totalAmt+itemList.total}"></c:set>
+											<c:set var="totalTaxAmt"
+												value="${totalTaxAmt+itemList.payableTax}"></c:set>
+											<c:set var="totalAmt" value="${totalAmt+itemList.payableAmt}"></c:set>
 										</c:forEach>
 
 									</tbody>
@@ -664,8 +664,8 @@ label:before {
 								<td>&nbsp;</td>
 								<td style="font-weight: 600; text-align: right;" align="right"
 									id="finalAmount"><fmt:formatNumber type="number"
-										groupingUsed="false" value="${totalAmt}" maxFractionDigits="2"
-										minFractionDigits="2" /></td>
+										groupingUsed="false" value="${totalAmt+totalTaxAmt}"
+										maxFractionDigits="2" minFractionDigits="2" /></td>
 							</tr>
 						</table>
 					</div>
@@ -1361,7 +1361,20 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 					//alert(data.length);
 						document.getElementById("enterQty").value=1;
 						document.getElementById("closeAddcust").click();
-						$('#itemTable td').remove();
+						$('#itemTable tr').remove();
+						
+						var mainTrStr = '<tr>'
+							+'<th style="text-align: center;" width="2%">Sr</th>'
+							+'<th style="text-align: center;">Product</th>'
+							+'<th style="text-align: center;" width="10%">QTY</th>' 
+							+'<th style="text-align: center;" width="13%">Price</th>' 
+							+'<th style="text-align: center;" width="13%">Total</th>'
+							+'<th style="text-align: center;" width="2%">Del</th>'
+							+'</tr>';
+						var mainTr = $(mainTrStr);
+						$('#itemTable tbody').append(
+								mainTr);
+						
 						$
 						.each(
 								data,
@@ -1379,7 +1392,7 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 							.append($(
 									'<td ></td>')
 									.html(key+1));
-								tr.append($('<td  ></td>').html(item.itemName));
+								tr.append($('<td  ></td>').html('<div style="width: 100%; white-space: normal;">'+item.itemName+'</div>'));
 								tr.append($('<td   style="text-align: right;"  class="initialism addcust1_open"  onclick="opnItemPopup('+item.itemId+',\'' + item.itemName + '\','+item.catId+','+item.aviableQty+',' + item.itemTax + ',' + item.itemTax + ',' + item.itemMrp + ',\'' + item.itemUom + '\','+0+')" > </td>').html(item.itemQty));
 								tr.append($('<td style="text-align: right;"></td>').html(item.itemMrp.toFixed(2)));
 								tr.append($('<td style="text-align: right;" ></td>').html(item.calPrice.toFixed(2)));
@@ -1643,7 +1656,19 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 						 $(".scrollbar-handle").css("top", "0");
 						document.getElementById("enterQty").value=1;
 						document.getElementById("closeAddcust").click();
-						$('#itemTable td').remove();
+						$('#itemTable tr').remove();
+						
+						var mainTrStr = '<tr>'
+							+'<th style="text-align: center;" width="2%">Sr</th>'
+							+'<th style="text-align: center;">Product</th>'
+							+'<th style="text-align: center;" width="10%">QTY</th>' 
+							+'<th style="text-align: center;" width="13%">Price</th>' 
+							+'<th style="text-align: center;" width="13%">Total</th>'
+							+'<th style="text-align: center;" width="2%">Del</th>'
+							+'</tr>';
+						var mainTr = $(mainTrStr);
+						$('#itemTable tbody').append(
+								mainTr);
 						
 						$
 						.each(
@@ -1663,7 +1688,7 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 							.append($(
 									'<td ></td>')
 									.html(key+1));
-								tr.append($('<td></td>').html(item.itemName));
+								tr.append($('<td></td>').html('<div style="width: 100%; white-space: normal;">'+item.itemName+'</div>'));
 								tr.append($('<td style="text-align: right;" class="initialism addcust1_open"  onclick="opnItemPopup('+item.itemId+',\'' + item.itemName + '\','+item.catId+','+item.aviableQty+',' + item.itemTax + ',' + item.itemTax + ',' + item.itemMrp + ',\'' + item.itemUom + '\','+0+')" > </td>').html(item.itemQty));
 								tr.append($('<td style="text-align: right;"></td>').html(item.itemMrp.toFixed(2)));
 								tr.append($('<td style="text-align: right;"></td>').html(item.calPrice.toFixed(2)));
@@ -1681,7 +1706,7 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 						//alert(tax);
 						document.getElementById("totalTax").innerHTML=tax.toFixed(2);
 						//alert(finalAmt);
-						document.getElementById("finalAmount").innerHTML=finalAmt.toFixed(2);
+						document.getElementById("finalAmount").innerHTML=total.toFixed(2);
 						document.getElementById("tblQty").value="";
 		       },
 		       error: function(jqXHR, textStatus, errorThrown)
@@ -1754,14 +1779,14 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 	 var detail =document.getElementById("selectCust").value;
 	if(!detail){
 	 		//$('#error_customer').show()
-		alert("Please Select Customer!!!!!");
+		alertify.error("Please Select Customer!!!!!");
 	 	}else{
 	 		
 	 		$('#error_customer').hide()
 	 		$.getJSON('${getItemList}',{ajax:true},function(data){
 	 			if(data.length<1){
 	 				//$('#empty_itemList').show()
-	 				alert("Please Select Atleast One Item To Genrate Bill!!!!!");
+	 				alertify.error("Please Select Atleast One Item To Genrate Bill!!!!!");
 	 			}else{
 	 				$('#empty_itemList').hide()
 	 				document.getElementById("payment1").click();
@@ -1782,13 +1807,13 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 	 
 	 if(!detail){
 	 		//$('#error_customer').show()
-	 		alert("Please Select Customer!!!!!");
+	 		alertify.error("Please Select Customer!!!!!");
 	 	}else{
 	 		$('#error_customer').hide()
 	 		$.getJSON('${getItemList}',{ajax:true},function(data){
 	 			if(data.length<1){
 	 				//$('#empty_itemList').show()
-	 				alert("Please Select Atleast One Item To Genrate Bill!!!!!");
+	 				alertify.error("Please Select Atleast One Item To Genrate Bill!!!!!");
 	 				
 	 			}else{
 	 				$('#empty_itemList').hide()
@@ -1869,7 +1894,8 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 	 
 	 
 	  if(isError==false){
-		   
+		  var key=document.getElementById("key").value;
+		  document.getElementById("closePay").click();
 			// will fade out the whole DIV that covers the website.
 			 
 	 		   var fd=new FormData();
@@ -1879,6 +1905,8 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 			fd.append('payableAmt',payableAmt);
 			fd.append('discPer',discPer);
 			fd.append('isSMS',isSMS);
+			fd.append('key',key);
+			 alert(key)
 			$("#preloader").show();
 			  $("#status").show();
 			$
@@ -1896,7 +1924,9 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 						 cancelBill();
 							//alert("Bill Genrated Successfully!!!");
 							alertify.success('Bill Genrated Successfully!!!');
-							 document.getElementById("closePay").click();
+							if(key>0){
+								window.location = "${pageContext.request.contextPath}/newPos/0";
+							}
 							 //document.getElementById("relod").click();
 							 
 						  
@@ -1928,12 +1958,12 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 				  if(parseInt(qty)<= parseInt(avQty)){
 					  addItem(flag);
 				  }else{
-					  alert("Please Enter Quatity In Aviable Range");
+					  alertify.error("Please Enter Quatity In Aviable Range");
 				 		}
 			}
 		 
 		}else{
-			alert("Enter Valid QTY ");
+			alertify.error("Enter Valid QTY ");
 			document.getElementById("enterQty").value=1;
 		}
  }
@@ -1964,8 +1994,10 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 		 
 		 
 		 if(isError==false){
-			 
-			 
+			 var key =  $("#key").val();
+			 $("#preloader").show();
+			  $("#status").show();
+			  document.getElementById("closePay").click();
 			 var fd=new FormData();
 				fd.append('custName',custName);
 				fd.append('paidAmt',payableAmt);
@@ -1973,31 +2005,36 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 				fd.append('payableAmt',payableAmt);
 				fd.append('discPer',discPer);
 				fd.append('isSMS',isSMS);
-			  
+				fd.append('key',key);
 			  $.ajax({
 		       url: '${pageContext.request.contextPath}/genrateSellBill',
 		       type: 'POST',
 		       data: fd,
 		       dataType: 'json',
 		       processData: false,
-		       contentType: false,
-		       async:false,
+		       contentType: false, 
 		       success: function(data, textStatus, jqXHR)
 		       {
+		    	   
+		    	   $("#preloader").hide();
+					  $("#status").hide();
 		    	   if (data == "") {
-						alert("Order Not Placed !!");
+		    		   alertify.error("Order Not Placed !!");
 				 }else 
 				 {
 					// alert("printing else"+JSON.stringify(data));
 					  //var loginWindow = window.open('', 'UserLogin');
 					 
-					 
+					 cancelBill();
 						//document.getElementById("li"+token).style.backgroundColor = "white";
 					   window.open('${pageContext.request.contextPath}/pdfSellBillNewPos?billNo='+ data.sellBillNo+'&type=R');
 					  //  alert("opened");
 						
-						document.getElementById("closePay").click();
-						 document.getElementById("relod").click();	
+						
+						if(key>0){
+							window.location = "${pageContext.request.contextPath}/newPos/0";
+						}
+						 //	
 	                
 					}
 					 },
@@ -2052,12 +2089,12 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 		 
 		 if(!detail){
 		 		//$('#error_customer').show()
-			 alert("Please Select Customer!!!!!");
+			 alertify.error("Please Select Customer!!!!!");
 		 	}else{
 		 		$.getJSON('${getItemList}',{ajax:true},function(data){
 		 			if(data.length<1){
 		 				//$('#empty_itemList').show()
-		 				alert("Please Select Atleast One Item To Genrate Bill!!!!!");
+		 				alertify.error("Please Select Atleast One Item To Genrate Bill!!!!!");
 		 			}else{
 		 				$('#empty_itemList').hide()
 		 				printAndSubmit();
@@ -2083,7 +2120,21 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 		//	alert(data.length);
 			if(data.length==0){
 				//alert("0");
-				$("#itemTable tbody tr").detach(); 
+				 
+				$('#itemTable tr').remove();
+				
+				var mainTrStr = '<tr>'
+				+'<th style="text-align: center;" width="2%">Sr</th>'
+				+'<th style="text-align: center;">Product</th>'
+				+'<th style="text-align: center;" width="10%">QTY</th>' 
+				+'<th style="text-align: center;" width="13%">Price</th>' 
+				+'<th style="text-align: center;" width="13%">Total</th>'
+				+'<th style="text-align: center;" width="2%">Del</th>'
+				+'</tr>';
+			var mainTr = $(mainTrStr);
+			$('#itemTable tbody').append(
+					mainTr);
+			
 				if(val>0){
 					document.getElementById("selectCust").value="";
 				}
@@ -2118,9 +2169,11 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 		var custId =document.getElementById("selectCust").value;
 		var rowcount = $('#itemTable tr').length;
 		 
+		//alert(rowcount)
 	 if(rowcount>1){
 		 
-		 if(!custId){
+		// alert(custId)
+		 if(custId!=""){
 			 submitBillOnHold();
 		 }else{
 			 alertify.error("Select Customer");
@@ -2132,24 +2185,40 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 		    
 	}
 	
+	function revertHoldBillOnCurrent() {
+		   
+		var index =  $('#holdBillNo').val() ;
+		  $
+		.post(
+				'${revertHoldBillOnCurrent}',
+				{
+					key : index,  
+					ajax : 'true'
+				},
+				function(data) {
+					  
+					window.location = "${pageContext.request.contextPath}/newPos/1";
+							 
+				});   
+	}
+	
 	function submitBillOnHold() {
 		   
 		var key =  $('#key').val() ;
 		var custId =document.getElementById("selectCust").value;
 			 
-				if(!custId || key>0 ){
+				if(custId!="" || key>0 ){
 					  
 					  $.post(
 							'${billOnHold}',
 							{
 								key : key, 
-								custId : custId,
-								holdCustName : 'aa',
+								holdCustName : custId,
 								ajax : 'true'
 							},
 							function(data) {
 								
-								window.location = "${pageContext.request.contextPath}/newcustomerbill/0";
+								window.location = "${pageContext.request.contextPath}/newPos/0";
 										 
 							});  
 				}else{
