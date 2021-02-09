@@ -4,15 +4,15 @@ import java.util.List;
 
 public class CustomerBillOnHold {
 
-	private int custId;
+	private String custId;
 	private String tempCustomerName;
 	private List<BillItemList> itemList;
 
-	public int getCustId() {
+	public String getCustId() {
 		return custId;
 	}
 
-	public void setCustId(int custId) {
+	public void setCustId(String custId) {
 		this.custId = custId;
 	}
 

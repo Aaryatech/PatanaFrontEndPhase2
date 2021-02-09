@@ -12,6 +12,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -67,6 +68,8 @@ public class NewOpsCustomerBillController {
 	List<BillItemList> itemList = new ArrayList<BillItemList>();
 
 	public List<Customer> custometList = new ArrayList<Customer>();
+	public List<Customer> customerTempList = new ArrayList<Customer>();
+
 	LinkedHashMap<Integer, CustomerBillOnHold> hashMap = new LinkedHashMap<Integer, CustomerBillOnHold>();
 	int key = 0;
 	int tempBillNo = 0;
@@ -221,17 +224,29 @@ public class NewOpsCustomerBillController {
 				Customer[] custResp = restTemplate.postForObject(Constant.URL + "getAllCustomerForPos", map,
 						Customer[].class);
 				custometList = new ArrayList<Customer>(Arrays.asList(custResp));
-				model.addObject("customerList", custometList);
 				CustomerBillOnHold customerBillOnHold = new CustomerBillOnHold();
 				itemList = new ArrayList<>();
 				customerBillOnHold.setItemList(itemList);
 				model.addObject("key", 0);
 				model.addObject("holdBill", customerBillOnHold);
 				model.addObject("tempCust", 0);
-				// e.printStackTrace();
+				for (int i = 0; i < customerTempList.size(); i++) {
+
+					System.out.println("customerTempList.get " + customerTempList.get(i));
+					String phoneno = customerTempList.get(i).getPhoneNo();
+
+					Optional<Customer> result = custometList.stream()
+							.filter(obj -> phoneno.equalsIgnoreCase(obj.getPhoneNo())).findFirst();
+					System.out.println("result " + result);
+					if (result.isEmpty()) {
+						custometList.add(customerTempList.get(i));
+
+					}
+
+				}
 
 			}
-
+			model.addObject("customerList", custometList);
 		} catch (Exception e) {
 
 			e.printStackTrace();
@@ -290,21 +305,22 @@ public class NewOpsCustomerBillController {
 		try {
 
 			int key = Integer.parseInt(request.getParameter("key"));
-			int custId = Integer.parseInt(request.getParameter("holdCustName"));
-			// String holdCustName = request.getParameter("holdCustName");
+			// int custId = Integer.parseInt(request.getParameter("holdCustName"));
+			String holdCustName = request.getParameter("holdCustName");
+
+			Optional<Customer> result = custometList.stream()
+					.filter(obj -> holdCustName.equalsIgnoreCase(obj.getPhoneNo())).findFirst();
 
 			if (hashMap.containsKey(key)) {
-				hashMap.get(key).setCustId(custId);
-				hashMap.get(key).setTempCustomerName(
-						custometList.get(custId).getUserName() + " - " + custometList.get(custId).getPhoneNo());
+				hashMap.get(key).setCustId(holdCustName);
+				hashMap.get(key).setTempCustomerName(result.get().getUserName() + " - " + result.get().getPhoneNo());
 				hashMap.get(key).setItemList(itemList);
 			} else {
 				CustomerBillOnHold addNew = new CustomerBillOnHold();
 				tempBillNo = tempBillNo + 1;
-				addNew.setCustId(custId);
+				addNew.setCustId(holdCustName);
 				addNew.setItemList(itemList);
-				addNew.setTempCustomerName(
-						custometList.get(custId).getUserName() + " - " + custometList.get(custId).getPhoneNo());
+				addNew.setTempCustomerName(result.get().getUserName() + " - " + result.get().getPhoneNo());
 				hashMap.put(tempBillNo, addNew);
 			}
 			System.out.println(hashMap);
@@ -436,7 +452,10 @@ public class NewOpsCustomerBillController {
 
 			flag = 1;
 			info.setError(false);
-			info.setMessage(String.valueOf(custometList.size()));
+			info.setMessage(mob);
+
+			customerTempList.add(cust);
+
 		} catch (Exception e) {
 			// TODO: handle exception
 			System.err.println("Exception Occuered In Catach Block Of /addCustomer");
@@ -489,18 +508,21 @@ public class NewOpsCustomerBillController {
 
 		try {
 			int index = Integer.parseInt(request.getParameter("key"));
-			int custDetails = Integer.parseInt(request.getParameter("custName"));
+			String custDetails = request.getParameter("custName");
 			// float paidAmt= Float.parseFloat(request.getParameter("paidAmt"));
 			int payMode = Integer.parseInt(request.getParameter("payMode"));
 			// System.err.println(custDetails+"cust");
 			float discountPer = Float.parseFloat(request.getParameter("discPer"));
 			float payableAmount = Float.parseFloat(request.getParameter("payableAmt"));
 
-			cName = custometList.get(custDetails).getUserName();
+			Optional<Customer> result = custometList.stream()
+					.filter(obj -> custDetails.equalsIgnoreCase(obj.getPhoneNo())).findFirst();
 
-			cPhone = custometList.get(custDetails).getPhoneNo();
-
-			cGst = custometList.get(custDetails).getGstNo();
+			if (!result.isEmpty()) {
+				cName = result.get().getUserName();
+				cPhone = result.get().getPhoneNo();
+				cGst = result.get().getGstNo();
+			}
 
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 			LocalDate localDate = LocalDate.now();

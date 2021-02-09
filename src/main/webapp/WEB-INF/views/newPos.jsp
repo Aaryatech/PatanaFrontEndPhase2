@@ -1511,10 +1511,10 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
  
 				var dataValue=data[i].userName+"~"+data[i].phoneNo+"~"+data[i].gstNo;
 				
-				if(val==i){
-					$("#custId").append($("<option selected></option>").attr("value",i).text(dataValue));
+				if(val==data[i].phoneNo){
+					$("#custId").append($("<option selected></option>").attr("value",data[i].phoneNo).text(dataValue));
 				}else{
-					$("#custId").append($("<option ></option>").attr("value",i).text(dataValue));
+					$("#custId").append($("<option ></option>").attr("value",data[i].phoneNo).text(dataValue));
 				}
 				
 			}
@@ -1593,7 +1593,7 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 		       success: function(data, textStatus, jqXHR)
 		       {
 		    	   if(data.error==false){
-						getCustomerList((data.message-1));
+						getCustomerList((data.message));
 							alertify.success("Customer Addeed");
 							document.getElementById("clsAddCust").click();
 							//document.getElementById("selectCust").value=name+"~"+mob+"~"+gst;
