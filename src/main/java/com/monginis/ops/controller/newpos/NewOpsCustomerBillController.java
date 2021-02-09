@@ -12,8 +12,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -54,6 +57,7 @@ import com.monginis.ops.model.frsetting.FrSetting;
 import com.monginis.ops.model.newpos.BillItemList;
 import com.monginis.ops.model.newpos.Customer;
 import com.monginis.ops.model.newpos.CustomerBillOnHold;
+import com.monginis.ops.model.newpos.ErrorMsgWithItemList;
 import com.monginis.ops.model.newpos.ItemListForCustomerBill;
 import com.monginis.ops.model.newpos.NewPosBillItem;
 
@@ -69,10 +73,12 @@ public class NewOpsCustomerBillController {
 
 	public List<Customer> custometList = new ArrayList<Customer>();
 	public List<Customer> customerTempList = new ArrayList<Customer>();
+	List<NewPosBillItem> showItemList = new ArrayList<NewPosBillItem>();
 
 	LinkedHashMap<Integer, CustomerBillOnHold> hashMap = new LinkedHashMap<Integer, CustomerBillOnHold>();
 	int key = 0;
 	int tempBillNo = 0;
+	int calStock = 0;
 
 	@RequestMapping(value = "/newPos/{type}", method = RequestMethod.GET)
 	public ModelAndView displayNewPOs1(@PathVariable int type, HttpServletRequest request,
@@ -91,18 +97,22 @@ public class NewOpsCustomerBillController {
 
 		try {
 
+			calStock = 1;
+
 			map.add("frId", frDetails.getFrId());
 
-			ParameterizedTypeReference<List<PostFrItemStockHeader>> typeRef1 = new ParameterizedTypeReference<List<PostFrItemStockHeader>>() {
-			};
-			ResponseEntity<List<PostFrItemStockHeader>> responseEntity1 = restTemplate.exchange(
-					Constant.URL + "getCurrentMonthOfCatId", HttpMethod.POST, new HttpEntity<>(map), typeRef1);
-			List<PostFrItemStockHeader> list = responseEntity1.getBody();
+			if (calStock == 1) {
+				ParameterizedTypeReference<List<PostFrItemStockHeader>> typeRef1 = new ParameterizedTypeReference<List<PostFrItemStockHeader>>() {
+				};
+				ResponseEntity<List<PostFrItemStockHeader>> responseEntity1 = restTemplate.exchange(
+						Constant.URL + "getCurrentMonthOfCatId", HttpMethod.POST, new HttpEntity<>(map), typeRef1);
+				List<PostFrItemStockHeader> list = responseEntity1.getBody();
 
-			for (int i = 0; i < list.size(); i++) {
+				for (int i = 0; i < list.size(); i++) {
 
-				runningMonth = list.get(i).getMonth();
+					runningMonth = list.get(i).getMonth();
 
+				}
 			}
 
 			String items;
@@ -187,24 +197,24 @@ public class NewOpsCustomerBillController {
 			map.add("year", yearFormat.format(todaysDate));
 
 			map.add("itemList", items);
+			map.add("flag", calStock);
 
 			System.out.println(map);
 			NewPosBillItem[] biiItleListArr = restTemplate.postForObject(Constant.URL + "getItemListWithCS", map,
 					NewPosBillItem[].class);
-			List<NewPosBillItem> BillItemsRespList = new ArrayList<NewPosBillItem>(Arrays.asList(biiItleListArr));
+			showItemList = new ArrayList<NewPosBillItem>(Arrays.asList(biiItleListArr));
 
 			String jsonStr = "";
 			ObjectMapper Obj = new ObjectMapper();
 
 			try {
-				jsonStr = Obj.writeValueAsString(BillItemsRespList);
+				jsonStr = Obj.writeValueAsString(showItemList);
 
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 
 			model.addObject("jsonItemList", jsonStr);
-			model.addObject("ItemList", BillItemsRespList);
 
 			SubCategory[] subCatArr = restTemplate.getForObject(Constant.URL + "getAllSubCatList", SubCategory[].class);
 			subCatResp = new ArrayList<SubCategory>(Arrays.asList(subCatArr));
@@ -246,7 +256,33 @@ public class NewOpsCustomerBillController {
 				}
 
 			}
+
+			if (calStock == 1) {
+
+				for (Entry<Integer, CustomerBillOnHold> entry : hashMap.entrySet()) {
+					// System.out.println(entry.getKey() + "/" + entry.getValue());
+					List<BillItemList> holBillItemList = entry.getValue().getItemList();
+
+					for (int i = 0; i < holBillItemList.size(); i++) {
+						for (int j = 0; j < showItemList.size(); j++) {
+
+							if (Integer.parseInt(showItemList.get(j).getItemId()) == holBillItemList.get(i)
+									.getItemId()) {
+								showItemList.get(j).setTotalRegStock(
+										showItemList.get(j).getTotalRegStock() - holBillItemList.get(i).getItemQty());
+								break;
+							}
+
+						}
+
+					}
+				}
+				// List<BillItemList> holBillItemList =hashMap.get
+
+			}
 			model.addObject("customerList", custometList);
+			model.addObject("calStock", calStock);
+			model.addObject("ItemList", showItemList);
 		} catch (Exception e) {
 
 			e.printStackTrace();
@@ -336,8 +372,11 @@ public class NewOpsCustomerBillController {
 
 	@RequestMapping(value = "/addItemInBillLIst", method = RequestMethod.POST)
 	@ResponseBody
-	public List<BillItemList> addItemInBillLIst(HttpServletRequest request, HttpServletResponse response, Model model) {
-		System.err.println("In addItemInBillLIst ");
+	public ErrorMsgWithItemList addItemInBillLIst(HttpServletRequest request, HttpServletResponse response,
+			Model model) {
+
+		ErrorMsgWithItemList errorMsg = new ErrorMsgWithItemList();
+
 		try {
 
 			String itemName = request.getParameter("itemName");
@@ -359,55 +398,135 @@ public class NewOpsCustomerBillController {
 
 			for (int i = 0; i < itemList.size(); i++) {
 				if (itemList.get(i).getItemId() == itemId) {
-					itemList.get(i).setItemQty(itemQty);
-					// float taxAmt=(price/100)*100;
-					itemList.get(i).setItemName(itemName);
-					itemList.get(i).setItemMrp(itemMrp);
-					itemList.get(i).setCalPrice(price);
-					itemList.get(i).setPayableTax(paybeleTax);
-					itemList.get(i).setPayableAmt(paybeleAmt);
-					itemList.get(i).setTax1(tax1);
-					itemList.get(i).setTax2(tax2);
-					itemList.get(i).setCatId(catId);
-					itemList.get(i).setAviableQty(avQty);
-					// System.out.println(itemList.get(i));
+					if (calStock == 1) {
+						for (int j = 0; j < showItemList.size(); j++) {
+							if (Integer.parseInt(showItemList.get(j).getItemId()) == itemId) {
 
+								float curntQty = itemList.get(i).getItemQty() + showItemList.get(j).getTotalRegStock();
+
+								if (curntQty >= itemQty) {
+
+									showItemList.get(j).setTotalRegStock(
+											itemList.get(i).getItemQty() + showItemList.get(j).getTotalRegStock());
+
+									itemList.get(i).setItemQty(itemQty);
+									// float taxAmt=(price/100)*100;
+									itemList.get(i).setItemName(itemName);
+									itemList.get(i).setItemMrp(itemMrp);
+									itemList.get(i).setCalPrice(price);
+									itemList.get(i).setPayableTax(paybeleTax);
+									itemList.get(i).setPayableAmt(paybeleAmt);
+									itemList.get(i).setTax1(tax1);
+									itemList.get(i).setTax2(tax2);
+									itemList.get(i).setCatId(catId);
+									itemList.get(i).setAviableQty(avQty);
+									showItemList.get(j)
+											.setTotalRegStock(showItemList.get(j).getTotalRegStock() - itemQty);
+									errorMsg.setItemList(itemList);
+									errorMsg.setError(false);
+									errorMsg.setMsg("Item added in cart.");
+									break;
+								} else {
+									errorMsg.setItemList(itemList);
+									errorMsg.setError(true);
+									errorMsg.setMsg("Item is out of stock.");
+									System.out.println("Out of Stock...");
+								}
+							}
+						}
+					} else {
+
+						itemList.get(i).setItemQty(itemQty);
+						// float taxAmt=(price/100)*100;
+						itemList.get(i).setItemName(itemName);
+						itemList.get(i).setItemMrp(itemMrp);
+						itemList.get(i).setCalPrice(price);
+						itemList.get(i).setPayableTax(paybeleTax);
+						itemList.get(i).setPayableAmt(paybeleAmt);
+						itemList.get(i).setTax1(tax1);
+						itemList.get(i).setTax2(tax2);
+						itemList.get(i).setCatId(catId);
+						itemList.get(i).setAviableQty(avQty);
+
+						errorMsg.setItemList(itemList);
+						errorMsg.setError(false);
+						errorMsg.setMsg("Item added in cart.");
+
+						break;
+					}
 					flag = 1;
-					System.out.println();
+					break;
 				}
 			}
 
 			if (flag == 0) {
+				if (calStock == 1) {
+					for (int i = 0; i < showItemList.size(); i++) {
+						if (Integer.parseInt(showItemList.get(i).getItemId()) == itemId) {
+							if (showItemList.get(i).getTotalRegStock() >= itemQty) {
+								showItemList.get(i).setTotalRegStock(showItemList.get(i).getTotalRegStock() - itemQty);
+								BillItemList it = new BillItemList();
+								it.setItemId(itemId);
+								it.setItemName(itemName);
+								it.setItemQty(itemQty);
+								it.setItemMrp(itemMrp);
+								it.setCalPrice(price);
+								it.setItemUom(itemUom);
+								it.setItemTax(itemTax);
+								it.setPayableTax(paybeleTax);
+								it.setPayableAmt(paybeleAmt);
+								it.setTax1(tax1);
+								it.setTax2(tax2);
+								it.setCatId(catId);
+								it.setAviableQty(avQty);
+								itemList.add(it);
+								errorMsg.setItemList(itemList);
+								errorMsg.setError(false);
+								errorMsg.setMsg("Item added in cart.");
+								break;
+							} else {
+								errorMsg.setItemList(itemList);
+								errorMsg.setError(true);
+								errorMsg.setMsg("Item is out of stock.");
+								System.out.println("Out of Stock...");
+							}
+						}
 
-				BillItemList it = new BillItemList();
+					}
+				} else {
 
-				it.setItemId(itemId);
-				it.setItemName(itemName);
-				it.setItemQty(itemQty);
-				it.setItemMrp(itemMrp);
-				it.setCalPrice(price);
-				it.setItemUom(itemUom);
-				it.setItemTax(itemTax);
-				it.setPayableTax(paybeleTax);
-				it.setPayableAmt(paybeleAmt);
-				it.setTax1(tax1);
-				it.setTax2(tax2);
-				it.setCatId(catId);
-				it.setAviableQty(avQty);
-				// System.out.println(it);
-				itemList.add(it);
+					BillItemList it = new BillItemList();
+					it.setItemId(itemId);
+					it.setItemName(itemName);
+					it.setItemQty(itemQty);
+					it.setItemMrp(itemMrp);
+					it.setCalPrice(price);
+					it.setItemUom(itemUom);
+					it.setItemTax(itemTax);
+					it.setPayableTax(paybeleTax);
+					it.setPayableAmt(paybeleAmt);
+					it.setTax1(tax1);
+					it.setTax2(tax2);
+					it.setCatId(catId);
+					it.setAviableQty(avQty);
+					itemList.add(it);
+					errorMsg.setItemList(itemList);
+					errorMsg.setError(false);
+					errorMsg.setMsg("Item added in cart.");
+				}
 
 			}
-
-			System.err.println("itemList==" + itemList.size());
+			errorMsg.setItemList(itemList);
 
 		} catch (Exception e) {
 			// TODO: handle exception
-			System.err.println("Exception Occured In Catch Block Of /addItemInBillLIst Mapping");
+			errorMsg.setItemList(itemList);
+			errorMsg.setError(true);
+			errorMsg.setMsg("Error while adding item in cart.");
 			e.printStackTrace();
 		}
 
-		return itemList;
+		return errorMsg;
 	}
 
 	@RequestMapping(value = "/getCustomerList", method = RequestMethod.GET)
@@ -472,16 +591,26 @@ public class NewOpsCustomerBillController {
 	@RequestMapping(value = "/deleteItem", method = RequestMethod.POST)
 	@ResponseBody
 	public List<BillItemList> deleteItem(HttpServletRequest request, HttpServletResponse response) {
-		System.err.println("In Dlete Item From ItemList");
+		// System.err.println("In Dlete Item From ItemList");
 		try {
 
 			int id = Integer.parseInt(request.getParameter("id"));
 
-			System.err.println("id =" + id);
 			for (int i = 0; i < itemList.size(); i++) {
 				if (itemList.get(i).getItemId() == id) {
-					itemList.remove(i);
+					if (calStock == 1) {
+						for (int j = 0; j < showItemList.size(); j++) {
 
+							if (Integer.parseInt(showItemList.get(j).getItemId()) == itemList.get(i).getItemId()) {
+								showItemList.get(j).setTotalRegStock(
+										showItemList.get(j).getTotalRegStock() + itemList.get(i).getItemQty());
+								break;
+
+							}
+						}
+					}
+					itemList.remove(i);
+					break;
 				}
 			}
 
@@ -619,6 +748,15 @@ public class NewOpsCustomerBillController {
 				sellBillDetail.setTotalTax(totalTax);
 
 				sellBillDetailList.add(sellBillDetail);
+
+				/*
+				 * for (int j = 0; j < submitSellBillItemList.size(); j++) { if
+				 * (submitSellBillItemList.get(j).getItemId() == itemList.get(i).getItemId()) {
+				 * submitSellBillItemList.get(j).setItemQty(itemList.get(i).getItemQty());
+				 * break; }
+				 * 
+				 * }
+				 */
 
 			}
 

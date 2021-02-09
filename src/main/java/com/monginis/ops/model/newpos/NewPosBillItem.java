@@ -19,7 +19,7 @@ public class NewPosBillItem {
 
 	
 
-	private int totalRegStock;
+	public float totalRegStock;
 
 	private int subCatId;
 
@@ -114,11 +114,11 @@ public class NewPosBillItem {
 		this.itemTax3 = itemTax3;
 	}
 
-	public int getTotalRegStock() {
+	public float getTotalRegStock() {
 		return totalRegStock;
 	}
 
-	public void setTotalRegStock(int totalRegStock) {
+	public void setTotalRegStock(float totalRegStock) {
 		this.totalRegStock = totalRegStock;
 	}
 

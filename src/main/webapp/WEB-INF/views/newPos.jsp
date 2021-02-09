@@ -307,15 +307,29 @@ label:before {
 								<span class="slider round"></span>
 						</label>
 
-						</span> <span
-							style="padding-top: 0px; float: left; margin-top: 13px; margin-left: 13px; font-size: 16px;"><p
-								class="onoff_btn">Check Stock</p> <i class="fa fa-envelope-o"
-							style="color: yellow"> <label class="switch"> <input
-									type="checkbox" name='checkStock' id='checkStock'
-									onchange="cancelBill(0)" /> <span class="slider round"></span>
-							</label></i> </span>
+						</span>
 
-
+						<c:choose>
+							<c:when test="${calStock==1}">
+								<span
+									style="padding-top: 0px; float: left; margin-top: 13px; margin-left: 13px; font-size: 16px; display: none;"><p
+										class="onoff_btn">Check Stock</p> <i class="fa fa-envelope-o"
+									style="color: yellow"> <label class="switch"> <input
+											type="checkbox" name='checkStock' id='checkStock'
+											onchange="cancelBill(0)" checked="checked" /> <span
+											class="slider round"></span>
+									</label></i> </span>
+							</c:when>
+							<c:otherwise>
+								<span
+									style="padding-top: 0px; float: left; margin-top: 13px; margin-left: 13px; font-size: 16px; display: none;"><p
+										class="onoff_btn">Check Stock</p> <i class="fa fa-envelope-o"
+									style="color: yellow"> <label class="switch"> <input
+											type="checkbox" name='checkStock' id='checkStock'
+											onchange="cancelBill(0)" /> <span class="slider round"></span>
+									</label></i> </span>
+							</c:otherwise>
+						</c:choose>
 
 						<div class="active_list">
 							<span class="marquee_select" id="selected_subcat">All</span>
@@ -590,9 +604,9 @@ label:before {
 								<table id="itemTable">
 									<thead>
 										<tr>
-											<th style="text-align: center;" width="2%">Sr.</th>
-											<th>Product</th>
-											<th style="text-align: center;" width="10%">Qty.</th>
+											<th style="text-align: center;" width="2%">Sr</th>
+											<th style="text-align: center;">Product</th>
+											<th style="text-align: center;" width="10%">Qty</th>
 											<th style="text-align: center;" width="13%">Price</th>
 											<th style="text-align: center;" width="13%">Total</th>
 											<th style="text-align: center;" width="2%">Del</th>
@@ -1334,7 +1348,7 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 		var paybeleTax=((price*100)/(100+itemTax)).toFixed(2);
 		var paybeleAmt=(price-paybeleTax).toFixed(2);
 		
-		 //alert(itemTax);
+		 //alert(itemId);
 		//alert(itemTax);
 		//alert(paybeleTax);
 		//alert(paybeleAmt);
@@ -1370,6 +1384,12 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 					var payableAmt=0;
 					
 					//alert(data.length);
+					
+					if(data.error==false){
+						alertify.success(data.msg);
+					}else{
+						alertify.error(data.msg);
+					}
 						document.getElementById("enterQty").value=1;
 						document.getElementById("closeAddcust").click();
 						$('#itemTable tr').remove();
@@ -1388,7 +1408,7 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 						
 						$
 						.each(
-								data,
+								data.itemList,
 								function(key, item) {
 						
 									 
@@ -1546,7 +1566,7 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 		$('#name_error').show()
 		
 	}else {
-		isError=false;
+	 
 		$('#name_error').hide();
 	}
 	if(!mob){
@@ -1554,7 +1574,7 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 		$('#mob_error').show()
 		
 	}else{
-		isError=false;
+		 
 		$('#mob_error').hide();
 		var phoneno = /^\d{10}$/;
 		if(!mob.match(phoneno)){
@@ -1570,7 +1590,7 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 		$('#gst_error').show()
 		
 	}else{
-		isError=false;
+		 
 		$('#gst_error').hide();
 	}
 	
@@ -1594,7 +1614,7 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 		       {
 		    	   if(data.error==false){
 						getCustomerList((data.message));
-							alertify.success("Customer Addeed");
+							alertify.success("Customer addeed.");
 							document.getElementById("clsAddCust").click();
 							//document.getElementById("selectCust").value=name+"~"+mob+"~"+gst;
 							document.getElementById("custName").value="";
@@ -1963,16 +1983,7 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 		 
 		if(!isNaN(qty) && qty>0){
 			 
-				if(!document.getElementById("checkStock").checked){
-			
 			addItem(flag);
-			}else{
-				  if(parseInt(qty)<= parseInt(avQty)){
-					  addItem(flag);
-				  }else{
-					  alertify.error("Please Enter Quatity In Aviable Range");
-				 		}
-			}
 		 
 		}else{
 			alertify.error("Enter Valid QTY ");

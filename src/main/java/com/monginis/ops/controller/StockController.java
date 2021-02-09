@@ -106,22 +106,22 @@ public class StockController {
 			List<PostFrItemStockHeader> list = restTemplate.postForObject(Constant.URL + "getCurrentMonthOfCatId", map,
 					List.class);
 
-			//System.out.println("list " + list);
+			// System.out.println("list " + list);
 
 			frItemStockHeader = restTemplate.postForObject(Constant.URL + "getRunningMonth", map,
 					PostFrItemStockHeader.class);
 
-			//System.out.println("Fr Opening Stock " + frItemStockHeader.toString());
+			// System.out.println("Fr Opening Stock " + frItemStockHeader.toString());
 			runningMonth = frItemStockHeader.getMonth();
 
 			int monthNumber = runningMonth;
 			String mon = Month.of(monthNumber).name();
 
-			//System.err.println("Month name " + mon);
+			// System.err.println("Month name " + mon);
 			model.addObject("getMonthList", list);
 
 		} catch (Exception e) {
-			//System.out.println("Exception in runningMonth" + e.getMessage());
+			// System.out.println("Exception in runningMonth" + e.getMessage());
 			e.printStackTrace();
 
 		}
@@ -130,7 +130,7 @@ public class StockController {
 
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		Date date = new Date();
-		//System.out.println(dateFormat.format(date));
+		// System.out.println(dateFormat.format(date));
 
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
@@ -138,14 +138,15 @@ public class StockController {
 		Integer dayOfMonth = cal.get(Calendar.DATE);
 
 		Integer calCurrentMonth = cal.get(Calendar.MONTH) + 1;
-		//System.out.println("Current Cal Month " + calCurrentMonth);
+		// System.out.println("Current Cal Month " + calCurrentMonth);
 
-		//System.out.println("Day Of Month is: " + dayOfMonth + "runningMonth" + runningMonth);
+		// System.out.println("Day Of Month is: " + dayOfMonth + "runningMonth" +
+		// runningMonth);
 
 		if (dayOfMonth == Constant.dayOfMonthEnd && runningMonth != calCurrentMonth) {
 
 			isMonthCloseApplicable = true;
-			//System.out.println("Day Of Month End ......");
+			// System.out.println("Day Of Month End ......");
 
 		}
 
@@ -154,14 +155,14 @@ public class StockController {
 			categoryList = restTemplate.getForObject(Constant.URL + "showAllCategory", CategoryList.class);
 
 		} catch (Exception e) {
-			//System.out.println("Exception in getAllGategory" + e.getMessage());
+			// System.out.println("Exception in getAllGategory" + e.getMessage());
 			e.printStackTrace();
 
 		}
 
 		mAllCategoryList = categoryList.getmCategoryList();
 
-		//System.out.println(" All Category " + mAllCategoryList.toString());
+		// System.out.println(" All Category " + mAllCategoryList.toString());
 
 		model.addObject("category", mAllCategoryList);
 		model.addObject("isMonthCloseApplicable", isMonthCloseApplicable);
@@ -358,50 +359,52 @@ public class StockController {
 	public @ResponseBody CurrentStockResponse getMenuListByFr(HttpServletRequest request,
 			HttpServletResponse response) {
 
-		catId = request.getParameter("cat_id");
-		String showOption = request.getParameter("show_option");
-		int selectRate = Integer.parseInt(request.getParameter("selectRate"));
-
+		boolean isMonthCloseApplicable = false;
 		HttpSession session = request.getSession();
+		int selectRate = 0;
 
-		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+		try {
 
-		menuList = (ArrayList<FrMenu>) session.getAttribute("allMenuList");
-		//System.out.println("Menu List " + menuList.toString());
+			catId = request.getParameter("cat_id");
+			String showOption = request.getParameter("show_option");
+			selectRate = Integer.parseInt(request.getParameter("selectRate"));
 
-		int menuId = 0;
-		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 
-		map.add("frId", frDetails.getFrId());
-		RestTemplate restTemplate = new RestTemplate();
+			menuList = (ArrayList<FrMenu>) session.getAttribute("allMenuList");
+			// System.out.println("Menu List " + menuList.toString());
 
-		ParameterizedTypeReference<List<PostFrItemStockHeader>> typeRef1 = new ParameterizedTypeReference<List<PostFrItemStockHeader>>() {
-		};
-		ResponseEntity<List<PostFrItemStockHeader>> responseEntity1 = restTemplate
-				.exchange(Constant.URL + "getCurrentMonthOfCatId", HttpMethod.POST, new HttpEntity<>(map), typeRef1);
-		List<PostFrItemStockHeader> list = responseEntity1.getBody();
-		int intCatId = Integer.parseInt(catId);
-		//System.out.println("## catId" + intCatId);
+			int menuId = 0;
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
-		map = new LinkedMultiValueMap<String, Object>();
-		map.add("frId", frDetails.getFrId());
-		map.add("catId", intCatId);
-		
-		for (int i = 0; i < list.size(); i++)
-		{
-			PostFrItemStockHeader postheader=list.get(i);
-			if(postheader.getCatId()==intCatId)
-			{
-				
-				runningMonth = postheader.getMonth();
+			map.add("frId", frDetails.getFrId());
+			RestTemplate restTemplate = new RestTemplate();
+
+			ParameterizedTypeReference<List<PostFrItemStockHeader>> typeRef1 = new ParameterizedTypeReference<List<PostFrItemStockHeader>>() {
+			};
+			ResponseEntity<List<PostFrItemStockHeader>> responseEntity1 = restTemplate.exchange(
+					Constant.URL + "getCurrentMonthOfCatId", HttpMethod.POST, new HttpEntity<>(map), typeRef1);
+			List<PostFrItemStockHeader> list = responseEntity1.getBody();
+			int intCatId = Integer.parseInt(catId);
+			// System.out.println("## catId" + intCatId);
+
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("frId", frDetails.getFrId());
+			map.add("catId", intCatId);
+
+			for (int i = 0; i < list.size(); i++) {
+				PostFrItemStockHeader postheader = list.get(i);
+				if (postheader.getCatId() == intCatId) {
+
+					runningMonth = postheader.getMonth();
+				}
 			}
-		}
 
-		ParameterizedTypeReference<List<ConfigureFr>> tr = new ParameterizedTypeReference<List<ConfigureFr>>() {
-		};
-		ResponseEntity<List<ConfigureFr>> re = restTemplate.exchange(Constant.URL + "getFrConfByFrAndMenu",
-				HttpMethod.POST, new HttpEntity<>(map), tr);
-		List<ConfigureFr> listConfgFr = re.getBody();
+			ParameterizedTypeReference<List<ConfigureFr>> tr = new ParameterizedTypeReference<List<ConfigureFr>>() {
+			};
+			ResponseEntity<List<ConfigureFr>> re = restTemplate.exchange(Constant.URL + "getFrConfByFrAndMenu",
+					HttpMethod.POST, new HttpEntity<>(map), tr);
+			List<ConfigureFr> listConfgFr = re.getBody();
 
 //		if (catId.equalsIgnoreCase("1")) {
 //
@@ -460,159 +463,163 @@ public class StockController {
 //
 //		}
 //		
-		//System.err.println("Cat Id: " + catId + "running month " + runningMonth);
+			// System.err.println("Cat Id: " + catId + "running month " + runningMonth);
 
-		String itemShow = "";
+			String itemShow = "";
 
-		if (listConfgFr != null) {
-			for (int i = 0; i < listConfgFr.size(); i++) {
+			if (listConfgFr != null) {
+				for (int i = 0; i < listConfgFr.size(); i++) {
 
-				itemShow = itemShow+","+ String.join(",", listConfgFr.get(i).getItemShow());
+					itemShow = itemShow + "," + String.join(",", listConfgFr.get(i).getItemShow());
 
-			}
-		}
-		
-		if(itemShow.length()>0) {
-			itemShow=itemShow.substring(1);
-		}
-		
-
-		//System.err.println("ITEM LIST - " + itemShow);
-
-		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-		DateFormat yearFormat = new SimpleDateFormat("yyyy");
-
-		Date todaysDate = new Date();
-		//System.out.println(dateFormat.format(todaysDate));
-
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(todaysDate);
-
-		cal.set(Calendar.DAY_OF_MONTH, 1);
-
-		Date firstDay = cal.getTime();
-
-		//System.out.println("First Day of month " + firstDay);
-
-		String strFirstDay = dateFormat.format(firstDay);
-
-		//System.out.println("Year " + yearFormat.format(todaysDate));
-		boolean isMonthCloseApplicable = false;
-
-		if (showOption.equals("1")) {
-			map = new LinkedMultiValueMap<String, Object>();
-
-			DateFormat dateFormat1 = new SimpleDateFormat("dd/MM/yyyy");
-			Date date = new Date();
-			//System.out.println(dateFormat1.format(date));
-
-			Calendar cal1 = Calendar.getInstance();
-			cal1.setTime(date);
-
-			int dayOfMonth = cal1.get(Calendar.DATE);
-
-			int calCurrentMonth = cal1.get(Calendar.MONTH) + 1;
-			//System.err.println( "Current Cal Month " + calCurrentMonth + "menuList" + menuList.toString() + "itemShow" + itemShow);
-
-			//System.out.println("Day Of Month is: " + dayOfMonth);
-
-			if (runningMonth < calCurrentMonth) {
-
-				isMonthCloseApplicable = true;
-				//System.out.println("Day Of Month End ......");
-
-			} else if (runningMonth == 12 && calCurrentMonth == 1) {
-				isMonthCloseApplicable = true;
+				}
 			}
 
-			if (isMonthCloseApplicable) {
-				//System.err.println("### Inside iMonthclose app");
-				String strDate;
-				int year;
-				if (runningMonth == 12) {
-					//System.err.println("running month =12");
-					year = (Calendar.getInstance().getWeekYear() - 1);
-					//System.err.println("year value " + year);
-				} else {
-					//System.err.println("running month not eq 12");
-					year = Calendar.getInstance().getWeekYear();
-					//System.err.println("year value " + year);
+			if (itemShow.length() > 0) {
+				itemShow = itemShow.substring(1);
+			}
+
+			// System.err.println("ITEM LIST - " + itemShow);
+
+			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+			DateFormat yearFormat = new SimpleDateFormat("yyyy");
+
+			Date todaysDate = new Date();
+			// System.out.println(dateFormat.format(todaysDate));
+
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(todaysDate);
+
+			cal.set(Calendar.DAY_OF_MONTH, 1);
+
+			Date firstDay = cal.getTime();
+
+			// System.out.println("First Day of month " + firstDay);
+
+			String strFirstDay = dateFormat.format(firstDay);
+
+			// System.out.println("Year " + yearFormat.format(todaysDate));
+
+			if (showOption.equals("1")) {
+				map = new LinkedMultiValueMap<String, Object>();
+
+				DateFormat dateFormat1 = new SimpleDateFormat("dd/MM/yyyy");
+				Date date = new Date();
+				// System.out.println(dateFormat1.format(date));
+
+				Calendar cal1 = Calendar.getInstance();
+				cal1.setTime(date);
+
+				int dayOfMonth = cal1.get(Calendar.DATE);
+
+				int calCurrentMonth = cal1.get(Calendar.MONTH) + 1;
+				// System.err.println( "Current Cal Month " + calCurrentMonth + "menuList" +
+				// menuList.toString() + "itemShow" + itemShow);
+
+				// System.out.println("Day Of Month is: " + dayOfMonth);
+
+				if (runningMonth < calCurrentMonth) {
+
+					isMonthCloseApplicable = true;
+					// System.out.println("Day Of Month End ......");
+
+				} else if (runningMonth == 12 && calCurrentMonth == 1) {
+					isMonthCloseApplicable = true;
 				}
 
-				// strDate="01/"+runningMonth+"/"+year;
+				if (isMonthCloseApplicable) {
+					// System.err.println("### Inside iMonthclose app");
+					String strDate;
+					int year;
+					if (runningMonth == 12) {
+						// System.err.println("running month =12");
+						year = (Calendar.getInstance().getWeekYear() - 1);
+						// System.err.println("year value " + year);
+					} else {
+						// System.err.println("running month not eq 12");
+						year = Calendar.getInstance().getWeekYear();
+						// System.err.println("year value " + year);
+					}
 
-				strDate = year + "/" + runningMonth + "/01";
+					// strDate="01/"+runningMonth+"/"+year;
 
-				map.add("fromDate", strDate);
+					strDate = year + "/" + runningMonth + "/01";
+
+					map.add("fromDate", strDate);
+				} else {
+
+					map.add("fromDate", dateFormat.format(firstDay));
+
+				}
+
+				map.add("frId", frDetails.getFrId());
+				map.add("frStockType", frDetails.getStockType());
+				// map.add("fromDate", dateFormat1.format(firstDay));
+				map.add("toDate", dateFormat.format(todaysDate));
+				map.add("currentMonth", String.valueOf(runningMonth));
+				map.add("year", yearFormat.format(todaysDate));
+				map.add("catId", catId);
+				map.add("itemIdList", itemShow);
+
+				System.out.println(map);
+				ParameterizedTypeReference<List<GetCurrentStockDetails>> typeRef2 = new ParameterizedTypeReference<List<GetCurrentStockDetails>>() {
+				};
+				ResponseEntity<List<GetCurrentStockDetails>> responseEntity2 = restTemplate
+						.exchange(Constant.URL + "getCurrentStock", HttpMethod.POST, new HttpEntity<>(map), typeRef2);
+
+				currentStockDetailList = responseEntity2.getBody();
+				// System.out.println("Current Stock Details : " +
+				// currentStockDetailList.toString());
+
 			} else {
 
-				map.add("fromDate", dateFormat.format(firstDay));
+				// System.out.println("inside get stock between dates");
+
+				String fromDate = request.getParameter("fromDate");
+
+				String toDate = request.getParameter("toDate");
+
+				SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+				SimpleDateFormat sdf2 = new SimpleDateFormat("dd-MM-yyyy");
+				String fr = null;
+				String to = null;
+				try {
+					fr = sdf1.format(sdf2.parse(fromDate));
+
+					to = sdf1.format(sdf2.parse(toDate));
+				} catch (ParseException e) {
+
+					e.printStackTrace();
+				}
+				// System.out.println("FromDate " + fr);
+
+				// System.out.println("toDate " + to);
+				map = new LinkedMultiValueMap<String, Object>();
+				map.add("frId", frDetails.getFrId());
+				map.add("fromDate", fr);
+				map.add("toDate", to);
+				map.add("itemIdList", itemShow);
+				map.add("catId", catId);
+				map.add("frStockType", frDetails.getStockType());
+
+				try {
+					ParameterizedTypeReference<List<GetCurrentStockDetails>> typeRef = new ParameterizedTypeReference<List<GetCurrentStockDetails>>() {
+					};
+					ResponseEntity<List<GetCurrentStockDetails>> responseEntity = restTemplate.exchange(
+							Constant.URL + "/getStockBetweenDates", HttpMethod.POST, new HttpEntity<>(map), typeRef);
+
+					currentStockDetailList = responseEntity.getBody();
+					// System.out.println("Current Stock Details Monthwise : " +
+					// currentStockDetailList.toString());
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 
 			}
-
-			map.add("frId", frDetails.getFrId());
-			map.add("frStockType", frDetails.getStockType());
-			// map.add("fromDate", dateFormat1.format(firstDay));
-			map.add("toDate", dateFormat.format(todaysDate));
-			map.add("currentMonth", String.valueOf(runningMonth));
-			map.add("year", yearFormat.format(todaysDate));
-			map.add("catId", catId);
-			map.add("itemIdList", itemShow);
-
-			ParameterizedTypeReference<List<GetCurrentStockDetails>> typeRef2 = new ParameterizedTypeReference<List<GetCurrentStockDetails>>() {
-			};
-			ResponseEntity<List<GetCurrentStockDetails>> responseEntity2 = restTemplate
-					.exchange(Constant.URL + "getCurrentStock", HttpMethod.POST, new HttpEntity<>(map), typeRef2);
-
-			currentStockDetailList = responseEntity2.getBody();
-			//System.out.println("Current Stock Details : " + currentStockDetailList.toString());
-
-		} else {
-
-			//System.out.println("inside get stock between dates");
-
-			String fromDate = request.getParameter("fromDate");
-
-			String toDate = request.getParameter("toDate");
-
-			SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
-			SimpleDateFormat sdf2 = new SimpleDateFormat("dd-MM-yyyy");
-			String fr = null;
-			String to = null;
-			try {
-				fr = sdf1.format(sdf2.parse(fromDate));
-
-				to = sdf1.format(sdf2.parse(toDate));
-			} catch (ParseException e) {
-
-				e.printStackTrace();
-			}
-			//System.out.println("FromDate " + fr);
-
-			//System.out.println("toDate " + to);
-			map = new LinkedMultiValueMap<String, Object>();
-			map.add("frId", frDetails.getFrId());
-			map.add("fromDate", fr);
-			map.add("toDate", to);
-			map.add("itemIdList", itemShow);
-			map.add("catId", catId);
-			map.add("frStockType", frDetails.getStockType());
-
-			try {
-				ParameterizedTypeReference<List<GetCurrentStockDetails>> typeRef = new ParameterizedTypeReference<List<GetCurrentStockDetails>>() {
-				};
-				ResponseEntity<List<GetCurrentStockDetails>> responseEntity = restTemplate.exchange(
-						Constant.URL + "/getStockBetweenDates", HttpMethod.POST, new HttpEntity<>(map), typeRef);
-
-				currentStockDetailList = responseEntity.getBody();
-				//System.out.println("Current Stock Details Monthwise : " + currentStockDetailList.toString());
-
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-
 		CurrentStockResponse currentStockResponse = new CurrentStockResponse();
 		currentStockResponse.setMonthClosed(isMonthCloseApplicable);
 		currentStockResponse.setCurrentStockDetailList(currentStockDetailList);
@@ -793,12 +800,12 @@ public class StockController {
 
 	@RequestMapping(value = "/monthEndProcess", method = RequestMethod.POST)
 	public String showCurrentMonthStock(HttpServletRequest request, HttpServletResponse response) {
-		//System.out.println("in end month");
+		// System.out.println("in end month");
 		try {
 			HttpSession session = request.getSession();
 			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 			int frId = frDetails.getFrId();
-			//System.err.println("Fr Id In stock Month End " + frId);
+			// System.err.println("Fr Id In stock Month End " + frId);
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("frId", frId);
 			map.add("catId", catId);
@@ -808,7 +815,7 @@ public class StockController {
 			PostFrItemStockHeader postFrItemStockHeader = restTemplate
 					.postForObject(Constant.URL + "getCurrentMonthByCatIdFrId", map, PostFrItemStockHeader.class);
 
-			//System.out.println("prev stock header " + postFrItemStockHeader);
+			// System.out.println("prev stock header " + postFrItemStockHeader);
 			/*
 			 * PostFrItemStockHeader postFrItemStockHeader = new PostFrItemStockHeader();
 			 * postFrItemStockHeader.setFrId(frItemStockHeader.getFrId());
@@ -863,13 +870,13 @@ public class StockController {
 
 			postFrItemStockHeader.setPostFrItemStockDetailList(stockDetailList);
 
-			//System.out.println("Post Fr Op Stock  " + postFrItemStockHeader.toString());
+			// System.out.println("Post Fr Op Stock " + postFrItemStockHeader.toString());
 
 			// RestTemplate restTemplate = new RestTemplate();
 
 			Info info = restTemplate.postForObject(Constant.URL + "updateEndMonth", postFrItemStockHeader, Info.class);
 
-			//System.out.println("Post Fr Op Stock response " + info.toString());
+			// System.out.println("Post Fr Op Stock response " + info.toString());
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -881,13 +888,14 @@ public class StockController {
 	public void showStockDetailsPdf(@PathVariable("selectRate") int selectRate, HttpServletRequest request,
 			HttpServletResponse response) throws FileNotFoundException {
 		BufferedOutputStream outStream = null;
-		//System.out.println("Inside Pdf showPOReportPdf");
+		// System.out.println("Inside Pdf showPOReportPdf");
 		Document document = new Document(PageSize.A4);
 
 		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 		Calendar cal = Calendar.getInstance();
 
-		//System.out.println("time in Gen Bill PDF ==" + dateFormat.format(cal.getTime()));
+		// System.out.println("time in Gen Bill PDF ==" +
+		// dateFormat.format(cal.getTime()));
 		String FILE_PATH = Constant.REPORT_SAVE;
 		File file = new File(FILE_PATH);
 		String type = null;
@@ -905,7 +913,7 @@ public class StockController {
 
 		PdfPTable table = new PdfPTable(14);
 		try {
-			//System.out.println("Inside PDF Table try");
+			// System.out.println("Inside PDF Table try");
 			table.setWidthPercentage(100);
 			table.setHeaderRows(1);
 			table.setWidths(
@@ -1369,7 +1377,7 @@ public class StockController {
 
 			int totalPages = writer.getPageNumber();
 
-			//System.out.println("Page no " + totalPages);
+			// System.out.println("Page no " + totalPages);
 
 			document.close();
 
@@ -1394,14 +1402,14 @@ public class StockController {
 				try {
 					FileCopyUtils.copy(inputStream, response.getOutputStream());
 				} catch (IOException e) {
-					//System.out.println("Excep in Opening a Pdf File");
+					// System.out.println("Excep in Opening a Pdf File");
 					e.printStackTrace();
 				}
 			}
 
 		} catch (DocumentException ex) {
 
-			//System.out.println("Pdf Generation Error: " + ex.getMessage());
+			// System.out.println("Pdf Generation Error: " + ex.getMessage());
 
 			ex.printStackTrace();
 
