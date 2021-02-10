@@ -97,7 +97,7 @@ public class NewOpsCustomerBillController {
 
 		try {
 
-			calStock = 1;
+			calStock = 0;
 
 			map.add("frId", frDetails.getFrId());
 
@@ -436,6 +436,7 @@ public class NewOpsCustomerBillController {
 						}
 					} else {
 
+						System.out.println("in else...");
 						itemList.get(i).setItemQty(itemQty);
 						// float taxAmt=(price/100)*100;
 						itemList.get(i).setItemName(itemName);
@@ -452,13 +453,12 @@ public class NewOpsCustomerBillController {
 						errorMsg.setError(false);
 						errorMsg.setMsg("Item added in cart.");
 
-						break;
 					}
 					flag = 1;
 					break;
 				}
 			}
-
+			System.out.println("flag " + flag);
 			if (flag == 0) {
 				if (calStock == 1) {
 					for (int i = 0; i < showItemList.size(); i++) {
@@ -483,6 +483,7 @@ public class NewOpsCustomerBillController {
 								errorMsg.setItemList(itemList);
 								errorMsg.setError(false);
 								errorMsg.setMsg("Item added in cart.");
+								System.out.println("stock " + showItemList.get(i).getTotalRegStock());
 								break;
 							} else {
 								errorMsg.setItemList(itemList);
@@ -532,7 +533,7 @@ public class NewOpsCustomerBillController {
 	@RequestMapping(value = "/getCustomerList", method = RequestMethod.GET)
 	@ResponseBody
 	public List<Customer> getCustomerList(HttpServletRequest request, HttpServletResponse response) {
-		System.err.println("in Get Customer List");
+		// System.err.println("in Get Customer List");
 		return custometList;
 
 	}
@@ -540,15 +541,23 @@ public class NewOpsCustomerBillController {
 	@RequestMapping(value = "/getItemList", method = RequestMethod.GET)
 	@ResponseBody
 	public List<BillItemList> getItemList(HttpServletRequest request, HttpServletResponse response) {
-		System.err.println("in Get Item List");
+		// System.err.println("in Get Item List");
 		return itemList;
+
+	}
+
+	@RequestMapping(value = "/getAllItemList", method = RequestMethod.GET)
+	@ResponseBody
+	public List<NewPosBillItem> getAllItemList(HttpServletRequest request, HttpServletResponse response) {
+		// System.out.println("showItemList " + showItemList);
+		return showItemList;
 
 	}
 
 	@RequestMapping(value = "/addCustomer", method = RequestMethod.POST)
 	@ResponseBody
 	public Info addCustomer(HttpServletRequest request, HttpServletResponse response) {
-		System.err.println("in Add Customer");
+		// System.err.println("in Add Customer");
 		int flag = 0;
 		/*
 		 * String name=request.getParameter("name"); System.err.println(name+"Name Is");
@@ -577,7 +586,7 @@ public class NewOpsCustomerBillController {
 
 		} catch (Exception e) {
 			// TODO: handle exception
-			System.err.println("Exception Occuered In Catach Block Of /addCustomer");
+			// System.err.println("Exception Occuered In Catach Block Of /addCustomer");
 			flag = 0;
 			info.setError(true);
 			info.setMessage(String.valueOf(0));

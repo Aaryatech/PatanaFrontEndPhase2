@@ -206,6 +206,7 @@ label:before {
 	<c:url var="cancelFromHoldBill" value="/cancelFromHoldBill" />
 	<c:url var="billOnHold" value="/billOnHold" />
 	<c:url var="revertHoldBillOnCurrent" value="/revertHoldBillOnCurrent" />
+	<c:url var="getAllItemList" value="/getAllItemList" />
 	<div style="display: none;">
 		<a href="${pageContext.request.contextPath}/newPos" id="relod"></a>
 	</div>
@@ -265,8 +266,8 @@ label:before {
 										<div class="multi_menu">
 											<ul id="multi_ul">
 
-												<li onclick="setItemList();subCatForSrch(0);" value="All"
-													id="1"><a href="#" class="scroll_menu"
+												<li onclick="selectBySubCatId(0);subCatForSrch(0);"
+													value="All" id="1"><a href="#" class="scroll_menu"
 													onclick="SlectedCat(this.innerHTML)">All</a></li>
 												<c:forEach items="${subCatList}" var="subCat"
 													varStatus="count">
@@ -291,9 +292,9 @@ label:before {
 
 						</div>
 						<div class="menu_search">
-							<input name="" type="text" class="input_cat"
-								onkeyup="searchByItemName(this.value)"
-								placeholder="Search Item..." />
+							<input name="myInput1" id="myInput1" type="text"
+								class="input_cat" onkeyup="myFunction1()"
+								placeholder="Search Item..." autocomplete="off"/>
 						</div>
 						<div class="clr"></div>
 					</div>
@@ -332,7 +333,9 @@ label:before {
 						</c:choose>
 
 						<div class="active_list">
-							<span class="marquee_select" id="selected_subcat">All</span>
+							<span class="marquee_select" id="selected_subcat">All</span> <input
+								type="hidden" name="hiddenSelectedCatId"
+								id="hiddenSelectedCatId" value="0">
 						</div>
 
 					</div>
@@ -1087,61 +1090,84 @@ label:before {
 		    }); 
 		 var custId  = '${holdBill.custId}';
 		 //alert(custId)
-		setItemList();
+		getAllItemList();
 		getCustomerList(custId);
 			
 	});
 	
-	
-	
-	function setItemList() {
+	function getAllItemList(){
+		 
+		 		$.getJSON('${getAllItemList}',{ajax:true},function(data){
+		 			var jsonStr= data;
+		 			
+		 			var divStr =" ";
+		 			document.getElementById("itemUl").innerHTML="";
+		 			for(var i=0 ; i <  jsonStr.length ; i++){
+		 				 
+		 			 divStr=divStr+'<li class="itemDummyClass" onclick="opnItemPopup('+jsonStr[i].itemId+',\'' + jsonStr[i].itemName + '\',' + jsonStr[i].catId + ',' + jsonStr[i].totalRegStock + ',' + jsonStr[i].itemTax1 + ',' + jsonStr[i].itemTax2 + ',' + jsonStr[i].mrp + ',\'' + jsonStr[i].uom + '\','+1+')"><div id="itemDiv">'+
+		 							'<div class="new_cake_bx" >'+
+		 								'<a href="#" class="initialism  addcust1_open  " title="'+jsonStr[i].itemName+'">'+
+		 									'<div class="cake_picture">'+
+		 										'<p>'+jsonStr[i].mrp+'</p>'+
+		 										'<img src="${pageContext.request.contextPath}/resources/newpos/images/chocolate_cake.jpg" alt="">'+
+		 										'<span>'+jsonStr[i].totalRegStock+'</span>'+
+		 									'</div>'+
+		 								'<div class="cake_name">'+jsonStr[i].itemName+'</div>'+
+		 							'</a> </div> </div> <div class="hiddenSubCatId" style="display: none;">'+jsonStr[i].subCatId+'</div></li>';
+		 									
+		 									
+		 					//	alert(iList[i].itemName);	
+		 				}
+		 			document.getElementById("itemUl").innerHTML=divStr;
+		 			 myFunction1();
+		 		});
+		 		 
+	 }
+	function myFunction1() {
 		
+		var hiddenSelectedCatId = $("#hiddenSelectedCatId").val();
 		
-		var iList=document.getElementById("iList").innerHTML;
-		//alert(iList);
-		sessionStorage.setItem("itemList",iList);
-		var jsonStr= $.parseJSON(iList);
-		
-		var divStr =" ";
-		//alert(jsonStr.length)
-		for(var i=0 ; i <  jsonStr.length ; i++){
-			
-			
-		
-		
-	
-		 divStr=divStr+'<li onclick="opnItemPopup('+jsonStr[i].itemId+',\'' + jsonStr[i].itemName + '\',' + jsonStr[i].catId + ',' + jsonStr[i].totalRegStock + ',' + jsonStr[i].itemTax1 + ',' + jsonStr[i].itemTax2 + ',' + jsonStr[i].mrp + ',\'' + jsonStr[i].uom + '\','+1+')"><div id="itemDiv">'+
-						'<div class="new_cake_bx" >'+
-							'<a href="#" class="initialism  addcust1_open  " title="'+jsonStr[i].itemName+'">'+
-								'<div class="cake_picture">'+
-									'<p>'+jsonStr[i].mrp+'</p>'+
-									'<img src="${pageContext.request.contextPath}/resources/newpos/images/chocolate_cake.jpg" alt="">'+
-									'<span>'+jsonStr[i].totalRegStock+'</span>'+
-								'</div>'+
-							'<div class="cake_name">'+jsonStr[i].itemName+'</div>'+
-						'</a> </div> </div> </li>';
-								
-								
-				//	alert(iList[i].itemName);	
-			}
-		document.getElementById("itemUl").innerHTML=divStr;
-		
-	
-		}
-
+		$(".scrollbar-content").css("top", "0");
+		 $(".scrollbar-handle").css("top", "0");
+	    $('.itemDummyClass').hide();
+	    var txt = $('#myInput1').val();
+	    
+	    if(hiddenSelectedCatId==0){
+	    	$('.itemDummyClass').each(function(){
+	 	       if($(this).text().toUpperCase().indexOf(txt.toUpperCase()) != -1){
+	 	           $(this).show();
+	 	       }
+	 	    });
+	    }else{
+	    	$('.itemDummyClass').each(function(index){
+	    		
+	    		var catId = parseFloat(document
+ 						.getElementsByClassName("hiddenSubCatId")[index].innerHTML);
+	    		
+	 	       if($(this).text().toUpperCase().indexOf(txt.toUpperCase()) != -1 && catId==parseInt(hiddenSelectedCatId)){ 
+	 	           
+	 		           $(this).show();
+	 		       
+	 	       }
+	 	    });
+	    }
+	    
+	     
+	} 
 	
 	
 	
 	function selectBySubCatId(id){
-		//alert(id);
-		var divStr="";
+		$("#hiddenSelectedCatId").val(parseInt(id));
+		
+		/* var divStr="";
 		var jsonStr = $.parseJSON(sessionStorage.getItem("itemList"));
-		//alert(jsonStr);
+		 
 		document.getElementById("itemUl").innerHTML="";
 		for(var i=0 ; i <  jsonStr.length ; i++){
 	
 			if(parseInt(jsonStr[i].subCatId)==parseInt(id)){
-				//alert(jsonStr[i].subCatId);
+				 
 			 divStr=divStr+'<li> <div id="itemDiv">'+
 							'<div class="new_cake_bx">'+
 								'<a href="#" title="'+jsonStr[i].itemName+'" class="initialism addcust1_open" onclick="opnItemPopup('+jsonStr[i].itemId+',\'' + jsonStr[i].itemName + '\','+jsonStr[i].catId+','+jsonStr[i].totalRegStock+',' + jsonStr[i].itemTax1 + ',' + jsonStr[i].itemTax2 + ',' + jsonStr[i].mrp + ',\'' + jsonStr[i].uom + '\','+1+')" >'+
@@ -1154,10 +1180,34 @@ label:before {
 							'</a> </div> </div> </li>';
 									
 						}					
-					//	alert(iList[i].itemName);	
+					 
 				}
-		document.getElementById("itemUl").innerHTML=divStr;
+		document.getElementById("itemUl").innerHTML=divStr; */
 		
+		$(".scrollbar-content").css("top", "0");
+		 $(".scrollbar-handle").css("top", "0");
+	    $('.itemDummyClass').hide(); 
+	    
+	    var txt = $('#myInput1').val();
+	    
+	    $('.itemDummyClass').each(function(index){
+	    	
+	    	
+	    	if(parseInt(id)==0){ 
+	 	 	       if($(this).text().toUpperCase().indexOf(txt.toUpperCase()) != -1){
+	 	 	           $(this).show();
+	 	 	       } 
+	    	}else{
+	    		var catId = parseFloat(document
+						.getElementsByClassName("hiddenSubCatId")[index].innerHTML);
+	    		if($(this).text().toUpperCase().indexOf(txt.toUpperCase()) != -1 && catId==parseInt(id)){
+	 	           $(this).show();
+	 	       }
+	    	}
+	    	
+	       
+	    });
+	    
 	}
 	
 	
@@ -1377,7 +1427,7 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 		       async:false,
 		       success: function(data, textStatus, jqXHR)
 		       {
-		    	   var itemCnt = data.length;
+		    	   var itemCnt = data.itemList.length;
 					var total = 0;
 					var tax = 0;
 					var finalAmt =0;
@@ -1434,7 +1484,9 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 								
 								
 						});
-						//alert(itemCnt);
+						getAllItemList();
+						
+						 //alert(itemCnt);
 						document.getElementById("totalCnt").innerHTML=itemCnt;
 						//alert(total);
 						document.getElementById("totalAmt").innerHTML=payableAmt.toFixed(2);
@@ -1444,13 +1496,14 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 						document.getElementById("finalAmount").innerHTML=total.toFixed(2);
 						document.getElementById("tblQty").value="";
 						jQuery("#preloader").delay(0).fadeOut("slow");
-		       },
+						
+						 },
 		       error: function(jqXHR, textStatus, errorThrown)
 		       {
 		           console.log('ERRORS: ' + textStatus);
 		       }
 		   });
-		       
+		 
 		
 		/* $.post('${addItemInBillLIst}',
 			{ 
@@ -1690,6 +1743,8 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 					//alert(data.length);
 					$(".scrollbar-content").css("top", "0");
 						 $(".scrollbar-handle").css("top", "0");
+						 getAllItemList();
+							
 						document.getElementById("enterQty").value=1;
 						document.getElementById("closeAddcust").click();
 						$('#itemTable tr').remove();
@@ -1744,13 +1799,14 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 						//alert(finalAmt);
 						document.getElementById("finalAmount").innerHTML=total.toFixed(2);
 						document.getElementById("tblQty").value="";
+						
 		       },
 		       error: function(jqXHR, textStatus, errorThrown)
 		       {
 		           console.log('ERRORS: ' + textStatus);
 		       }
 		   });
-	 
+		 
 	/*  $.post('${deleteItem}',
 			 {
 		 		id :id,
