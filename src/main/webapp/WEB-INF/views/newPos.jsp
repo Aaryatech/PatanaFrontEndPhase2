@@ -214,9 +214,6 @@ label:before {
 		<input type="hidden" id="SubCatForSearch" name="SubCatForSearch"
 			value="0">
 
-		<div id="iList" style="display: none;">${jsonItemList}</div>
-
-
 		<!--wrapper-start-->
 		<div class="wrapper">
 
@@ -294,7 +291,7 @@ label:before {
 						<div class="menu_search">
 							<input name="myInput1" id="myInput1" type="text"
 								class="input_cat" onkeyup="myFunction1()"
-								placeholder="Search Item..." autocomplete="off"/>
+								placeholder="Search Item..." autocomplete="off" />
 						</div>
 						<div class="clr"></div>
 					</div>
@@ -669,8 +666,8 @@ label:before {
 					<div class="total_tab">
 						<table width="100%">
 							<tr bgcolor="#ffe5e6">
-								<td>Total Items : ${totalItemCount}</td>
-								<td id="totalCnt"></td>
+								<td>Total Items :</td>
+								<td id="totalCnt">${totalItemCount}</td>
 								<td>Total :</td>
 								<td align="right" style="text-align: right;" id="totalAmt"><fmt:formatNumber
 										type="number" groupingUsed="false" value="${totalTaxableAmt}"
@@ -702,7 +699,7 @@ label:before {
 						<div class="button_one">
 							<a href="#" class="hold hold_btn" onclick="billOnHold()">Hold</a>
 							<a href="#" class="hold can_btn"
-								onclick="cancelFromHoldBill(${key})">Cancel</a>
+								onclick="cancelFromHoldBill(${key})">Cancel Hold Bill</a>
 							<!-- onclick="cancelBill(1)" -->
 						</div>
 						<div class="button_one">
@@ -1092,7 +1089,7 @@ label:before {
 		 //alert(custId)
 		getAllItemList();
 		getCustomerList(custId);
-			
+		 alertify.set('notifier','position', 'top-right'); 
 	});
 	
 	function getAllItemList(){
@@ -1154,36 +1151,10 @@ label:before {
 	    
 	     
 	} 
-	
-	
-	
+	 
 	function selectBySubCatId(id){
 		$("#hiddenSelectedCatId").val(parseInt(id));
-		
-		/* var divStr="";
-		var jsonStr = $.parseJSON(sessionStorage.getItem("itemList"));
-		 
-		document.getElementById("itemUl").innerHTML="";
-		for(var i=0 ; i <  jsonStr.length ; i++){
-	
-			if(parseInt(jsonStr[i].subCatId)==parseInt(id)){
-				 
-			 divStr=divStr+'<li> <div id="itemDiv">'+
-							'<div class="new_cake_bx">'+
-								'<a href="#" title="'+jsonStr[i].itemName+'" class="initialism addcust1_open" onclick="opnItemPopup('+jsonStr[i].itemId+',\'' + jsonStr[i].itemName + '\','+jsonStr[i].catId+','+jsonStr[i].totalRegStock+',' + jsonStr[i].itemTax1 + ',' + jsonStr[i].itemTax2 + ',' + jsonStr[i].mrp + ',\'' + jsonStr[i].uom + '\','+1+')" >'+
-									'<div class="cake_picture">'+
-										'<p>'+jsonStr[i].mrp+'</p>'+
-										'<img src="${pageContext.request.contextPath}/resources/newpos/images/chocolate_cake.jpg" alt="">'+
-										'<span>'+jsonStr[i].totalRegStock+'</span>'+
-									'</div>'+
-								'<div class="cake_name">'+jsonStr[i].itemName+'</div>'+
-							'</a> </div> </div> </li>';
-									
-						}					
-					 
-				}
-		document.getElementById("itemUl").innerHTML=divStr; */
-		
+		  
 		$(".scrollbar-content").css("top", "0");
 		 $(".scrollbar-handle").css("top", "0");
 	    $('.itemDummyClass').hide(); 
@@ -1209,64 +1180,7 @@ label:before {
 	    });
 	    
 	}
-	
-	
-	function searchByItemName(name) {
-	var divStr="";
-		//var name =document.getElementById("input_cat");
-		//alert(name);
-		$(".scrollbar-content").css("top", "0");
-		$(".scrollbar-handle").css("top", "0");
-		 var jsonStr = $.parseJSON(sessionStorage.getItem("itemList"));
-		//alert(name);
-		document.getElementById("itemUl").innerHTML="";
-		var flag=document.getElementById("SubCatForSearch").value;
-		if(parseInt(flag)>0){
-			//alert("If");
-			for(var i=0 ; i <  jsonStr.length ; i++){
-				if(jsonStr[i].itemName.includes(name) && parseInt(jsonStr[i].subCatId)==parseInt(flag)  ){
-					//alert(jsonStr[i].itemName);
-				 divStr=divStr+'<li> <div id="itemDiv">'+
-								'<div class="new_cake_bx">'+
-									'<a href="#" title="'+jsonStr[i].itemName+'" class="initialism addcust1_open" onclick="opnItemPopup('+jsonStr[i].itemId+',\'' + jsonStr[i].itemName + '\',' + jsonStr[i].catId + ','+jsonStr[i].totalRegStock+',' + jsonStr[i].itemTax1 + ',' + jsonStr[i].itemTax2 + ',' + jsonStr[i].mrp + ',\'' + jsonStr[i].uom + '\','+1+')">'+
-										'<div class="cake_picture">'+
-											'<p>'+jsonStr[i].mrp+'</p>'+
-											'<img src="${pageContext.request.contextPath}/resources/newpos/images/chocolate_cake.jpg" alt="">'+
-											'<span>'+jsonStr[i].totalRegStock+'</span>'+
-										'</div>'+
-									'<div class="cake_name">'+jsonStr[i].itemName+'</div>'+
-								'</a> </div> </div> </li>';
-										
-							}					
-						//	alert(iList[i].itemName);	
-					}
-		}else {
-			//alert("Else");
-			for(var i=0 ; i <  jsonStr.length ; i++){
-				if(jsonStr[i].itemName.includes(name)){
-					//alert(jsonStr[i].itemName);
-				 divStr=divStr+'<li> <div id="itemDiv">'+
-								'<div class="new_cake_bx">'+
-									'<a href="#" title="'+jsonStr[i].itemName+'" class="initialism addcust1_open"  onclick="opnItemPopup('+jsonStr[i].itemId+',\'' + jsonStr[i].itemName + '\',' + jsonStr[i].catId + ','+jsonStr[i].totalRegStock+',' + jsonStr[i].itemTax1 + ',' + jsonStr[i].itemTax2 + ',' + jsonStr[i].mrp + ',\'' + jsonStr[i].uom + '\','+1+')">'+
-										'<div class="cake_picture">'+
-											'<p>'+jsonStr[i].mrp+'</p>'+
-											'<img src="${pageContext.request.contextPath}/resources/newpos/images/chocolate_cake.jpg" alt="">'+
-											'<span>'+jsonStr[i].totalRegStock+'</span>'+
-										'</div>'+
-									'<div class="cake_name">'+jsonStr[i].itemName+'</div>'+
-								'</a> </div> </div> </li>';
-										
-							}					
-						//	alert(iList[i].itemName);	
-					}
-		}
-		
-	
-		document.getElementById("itemUl").innerHTML=divStr; 
-		
-	}
-	
-	
+	 
 	function subCatForSrch(val){
 		//alert("FUNC"+val);
 		document.getElementById("SubCatForSearch").value=val;
@@ -1345,10 +1259,7 @@ label:before {
 	
 	
 function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp,uom,flag){
-	//'+jsonStr[i].itemId+','+jsonStr[i].itemName+','+jsonStr[i].itemTax1+','+jsonStr[i].itemTax2+','+jsonStr[i].mrp+','+jsonStr[i].uom+'
-	//itemId,itemName,itemTax1,itemTax2,itemMrp,uom
-	//alert(itemTax1+itemTax2);
-	/* alert("ASf") */
+	 
 	if(flag>0){
 		document.getElementById("itemTaxHidden").value = itemTax1+itemTax2;
 	}else{
@@ -1371,9 +1282,7 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 	
 	
 	function addItem(flag){
-		
-		
-
+		 
 		if(flag>0){
 			var qty= document.getElementById("enterQty").value;
 		}else{
@@ -1503,72 +1412,7 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 		           console.log('ERRORS: ' + textStatus);
 		       }
 		   });
-		 
-		
-		/* $.post('${addItemInBillLIst}',
-			{ 
-			itemName : itemName,
-			itemId 	 : itemId,
-			itemMrp  : itemMrp,
-			itemTax  : itemTax,
-			tax1	 : tax1,
-			tax2	 : tax2,
-			catId 	 : catId,
-			aviableQty : aviableQty,
-			itemUom  : itemUom,
-			qty		 : qty,
-			price    : price,
-			paybeleTax : paybeleTax,
-			paybeleAmt : paybeleAmt,
-			ajax : 'true'
-			
-			}, function(data){
-				//alert(JSON.stringify(data));
-				/* var itemCnt = data.length;
-				var total = 0;
-				var tax = 0;
-				var finalAmt =0;
-				//alert(data.length);
-					document.getElementById("enterQty").value=1;
-					document.getElementById("closeAddcust").click();
-					$('#itemTable td').remove();
-					$
-					.each(
-							data,
-							function(key, item) {
-					
-								 
-						
-						//alert(JSON.stringify(item))
-						finalAmt += parseFloat(item.payableAmt);
-						total += parseFloat(item.calPrice);
-						tax += parseFloat(item.payableTax);
-						var tr=$('<tr></tr>');
-						tr
-						.append($(
-								'<td ></td>')
-								.html(key+1));
-							tr.append($('<td></td>').html(item.itemName));
-							tr.append($('<td class="initialism addcust1_open"  onclick="opnItemPopup('+item.itemId+',\'' + item.itemName + '\','+item.catId+','+item.aviableQty+',' + item.itemTax + ',' + item.itemTax + ',' + item.itemMrp + ',\'' + item.itemUom + '\','+0+')" > </td>').html(item.itemQty));
-							tr.append($('<td></td>').html(item.itemMrp));
-							tr.append($('<td></td>').html(item.calPrice));
-							tr.append($('<td></td>').html('<a href="#" class="trash_icon" onclick="deleteItem('+item.itemId+')" ><i class="fa fa-trash-o" aria-hidden="true"></i></a>'));
-							
-							
-							$('#itemTable tbody').append(tr);
-							
-							
-					});
-					//alert(itemCnt);
-					document.getElementById("totalCnt").innerHTML=itemCnt;
-					//alert(total);
-					document.getElementById("totalAmt").innerHTML=total;
-					//alert(tax);
-					document.getElementById("totalTax").innerHTML=tax;
-					//alert(finalAmt);
-					document.getElementById("finalAmount").innerHTML=total;
-					document.getElementById("tblQty").value="";
-			 });*/
+		  
 	}
 	
 	function getCustomerList(val) {
@@ -1598,10 +1442,7 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 	}
 
  function getCustInfo(val){
-	//
-	
-	//alert(val);
-	//var temp= document.getElementById("custMob").value;
+	 
 	var phoneno = /^\d{10}$/;
 	if(val.match(phoneno)){
 		document.getElementById("custMob").value=val;
@@ -1687,27 +1528,7 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 		
 		
 		
-		
-		/* $.post('${addCustomer}',
-				{
-				name :name,
-				mob:mob,
-				gst: gst,
-				ajax : 'true'
-				},function(data){
-				//	alert(data);
-				if(data==1){
-					getCustomerList();
-						alert("Customer Addeed!");
-						document.getElementById("clsAddCust").click();
-						document.getElementById("selectCust").value=name+"~"+mob+"~"+gst;
-						document.getElementById("custName").value="";
-						document.getElementById("custMob").value="";
-						document.getElementById("custGst").value="";
-					}else{
-						alert("Unable To Add Customer");
-					} 
-				}); */
+		 
 		
 		
 		
@@ -1806,59 +1627,7 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 		           console.log('ERRORS: ' + textStatus);
 		       }
 		   });
-		 
-	/*  $.post('${deleteItem}',
-			 {
-		 		id :id,
-		 		ajax : 'true'
-			 },
-			 function(data){
-					//alert(JSON.stringify(data));
-					var itemCnt = data.length;
-					var total = 0;
-					var tax = 0;
-					var finalAmt =0;
-					//alert(data.length);
-						document.getElementById("enterQty").value=1;
-						document.getElementById("closeAddcust").click();
-						$('#itemTable td').remove();
-						$
-						.each(
-								data,
-								function(key, item) {
-						
-									 
-							
-							//alert(JSON.stringify(item))
-							finalAmt += parseFloat(item.payableAmt);
-							total += parseFloat(item.calPrice);
-							tax += parseFloat(item.payableTax);
-							var tr=$('<tr></tr>');
-							tr
-							.append($(
-									'<td ></td>')
-									.html(key+1));
-								tr.append($('<td></td>').html(item.itemName));
-								tr.append($('<td class="initialism addcust1_open"  onclick="opnItemPopup('+item.itemId+',\'' + item.itemName + '\','+item.catId+','+item.aviableQty+',' + item.itemTax + ',' + item.itemTax + ',' + item.itemMrp + ',\'' + item.itemUom + '\','+0+')" > </td>').html(item.itemQty));
-								tr.append($('<td></td>').html(item.itemMrp));
-								tr.append($('<td></td>').html(item.calPrice));
-								tr.append($('<td></td>').html('<a href="#" class="trash_icon" onclick="deleteItem('+item.itemId+')" ><i class="fa fa-trash-o" aria-hidden="true"></i></a>'));
-								
-								
-								$('#itemTable tbody').append(tr);
-								
-								
-						});
-						//alert(itemCnt);
-						document.getElementById("totalCnt").innerHTML=itemCnt;
-						//alert(total);
-						document.getElementById("totalAmt").innerHTML=Math.round(total);
-						//alert(tax);
-						document.getElementById("totalTax").innerHTML=Math.round(tax);
-						//alert(finalAmt);
-						document.getElementById("finalAmount").innerHTML=Math.round(finalAmt);
-						document.getElementById("tblQty").value="";
-				}); */
+		  
 	 
  }
  
@@ -2124,35 +1893,7 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 		           console.log('ERRORS: ' + textStatus);
 		       }
 		   });
-			/*  $.post('${genrateSellBill}',
-					 {
-				 		custName : custName,
-				 		paidAmt	 : paidAmt,
-				 		payMode  : payMode,
-				 		payableAmt : payableAmt,
-				 		discPer  : discPer,
-				 		isSMS	: isSMS,
-				 		ajax : true
-					 },
-					 function(data){
-						 if (data == "") {
-								alert("Order Not Placed !!");
-						 }else 
-						 {
-							// alert("printing else"+JSON.stringify(data));
-							  //var loginWindow = window.open('', 'UserLogin');
-							 
-							 
-								//document.getElementById("li"+token).style.backgroundColor = "white";
-							   window.open('${pageContext.request.contextPath}/pdfSellBillNewPos?billNo='+ data.sellBillNo+'&type=R');
-							  //  alert("opened");
-								
-								document.getElementById("closePay").click();
-								 document.getElementById("relod").click();	
-			                
-							}
-						
-					 });   */ 
+			 
 		 }
 		
 	}

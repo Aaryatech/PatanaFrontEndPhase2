@@ -45,6 +45,8 @@ import com.monginis.ops.billing.SellBillHeader;
 import com.monginis.ops.common.Common;
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.model.CustomerBillItem;
+import com.monginis.ops.model.FrItemStockConfigure;
+import com.monginis.ops.model.FrItemStockConfigureList;
 import com.monginis.ops.model.FrMenu;
 import com.monginis.ops.model.Franchisee;
 import com.monginis.ops.model.GetCustBillTax;
@@ -97,8 +99,15 @@ public class NewOpsCustomerBillController {
 
 		try {
 
-			calStock = 0;
+			map = new LinkedMultiValueMap<String, Object>();
 
+			map.add("settingKeyList", "CHECK_STOCK_FOR_CUSTOMER_BILL");
+			FrItemStockConfigureList settingList = restTemplate.postForObject(Constant.URL + "getDeptSettingValue", map,
+					FrItemStockConfigureList.class);
+			List<FrItemStockConfigure> settingListRes = settingList.getFrItemStockConfigure();
+			calStock = settingListRes.get(0).getSettingValue();
+
+			map = new LinkedMultiValueMap<String, Object>();
 			map.add("frId", frDetails.getFrId());
 
 			if (calStock == 1) {
@@ -204,17 +213,7 @@ public class NewOpsCustomerBillController {
 					NewPosBillItem[].class);
 			showItemList = new ArrayList<NewPosBillItem>(Arrays.asList(biiItleListArr));
 
-			String jsonStr = "";
-			ObjectMapper Obj = new ObjectMapper();
-
-			try {
-				jsonStr = Obj.writeValueAsString(showItemList);
-
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-
-			model.addObject("jsonItemList", jsonStr);
+			 
 
 			SubCategory[] subCatArr = restTemplate.getForObject(Constant.URL + "getAllSubCatList", SubCategory[].class);
 			subCatResp = new ArrayList<SubCategory>(Arrays.asList(subCatArr));
