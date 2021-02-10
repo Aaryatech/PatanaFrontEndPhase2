@@ -45,7 +45,6 @@ public class SpecialCake {
 
     private float sprRate;
     
-	private float sprAddOnRate;
 	
 	
    private String spDesc;
@@ -74,9 +73,40 @@ public class SpecialCake {
 	private int isSlotUsed;
 	
 	
+	//Sachin Temp Field Added 01-02-2021
+	
+	float sprRateMrp;
+	float spBackendRate;
+	int menuSettingDelDays;
+	private float sprAddOnRate;//existing just pinched below
+private float profitPer;
+
 	
 	
-	
+	public float getProfitPer() {
+	return profitPer;
+}
+public void setProfitPer(float profitPer) {
+	this.profitPer = profitPer;
+}
+	public float getSprRateMrp() {
+		return sprRateMrp;
+	}
+	public void setSprRateMrp(float sprRateMrp) {
+		this.sprRateMrp = sprRateMrp;
+	}
+	public float getSpBackendRate() {
+		return spBackendRate;
+	}
+	public void setSpBackendRate(float spBackendRate) {
+		this.spBackendRate = spBackendRate;
+	}
+	public int getMenuSettingDelDays() {
+		return menuSettingDelDays;
+	}
+	public void setMenuSettingDelDays(int menuSettingDelDays) {
+		this.menuSettingDelDays = menuSettingDelDays;
+	}
 	public int getIsSlotUsed() {
 		return isSlotUsed;
 	}
@@ -291,7 +321,8 @@ public class SpecialCake {
 				+ orderQty + ", orderDiscount=" + orderDiscount + ", isCustChoiceCk=" + isCustChoiceCk
 				+ ", isAddonRateAppli=" + isAddonRateAppli + ", mrpRate1=" + mrpRate1 + ", mrpRate2=" + mrpRate2
 				+ ", mrpRate3=" + mrpRate3 + ", spRate1=" + spRate1 + ", spRate2=" + spRate2 + ", spRate3=" + spRate3
-				+ ", isSlotUsed=" + isSlotUsed + "]";
+				+ ", isSlotUsed=" + isSlotUsed + ", sprRateMrp=" + sprRateMrp + ", spBackendRate=" + spBackendRate
+				+ ", menuSettingDelDays=" + menuSettingDelDays + "]";
 	}
 	
 

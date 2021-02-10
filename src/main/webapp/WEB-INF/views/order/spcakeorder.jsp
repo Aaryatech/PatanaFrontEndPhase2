@@ -346,7 +346,7 @@ select {
 									</div>
 									<div class="col2full">
 										<select name="spFlavour" tabindex="-1"
-											onchange="onChangeFlavour()" id="spFlavour" required>
+											  id="spFlavour" required>
 											<option value="">Select Flavour</option>
 										</select>
 									</div>
@@ -781,6 +781,14 @@ select {
 								type="hidden" id="dbPrice" name="dbPrice" value="${sprRate}">
 							<input type="hidden" id="sp_id" name="sp_id"
 								value="${specialCake.spId}">
+									<input type="hidden" id="spBackEndRateNew" name="spBackEndRateNew"
+								value="0">
+								<input type="hidden" id="flvAdRate" name="flvAdRate"
+								value="0">
+								<input type="hidden" id="mrp" name="mrp"
+								value="0">
+								<input type="hidden" id="profPer" name="profPer"
+								value="0">
 						</form>
 						<!--rightForm-->
 
@@ -877,6 +885,13 @@ select {
 
 		<script type="text/javascript">
 			function onChange(dbRate) {
+				var flavourAdonRate=$("#flvAdRate").val();
+				var mrp=$("#mrp").val();
+				var profitPer=$("#profPer").val();
+				setData(flavourAdonRate,mrp,profitPer);
+				
+				if(1==2){
+				
 				var wt = $('#spwt').find(":selected").text();
 				var flavourAdonRate = $("#dbAdonRate").val();
 				var tax3 = parseFloat($("#tax3").val());
@@ -968,9 +983,103 @@ select {
 
 				document.getElementById("t2amt").setAttribute('value',
 						tax2Amt.toFixed(2));
+			}
 
 			}
 		</script>
+		
+		
+		<script type="text/javascript">
+			function setData(flavourAdonRate,mrp,profitPer) {
+				/*Sachin 08-02-2021*/
+				var wt = $('#spwt').find(":selected").text();
+				//1
+				var spTotAddonRate=flavourAdonRate*wt;
+				console.log("spTotAddonRate",spTotAddonRate)
+				var tax3 = parseFloat($("#tax3").val());
+				var tax1 = parseFloat($("#tax1").val());
+				var tax2 = parseFloat($("#tax2").val());
+				
+				var sp_ex_charges = parseFloat($("#sp_ex_charges").val());
+				var sp_disc = parseFloat($("#sp_disc").val());
+
+				var advAmt=document.getElementById("adv").value;
+				var spPrice=mrp*wt;
+				console.log("spPrice",spPrice)
+				var spSubTotal=(spTotAddonRate+spPrice+sp_ex_charges);
+				console.log("spSubTotal",spSubTotal)
+				var spBackEndRate=(spSubTotal-(spSubTotal*profitPer)/100);
+				console.log("spBackEndRate",spBackEndRate);
+				var discAmt=spSubTotal*(sp_disc/100);
+				var spGrandTot=(spTotAddonRate+spPrice+sp_ex_charges)-discAmt;
+				var taxableAmt=(spGrandTot*100)/100+tax3;
+
+				var mrpBaseRate = parseFloat((spSubTotal * 100) / (tax3 + 100));
+
+				var gstInRs = 0;
+				var taxPerPerc1 = 0;
+				var taxPerPerc2 = 0;
+				var tax1Amt = 0;
+				var tax2Amt = 0;
+				if (tax3 == 0) {
+					gstInRs = 0;
+
+				} else {
+					gstInRs = (mrpBaseRate * tax3) / 100;
+
+					if (tax1 == 0) {
+						taxPerPerc1 = 0;
+					} else {
+						taxPerPerc1 = parseFloat((tax1 * 100) / tax3);
+						tax1Amt = parseFloat((gstInRs * taxPerPerc1) / 100);
+					}
+					if (tax2 == 0) {
+						taxPerPerc2 = 0;
+					} else {
+						taxPerPerc2 = parseFloat((tax2 * 100) / tax3);
+						tax2Amt = parseFloat((gstInRs * taxPerPerc2) / 100);
+					}
+				}
+
+				$('#gstrs').html(gstInRs.toFixed(2));
+				document.getElementById("gst_rs").setAttribute('value',
+						taxableAmt.toFixed(2));
+
+				var mGstAmt = mrpBaseRate;
+				$('#mgstamt').html('AMT-' + mGstAmt.toFixed(2));
+				document.getElementById("m_gst_amt").setAttribute('value',
+						mGstAmt.toFixed(2));
+
+				$('#price').html(spPrice.toFixed(2));
+				document.getElementById("sp_calc_price").value = spPrice;
+				$('#rate').html(spTotAddonRate.toFixed(2));
+				document.getElementById("sp_add_rate").setAttribute('value',
+						spTotAddonRate);
+
+				$('#subtotal').html(spSubTotal.toFixed(2));
+				document.getElementById("sp_sub_total").setAttribute('value',
+						spSubTotal);
+
+				$('#INR').html('INR-' + (spGrandTot).toFixed(2));
+				document.getElementById("sp_grand").setAttribute('value',
+						spGrandTot);
+				$('#tot').html('TOTAL-' + (spSubTotal).toFixed(2));
+				document.getElementById("total_amt").setAttribute('value',
+						spSubTotal);
+				$('#rmAmt').html((spGrandTot-advAmt).toFixed(2));
+				document.getElementById("rm_amount").setAttribute('value',
+						(spGrandTot-advAmt).toFixed(2));
+
+				document.getElementById("t1amt").setAttribute('value',
+						tax1Amt.toFixed(2));
+
+				document.getElementById("t2amt").setAttribute('value',
+						tax2Amt.toFixed(2));
+				document.getElementById("spBackEndRateNew").setAttribute('value',
+						spBackEndRate.toFixed(2));
+			}
+		</script>
+		
 		<!------------------------------------------------END------------------------------------------------>
 		<!------------------------CALLING FUNCTION WHEN FLAVOUR CHANGE FOR GETTING ADDON RATE---------------->
 		<script type="text/javascript">
@@ -991,33 +1100,43 @@ select {
 																	},
 																	function(
 																			data) {
+																		//alert(JSON.stringify(data))
 																		$(
 																				'#rate')
 																				.empty();
 																		$(
 																				"#dbAdonRate")
 																				.val((
-																						data.spfAdonRate).toFixed(2));
+																						data.sprAddOnRate).toFixed(2));
 																		$(
 																				"#rate")
 																				.html(
-																						(data.spfAdonRate).toFixed(2));
-																		document
-																				.getElementById("adv").value = 0.00;
+																						(data.sprAddOnRate).toFixed(2));
+																		/* document
+																				.getElementById("adv").value = 0.00; */
 																		document
 																				.getElementById(
 																						"sp_add_rate")
 																				.setAttribute(
 																						'value',
-																						data.spfAdonRate);
+																						data.sprAddOnRate);
 
+																		document .getElementById("flvAdRate").value=data.sprAddOnRate
+																		document .getElementById("mrp").value=data.sprRateMrp;
+																		document .getElementById("profPer").value=data.profitPer;
+																		
 																		var wt = $(
 																				'#spwt')
 																				.find(
 																						":selected")
 																				.text();
-
-																		var flavourAdonRate = data.spfAdonRate;
+																		var flavourAdonRate=$("#flvAdRate").val();
+																		var mrp=$("#mrp").val();
+																		var profitPer=$("#profPer").val();
+																		setData(flavourAdonRate,mrp,profitPer);
+																		
+																		if(1==2){
+																		var flavourAdonRate = data.sprAddOnRate;
 
 																		var tax3 = parseFloat($(
 																				"#tax3")
@@ -1038,10 +1157,17 @@ select {
 																				.val());
 																		//alert("sp_disc"+sp_disc);
 
-																		var price = $(
-																				"#dbPrice")
-																				.val();//dbRate
-
+																		/* var price = $(
+																				"#dbPrice") */
+																				var price = data.sprRateMrp;
+																				//dbRate
+																			//$("#dbPrice").val()=price.toFixed(2);
+																			document
+																			.getElementById(
+																					"dbPrice")
+																			.setAttribute(
+																					'value',
+																					price.toFixed(2));
 																		var totalFlavourAddonRate = wt
 																				* flavourAdonRate;
 
@@ -1208,13 +1334,22 @@ select {
 																						'value',
 																						mrpBaseRate
 																								.toFixed(2));
-
+																		//onChange(price);
+																		//alert("Ok")
+																	}
 																	});
 												});
 							});
 		</script>
 		<script>
 			function chChange() {
+				
+				var flavourAdonRate=$("#flvAdRate").val();
+				var mrp=$("#mrp").val();
+				var profitPer=$("#profPer").val();
+				setData(flavourAdonRate,mrp,profitPer);
+				
+				if(1==2){
 				var wt = $('#spwt').find(":selected").text();
 				var flavourAdonRate = $("#dbAdonRate").val();
 				var tax3 = parseFloat($("#tax3").val());
@@ -1320,7 +1455,7 @@ select {
 
 				document.getElementById("t2amt").setAttribute('value',
 						tax2Amt.toFixed(2));
-
+				}
 			}
 			</script>
 
@@ -1363,6 +1498,11 @@ select {
 		<!------------------------------------REMAINING AMOUNT ONKEYUP FUNCTION------------------------------>
 		<script type="text/javascript">
 			function advanceFun() {
+				var flavourAdonRate=$("#flvAdRate").val();
+				var mrp=$("#mrp").val();
+				var profitPer=$("#profPer").val();
+				setData(flavourAdonRate,mrp,profitPer);
+				if(1==2){
 				var advance = parseFloat($("#adv").val()); 
 				var rmamt = $("#total_amt").val();
 				if(isNaN(advance)){
@@ -1377,6 +1517,7 @@ select {
 				$('#rmAmt').html((rmamt - advance).toFixed(2));
 				document.getElementById("rm_amount").setAttribute('value',
 						rmamt - advance);
+				}
 			}
 		</script>
 		<!------------------------------------------------END------------------------------------------------>

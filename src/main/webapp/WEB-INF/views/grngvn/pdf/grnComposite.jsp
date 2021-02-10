@@ -162,11 +162,14 @@
 
 													<c:choose>
 														<c:when test="${detail.isGrn==0}">
-															<c:set var="type" value="GVN"></c:set>
+															<c:set var="type" value="GVN ${detail.grnType}"></c:set>
 															<c:set var="rate" value="${detail.itemRate}"></c:set>
 														</c:when>
 														<c:otherwise>
-															<c:choose>
+															<c:set var="type" value="GRN ${detail.grnType}"></c:set>
+																<c:set var="rate" value="${detail.baseRate*detail.grnType}"></c:set>
+														
+															<%--Sac02Feb2021 <c:choose>
 																<c:when test="${detail.grnType==0}">
 																	<c:set var="type" value="GRN 1(75%)"></c:set>
 																	<c:set var="rate" value="${detail.baseRate* 0.75}"></c:set>
@@ -182,7 +185,7 @@
 																	<c:set var="rate" value="${detail.baseRate}"></c:set>
 
 																</c:when>
-															</c:choose>
+															</c:choose> --%>
 														</c:otherwise>
 													</c:choose>
 

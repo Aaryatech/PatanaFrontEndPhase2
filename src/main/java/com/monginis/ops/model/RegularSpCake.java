@@ -216,5 +216,17 @@ public class RegularSpCake {
 	public void setExVar2(String exVar2) {
 		this.exVar2 = exVar2;
 	}
+	@Override
+	public String toString() {
+		return "RegularSpCake [rspId=" + rspId + ", frId=" + frId + ", frCode=" + frCode + ", rspSubCat=" + rspSubCat
+				+ ", itemId=" + itemId + ", menuId=" + menuId + ", orderDate=" + orderDate + ", rspProduDate="
+				+ rspProduDate + ", rspDeliveryDt=" + rspDeliveryDt + ", rspEvents=" + rspEvents + ", rspEventsName="
+				+ rspEventsName + ", rspSubTotal=" + rspSubTotal + ", rspAdvanceAmt=" + rspAdvanceAmt
+				+ ", rspRemainingAmt=" + rspRemainingAmt + ", tax1=" + tax1 + ", tax1Amt=" + tax1Amt + ", tax2=" + tax2
+				+ ", tax2Amt=" + tax2Amt + ", rspCustName=" + rspCustName + ", rspCustMobileNo=" + rspCustMobileNo
+				+ ", rate=" + rate + ", mrp=" + mrp + ", rateCat=" + rateCat + ", qty=" + qty + ", isBillGenerated="
+				+ isBillGenerated + ", rspPlace=" + rspPlace + ", orderTime=" + orderTime + ", exVar1=" + exVar1
+				+ ", exVar2=" + exVar2 + "]";
+	}
 	
 }

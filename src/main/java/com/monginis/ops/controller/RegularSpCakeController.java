@@ -38,6 +38,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.monginis.ops.common.Common;
 import com.monginis.ops.common.Firebase;
+import com.monginis.ops.common.SetOrderDataCommon;
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.model.SubCategoryResponse;
 import com.monginis.ops.model.frsetting.FrSetting;
@@ -498,8 +499,11 @@ public class RegularSpCakeController {
 				e.printStackTrace();
 			}
             regularSpCakeOrder.setRspPlace(spNo);
-			
-			
+			SetOrderDataCommon orderDataSetting=new SetOrderDataCommon();
+
+            regularSpCakeOrder=orderDataSetting.setRegSpOrderData(regularSpCakeOrder, menuList.get(globalIndex), menuList.get(globalIndex).getMenuId(),
+					frDetails.getFrId(),
+					regularSpCakeOrder.getQty(), request);
 				HttpHeaders httpHeaders = new HttpHeaders();
 				httpHeaders.set("Content-Type", "application/json");
 

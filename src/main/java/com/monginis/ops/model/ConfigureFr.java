@@ -1,5 +1,6 @@
 package com.monginis.ops.model;
- 
+
+
 public class ConfigureFr {
 
 	private int settingId;
@@ -25,15 +26,19 @@ public class ConfigureFr {
 	private String itemShow;
 
 	private int delStatus;
-	 
-	int rateSettingFrom; 
-	float profitPer; 
-	int rateSettingType; 
-	int delDays; 
-	int prodDays; 
-	int isDiscApp; 
-	float discPer; 
-	int grnPer;
+	
+	
+	 //New fields 02-02-2021 -sachin
+  	int rateSettingFrom;
+  	float profitPer;
+  	int rateSettingType;
+  	int delDays;
+  	int prodDays;
+  	int isDiscApp;
+  	float discPer;
+  	int grnPer;
+  	//New fields 02-02-2021 -sachin code end
+  	
 
 	public int getSettingId() {
 		return settingId;
@@ -131,6 +136,16 @@ public class ConfigureFr {
 		this.delStatus = delStatus;
 	}
 
+	@Override
+	public String toString() {
+		return "ConfigureFr [settingId=" + settingId + ", frId=" + frId + ", menuId=" + menuId + ", catId=" + catId
+				+ ", subCatId=" + subCatId + ", settingType=" + settingType + ", fromTime=" + fromTime + ", toTime="
+				+ toTime + ", day=" + day + ", date=" + date + ", itemShow=" + itemShow + ", delStatus=" + delStatus
+				+ ", rateSettingFrom=" + rateSettingFrom + ", profitPer=" + profitPer + ", rateSettingType="
+				+ rateSettingType + ", delDays=" + delDays + ", prodDays=" + prodDays + ", isDiscApp=" + isDiscApp
+				+ ", discPer=" + discPer + ", grnPer=" + grnPer + "]";
+	}
+
 	public int getRateSettingFrom() {
 		return rateSettingFrom;
 	}
@@ -195,14 +210,6 @@ public class ConfigureFr {
 		this.grnPer = grnPer;
 	}
 
-	@Override
-	public String toString() {
-		return "ConfigureFr [settingId=" + settingId + ", frId=" + frId + ", menuId=" + menuId + ", catId=" + catId
-				+ ", subCatId=" + subCatId + ", settingType=" + settingType + ", fromTime=" + fromTime + ", toTime="
-				+ toTime + ", day=" + day + ", date=" + date + ", itemShow=" + itemShow + ", delStatus=" + delStatus
-				+ ", rateSettingFrom=" + rateSettingFrom + ", profitPer=" + profitPer + ", rateSettingType="
-				+ rateSettingType + ", delDays=" + delDays + ", prodDays=" + prodDays + ", isDiscApp=" + isDiscApp
-				+ ", discPer=" + discPer + ", grnPer=" + grnPer + "]";
-	}
-
+	
+	
 }
