@@ -208,6 +208,7 @@
 
 							<thead>
 								<tr class="bgpink">
+								<th width="5%" style="text-align: center;"><input type="checkbox" name="checkAll" id="checkAll"/></th>
 									<th class="col-sm-1" style="text-align: center;">Invoice
 										No</th>
 									<th class="col-md-1" style="text-align: center;">Date</th>
@@ -226,7 +227,7 @@
 								<c:forEach items="${billHeader}" var="billHeader"
 									varStatus="count">
 									<tr>
-										<%-- 	<td class="col-sm-1"><c:out value="${billHeader.billNo}" /></td> --%>
+										<td><input type="checkbox" name="check" id="form6check2" class="bill-class"  value="${billHeader.billNo}"/></td>
 										<td class="col-sm-1" style="text-align: center;"><c:out
 												value="${billHeader.invoiceNo}" /></td>
 										<td class="col-md-1" style="text-align: center;"><c:out
@@ -282,6 +283,10 @@
 						</table>
 
 					</div>
+					<div class="col-sm-3  controls">
+								<input type="button" id="printBills" class="btn btn-primary"
+									value="Print Bills" onclick="printSelctBills()" disabled="disabled">
+							</div>
 				</div>
 
 
@@ -314,6 +319,10 @@
 
 
 <script>
+$("#checkAll").click(function(){
+    $('input:checkbox').not(this).prop('checked', this.checked);
+    document.getElementById("printBills").disabled = false;
+});
 	/*
 	//  jquery equivalent
 	jQuery(document).ready(function() {
@@ -331,6 +340,41 @@
 		fauxTable.appendChild(clonedElement);
 		fauxTable.appendChild(clonedElement2);
 	})();
+	 
+</script>
+
+<script type="text/javascript">
+$('.bill-class').each(function (i) {
+    $(this).click(function () {
+        //alert (this.value);
+    	 document.getElementById("printBills").disabled = false;
+      
+    });
+});
+	
+	function printSelctBills() {
+
+		var billIds = [];
+		$(".bill-class")
+				.each(
+						function(counter) {
+							if (document.getElementsByClassName("bill-class")[counter].checked) {
+								
+								var billId = document
+										.getElementsByClassName("bill-class")[counter].value;
+
+								billIds.push(billId);
+								flag = 0;
+							}
+						});
+		
+		window
+		.open('http://132.148.148.215:8080/admin/pdf?url=pdf/showBillPdf/By-Road/0/'
+				+ billIds.join());
+		
+		
+
+	}
 </script>
 
 </body>

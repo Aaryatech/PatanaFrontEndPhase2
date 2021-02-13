@@ -463,7 +463,7 @@ public class StockController {
 //
 //		}
 //		
-			// System.err.println("Cat Id: " + catId + "running month " + runningMonth);
+			System.err.println("Cat Id: " + catId + "running month " + runningMonth);
 
 			String itemShow = "";
 
@@ -479,7 +479,7 @@ public class StockController {
 				itemShow = itemShow.substring(1);
 			}
 
-			// System.err.println("ITEM LIST - " + itemShow);
+			System.err.println("ITEM LIST - " + itemShow);
 
 			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 			DateFormat yearFormat = new SimpleDateFormat("yyyy");
@@ -591,9 +591,9 @@ public class StockController {
 
 					e.printStackTrace();
 				}
-				// System.out.println("FromDate " + fr);
+				System.out.println("FromDate " + fr);
 
-				// System.out.println("toDate " + to);
+				System.out.println("toDate " + to);
 				map = new LinkedMultiValueMap<String, Object>();
 				map.add("frId", frDetails.getFrId());
 				map.add("fromDate", fr);
