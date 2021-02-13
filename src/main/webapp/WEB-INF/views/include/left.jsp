@@ -579,7 +579,9 @@
 								href="${pageContext.request.contextPath}/grnReport"><i
 								class="fa fa-files-o icon"></i> GRN Report (Sell)</a> <a
 								href="${pageContext.request.contextPath}/gvnReport"><i
-								class="fa fa-files-o icon"></i> GVN Report (Sell)</a>
+								class="fa fa-files-o icon"></i> GVN Report (Sell)</a><a
+								href="${pageContext.request.contextPath}/viewAccPndngItmReport"><i
+								class="fa fa-files-o icon"></i>A/c Pending Item Wise Grn Gvn</a>
 
 
 

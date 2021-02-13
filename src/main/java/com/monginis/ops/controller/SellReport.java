@@ -17,7 +17,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.context.annotation.Scope; 
+import org.springframework.context.annotation.Scope;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -25,17 +29,20 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 import org.zefer.pd4ml.PD4Constants;
 import org.zefer.pd4ml.PD4ML;
-import org.zefer.pd4ml.PD4PageMark; 
+import org.zefer.pd4ml.PD4PageMark;
+
 import com.monginis.ops.common.DateConvertor;
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.model.ExportToExcel;
 import com.monginis.ops.model.Franchisee;
 import com.monginis.ops.model.GrnGvnReport;
 import com.monginis.ops.model.TSellReport;
+import com.monginis.ops.model.grngvn.PendingGrnGvnItemWise;
 
 @Controller
 @Scope("session")
@@ -556,5 +563,192 @@ public class SellReport {
 			pd4ml.render(urlstring, fos);
 		}
 	}
+	
+	@RequestMapping(value = "/viewAccPndngItmReport", method = RequestMethod.GET)
+	public ModelAndView viewAccPndngItmReport(HttpServletRequest request,
+				HttpServletResponse response) {
 
+			ModelAndView model = new ModelAndView("report/sellReport/accPendingItmGrnGvn");
+			
+			HttpSession ses = request.getSession();
+			Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
+			 
+			model.addObject("frId", frDetails.getFrId());
+			model.addObject("frName", frDetails.getFrName());
+			 
+			return model;			
+	}
+	List<PendingGrnGvnItemWise> grnAcGvnList = new ArrayList<PendingGrnGvnItemWise>();
+	@RequestMapping(value = "/viewAccPendingItemsGrnGvn", method = RequestMethod.GET)
+	@ResponseBody
+	public List<PendingGrnGvnItemWise> getAccPendingItemsGrnGvn(HttpServletRequest request, HttpServletResponse response) {
+		try {
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			RestTemplate restTemplate = new RestTemplate();
+			
+			System.out.println("inside getAccPendingItemsGrnGvn ajax call");
+
+			HttpSession ses = request.getSession();
+			Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
+			String fromDate = request.getParameter("from_date");
+			String toDate = request.getParameter("to_date");
+			String isGrn = request.getParameter("is_grn");
+			int aprvBy = Integer.parseInt(request.getParameter("apprvBy"));
+		//	int grnStatus = Integer.parseInt(request.getParameter("grnStatus"));
+			int grnStatus = 6;
+
+			map = new LinkedMultiValueMap<String, Object>();
+			
+			String grnType = null;
+			if (isGrn.equalsIgnoreCase("2")) {
+				grnType = "1" + "," + "0";
+
+				map.add("isGrn", grnType);
+			} else {
+				System.err.println("Is Grn not =2");
+				grnType = isGrn;
+				map.add("isGrn", grnType);
+			}
+			
+			
+			map.add("frIdList", frDetails.getFrId());
+			map.add("fromDate", DateConvertor.convertToYMD(fromDate));
+			map.add("toDate",  DateConvertor.convertToYMD(toDate));
+			map.add("grnStatus", grnStatus);
+			map.add("aprvBy", aprvBy);
+			
+			System.out.println(frDetails.getFrId()+" / "+fromDate+" / "+toDate+" / "+grnStatus+" / "+aprvBy+" / "+grnType);
+			
+			
+			ParameterizedTypeReference<List<PendingGrnGvnItemWise>> typeRef = new ParameterizedTypeReference<List<PendingGrnGvnItemWise>>() {
+			};
+			ResponseEntity<List<PendingGrnGvnItemWise>> responseEntity = null;
+			try {
+			responseEntity = restTemplate
+					.exchange(Constant.URL + "getAcPendingItemGrnGvnReport", HttpMethod.POST, new HttpEntity<>(map), typeRef);
+			}catch (HttpClientErrorException e) {
+				System.out.println(e.getResponseBodyAsString());
+			}
+			grnAcGvnList = responseEntity.getBody();
+			
+
+			System.err.println("A/c Pending grnGvnList ------------------- " + grnAcGvnList);
+
+			List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
+
+			ExportToExcel expoExcel = new ExportToExcel();
+			List<String> rowData = new ArrayList<String>();
+
+			rowData.add("Sr. No.");
+			rowData.add("GRN GVN SrNo.");
+			rowData.add("Type");
+			rowData.add("GRN GVN Date");
+			rowData.add("Item Name");
+			rowData.add("Qty");	
+			rowData.add("GRN GVN Status");
+
+			expoExcel.setRowData(rowData);
+			exportToExcelList.add(expoExcel);
+			List<PendingGrnGvnItemWise> excelItems = grnAcGvnList;
+			for (int i = 0; i < excelItems.size(); i++) {
+				expoExcel = new ExportToExcel();
+				rowData = new ArrayList<String>();
+				rowData.add("" + (i + 1));				
+				
+				rowData.add(excelItems.get(i).getGrngvnDate());
+				rowData.add(excelItems.get(i).getIsGrn()==1 ? "GRN" : "GVN");
+				rowData.add("" + excelItems.get(i).getGrngvnDate());
+				rowData.add(excelItems.get(i).getItemName());
+				rowData.add("" + excelItems.get(i).getGrnGvnQty());
+				
+				String grnGvnstatus = null;
+				if (excelItems.get(i).getGrngvnStatus() == 1)
+					grnGvnstatus = "Pending";
+				else if (excelItems.get(i).getGrngvnStatus() == 2)
+					grnGvnstatus = "Approved By Gate";
+				else if (excelItems.get(i).getGrngvnStatus() == 3)
+					grnGvnstatus = "Reject By Gate";
+				else if (excelItems.get(i).getGrngvnStatus() == 4)
+					grnGvnstatus = "Approved By Store";
+				else if (excelItems.get(i).getGrngvnStatus() == 5)
+					grnGvnstatus = "Reject By Store";
+				else if (excelItems.get(i).getGrngvnStatus() == 6)
+					grnGvnstatus = "Approved By Acc";
+				else
+					grnGvnstatus = "Reject By Acc";
+
+				rowData.add(grnGvnstatus);
+				expoExcel.setRowData(rowData);
+				exportToExcelList.add(expoExcel);
+
+			}
+
+			HttpSession session = request.getSession();
+			session.setAttribute("exportExcelList", exportToExcelList);
+			session.setAttribute("excelName", "A/c Pending Item Wise Grn Gvn");
+
+		} catch (Exception e) {
+
+			System.out.println("Ex in getting /getGrnGvnPendingItems List  Ajax call" + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return grnAcGvnList;
+
+	}
+	
+	@RequestMapping(value = "pdf/showPndItemGrnGvnReportPdf/{fromDate}/{toDate}/{frIds}/{aprvBy}/{isGrn}", method = RequestMethod.GET)
+	public ModelAndView showPndItemGrnGvnReportPdf(@PathVariable("fromDate") String fromDate, @PathVariable("toDate") String toDate,
+			@PathVariable("frIds") String frIds,
+			@PathVariable("aprvBy") int aprvBy , @PathVariable("isGrn") String isGrn, HttpServletRequest request, HttpServletResponse response)
+			throws FileNotFoundException {
+		ModelAndView model = new ModelAndView("report/sellReport/sellReportPdf/acPndItmGvnReportPdf");
+		try {
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			RestTemplate restTemplate = new RestTemplate();
+			String grnType=null;
+			if (isGrn.equalsIgnoreCase("2")) {
+				grnType = "1" + "," + "0";
+
+				map.add("isGrn", grnType);
+			} else {
+				System.err.println("Is Grn not =2");
+				grnType = isGrn;
+				map.add("isGrn", grnType);
+			}
+			int grnStatus = 6;
+			
+			map.add("frIdList", frIds);
+			map.add("fromDate", DateConvertor.convertToYMD(fromDate));
+			map.add("toDate",  DateConvertor.convertToYMD(toDate));
+			map.add("grnStatus", grnStatus);
+			map.add("aprvBy", aprvBy);
+
+			ParameterizedTypeReference<List<PendingGrnGvnItemWise>> typeRef = new ParameterizedTypeReference<List<PendingGrnGvnItemWise>>() {
+			};
+			ResponseEntity<List<PendingGrnGvnItemWise>> responseEntity = null;
+			try {
+			responseEntity = restTemplate
+					.exchange(Constant.URL + "getAcPendingItemGrnGvnReport", HttpMethod.POST, new HttpEntity<>(map), typeRef);
+			}catch (HttpClientErrorException e) {
+				System.out.println(e.getResponseBodyAsString());
+			}
+			grnAcGvnList = responseEntity.getBody();
+			
+			model.addObject("report", grnAcGvnList);
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		model.addObject("report", grnAcGvnList);
+		model.addObject("fromDate", fromDate);
+		model.addObject("toDate", toDate);
+		model.addObject("isGrn", isGrn);
+		
+		return model;
+		
+	}
 }
