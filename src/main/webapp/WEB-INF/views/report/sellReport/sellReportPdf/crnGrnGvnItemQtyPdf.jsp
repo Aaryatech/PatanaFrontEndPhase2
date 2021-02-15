@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Purchase Bill Pdf</title>
+<title>Credit Note GRN - GVN Item Qty</title>
 <head>
 <meta charset="UTF-8" />
 <title></title>
@@ -41,7 +41,7 @@
 
 </head>
 <body>
-<c:forEach items="${billDetails}" var="frDetails" varStatus="count">
+
 	<table width="250" border="0" cellspacing="0" cellpadding="0"
 		style="padding: 5px; font-family: verdana; font-size: 10px; border: 1px solid #E7E7E7;">
 
@@ -52,7 +52,7 @@
 				<tr>
 
 
-					<td colspan="2" align="center" style="padding: 1px;"><p>TAX INVOICE</p></td>
+					<td colspan="2" align="center" style="padding: 1px;"><p>Credit Note GRN - GVN Item Qty</p></td>
 
 				</tr>
 				<tr>
@@ -89,13 +89,13 @@
 				<td colspan="2">
 					<table width="100%" border="0" cellspacing="0" cellpadding="7">
 						<tbody>
-							<tr>
+							<%-- <tr>
 								<td style="font-size: 9px">Invoice No:</td>
 								<td style="font-size: 10px"><b>${frDetails.invoiceNo}</b></td>
 								<td style="font-size: 9px">Invoice Date:</td>
 
 								<td style="font-size: 10px"><b>${frDetails.billDate}</b></td>
-							</tr>
+							</tr> --%>
 							<%--  <tr>
       <td>Det No</td>
       <td colspan="3">${exBill.sellBillDetailNo}</td>
@@ -106,52 +106,31 @@
 										cellspacing="0" cellpadding="1" class="tbl-inner"><!--cellpading was 5   -->
 										<tbody>
 											<tr>
-												<th width="30%" align="left" bgcolor="#ECECEC">HsnCode-ItemName</th>
-												<th width="13%" bgcolor="#ECECEC">Qty</th>
+												<th width="13%" bgcolor="#ECECEC">GRN GVN Sr No.</th>
+												<th width="30%" align="left" bgcolor="#ECECEC">ItemName</th>
+												<th width="13%" bgcolor="#ECECEC">Approve Qty</th>
+												<th width="13%" bgcolor="#ECECEC">Request Qty</th>
 											</tr>
 
-											<c:forEach items="${frDetails.billDetailsList}" var="billDetails"
-												varStatus="count">
+											<c:forEach items="${report}" var="report" varStatus="count">
 												<tr>
+													<td>
+														<p style="font-size: 10px">${report.grngvnSrno}</p>
+													</td>
+													<td>
+														<p style="font-size: 10px">${report.itemName}</p>
+													</td>
 
-														<c:choose>
-															<c:when test="${billDetails.grnType==3}">
-																<td>
-																	<%-- <p style="font-size: 10px">${billDetails.itemHsncd}</p> --%>
-																	<p style="font-size: 10px">${billDetails.itemName}
-																		[NR]</p>
-																</td>
-															</c:when>
-															<c:when test="${billDetails.grnType==4}">
-																<%-- <p style="font-size: 10px">${billDetails.itemHsncd}</p> --%>
-																<p style="font-size: 10px">${billDetails.itemName}
-																	[R]</p>
-															</c:when>
-															<c:otherwise>
-																<td>
-																	<%-- <p style="font-size: 10px">${billDetails.itemHsncd}</p> --%>
-																	<p style="font-size: 10px">${billDetails.itemName}</p>
-																</td>
-															</c:otherwise>
-
-														</c:choose>
-
-														
-
-													
-
-													
 													<td align="center"><p style="font-size: 10px">
 															<fmt:formatNumber type="number" maxFractionDigits="2"
-																value="${rate}" />
-														</p><p style="font-size: 10px"> <fmt:formatNumber type="number"
-															maxFractionDigits="2" value="${billDetails.billQty}" />
+																value="${report.reqQty}" />
+														</p>
+														</td>
+														<td align="center">
+														<p style="font-size: 10px">
+															<fmt:formatNumber type="number" maxFractionDigits="2"
+																value="${report.aprvQty}" />
 														</p></td>
-
-													
-													
-
-													
 												</tr>
 											</c:forEach>
 											<%-- <tr>
@@ -229,7 +208,6 @@
 			</tr>
 		</tbody>
 	</table>
-	</c:forEach>
 </body>
 <body onload="directPrint()">
 	<script>

@@ -42,6 +42,7 @@ import com.monginis.ops.model.ExportToExcel;
 import com.monginis.ops.model.Franchisee;
 import com.monginis.ops.model.GrnGvnReport;
 import com.monginis.ops.model.TSellReport;
+import com.monginis.ops.model.grngvn.CreditNoteGrnGvnItemWise;
 import com.monginis.ops.model.grngvn.PendingGrnGvnItemWise;
 
 @Controller
@@ -607,7 +608,7 @@ public class SellReport {
 
 				map.add("isGrn", grnType);
 			} else {
-				System.err.println("Is Grn not =2");
+			//	System.err.println("Is Grn not =2");
 				grnType = isGrn;
 				map.add("isGrn", grnType);
 			}
@@ -634,7 +635,7 @@ public class SellReport {
 			grnAcGvnList = responseEntity.getBody();
 			
 
-			System.err.println("A/c Pending grnGvnList ------------------- " + grnAcGvnList);
+		//	System.err.println("A/c Pending grnGvnList ------------------- " + grnAcGvnList);
 
 			List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
 
@@ -715,7 +716,7 @@ public class SellReport {
 
 				map.add("isGrn", grnType);
 			} else {
-				System.err.println("Is Grn not =2");
+			//	System.err.println("Is Grn not =2");
 				grnType = isGrn;
 				map.add("isGrn", grnType);
 			}
@@ -733,6 +734,137 @@ public class SellReport {
 			try {
 			responseEntity = restTemplate
 					.exchange(Constant.URL + "getAcPendingItemGrnGvnReport", HttpMethod.POST, new HttpEntity<>(map), typeRef);
+			}catch (HttpClientErrorException e) {
+				System.out.println(e.getResponseBodyAsString());
+			}
+			grnAcGvnList = responseEntity.getBody();
+			
+			model.addObject("report", grnAcGvnList);
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		model.addObject("report", grnAcGvnList);
+		model.addObject("fromDate", fromDate);
+		model.addObject("toDate", toDate);
+		model.addObject("isGrn", isGrn);
+		
+		return model;
+		
+	}
+	
+	@RequestMapping(value = "/viewCrnGrnGvnItemQty", method = RequestMethod.GET)
+	public ModelAndView viewCrnGrnGvnItemQty(HttpServletRequest request,
+				HttpServletResponse response) {
+
+			ModelAndView model = new ModelAndView("report/sellReport/crnGrnGvnItem");
+			
+			HttpSession ses = request.getSession();
+			Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
+			 
+			model.addObject("frId", frDetails.getFrId());
+			model.addObject("frName", frDetails.getFrName());
+			 
+			return model;			
+	}
+	
+	
+	@RequestMapping(value = "/getCreditNoteGrnGvnItmQty", method = RequestMethod.GET)
+	@ResponseBody
+	public List<CreditNoteGrnGvnItemWise> getCreditNoteGrnGvnItmQty(HttpServletRequest request, HttpServletResponse response) {
+		List<CreditNoteGrnGvnItemWise> grnAcGvnList = new ArrayList<CreditNoteGrnGvnItemWise>();
+		try {
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			RestTemplate restTemplate = new RestTemplate();
+			
+			System.out.println("inside getAccPendingItemsGrnGvn ajax call");
+
+			HttpSession ses = request.getSession();
+			Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
+			String fromDate = request.getParameter("from_date");
+			String toDate = request.getParameter("to_date");
+			String isGrn = request.getParameter("is_grn");
+
+			map = new LinkedMultiValueMap<String, Object>();
+			
+			String grnType = null;
+			if (isGrn.equalsIgnoreCase("2")) {
+				grnType = "1" + "," + "0";
+
+				map.add("isGrn", grnType);
+			} else {
+				System.err.println("Is Grn not =2");
+				grnType = isGrn;
+				map.add("isGrn", grnType);
+			}
+			
+			
+			map.add("frId", frDetails.getFrId());
+			map.add("fromDate", DateConvertor.convertToYMD(fromDate));
+			map.add("toDate",  DateConvertor.convertToYMD(toDate));			
+			
+			
+			ParameterizedTypeReference<List<CreditNoteGrnGvnItemWise>> typeRef = new ParameterizedTypeReference<List<CreditNoteGrnGvnItemWise>>() {
+			};
+			ResponseEntity<List<CreditNoteGrnGvnItemWise>> responseEntity = null;
+			try {
+			responseEntity = restTemplate
+					.exchange(Constant.URL + "getCrnItemGrnGvnReport", HttpMethod.POST, new HttpEntity<>(map), typeRef);
+			}catch (HttpClientErrorException e) {
+				System.out.println(e.getResponseBodyAsString());
+			}
+			grnAcGvnList = responseEntity.getBody();
+			
+
+			//System.err.println("A/c Pending grnGvnList ------------------- " + grnAcGvnList);
+
+			
+
+		} catch (Exception e) {
+
+			System.out.println("Ex in getting /getCreditNoteGrnGvnItmQty List  Ajax call" + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return grnAcGvnList;
+
+	}
+	
+	@RequestMapping(value = "pdf/showCrnGrnGvnItemQtyPdf/{fromDate}/{toDate}/{frIds}/{isGrn}", method = RequestMethod.GET)
+	public ModelAndView showPndItemGrnGvnReportPdf(@PathVariable("fromDate") String fromDate, @PathVariable("toDate") String toDate,
+			@PathVariable("frIds") String frIds,  @PathVariable("isGrn") String isGrn, HttpServletRequest request, HttpServletResponse response)
+			throws FileNotFoundException {
+		ModelAndView model = new ModelAndView("report/sellReport/sellReportPdf/crnGrnGvnItemQtyPdf");
+		List<CreditNoteGrnGvnItemWise> grnAcGvnList = new ArrayList<CreditNoteGrnGvnItemWise>();
+		try {
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			RestTemplate restTemplate = new RestTemplate();
+			String grnType=null;
+			if (isGrn.equalsIgnoreCase("2")) {
+				grnType = "1" + "," + "0";
+
+				map.add("isGrn", grnType);
+			} else {
+				System.err.println("Is Grn not =2");
+				grnType = isGrn;
+				map.add("isGrn", grnType);
+			}
+			int grnStatus = 6;
+			
+			map.add("frId", frIds);
+			map.add("fromDate", DateConvertor.convertToYMD(fromDate));
+			map.add("toDate",  DateConvertor.convertToYMD(toDate));			
+			
+			
+			ParameterizedTypeReference<List<CreditNoteGrnGvnItemWise>> typeRef = new ParameterizedTypeReference<List<CreditNoteGrnGvnItemWise>>() {
+			};
+			ResponseEntity<List<CreditNoteGrnGvnItemWise>> responseEntity = null;
+			try {
+			responseEntity = restTemplate
+					.exchange(Constant.URL + "getCrnItemGrnGvnReport", HttpMethod.POST, new HttpEntity<>(map), typeRef);
 			}catch (HttpClientErrorException e) {
 				System.out.println(e.getResponseBodyAsString());
 			}

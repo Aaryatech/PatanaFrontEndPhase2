@@ -620,6 +620,8 @@
 								class="fa fa-files-o icon"></i>Purchase Bill Pdf</a> 
 							<a href="${pageContext.request.contextPath}/showCurrentStockData"><i
 								class="fa fa-files-o icon"></i>Current Stock Pdf</a> 
+							<a href="${pageContext.request.contextPath}/viewCrnGrnGvnItemQty"><i
+								class="fa fa-files-o icon"></i>CRN GRN GVN Pdf</a> 
 						</div>
 					</li>
 

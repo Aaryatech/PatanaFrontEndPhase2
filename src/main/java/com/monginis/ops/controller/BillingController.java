@@ -797,9 +797,9 @@ public class BillingController {
 			// vehicleNo=request.getParameter("vehicle_no");
 			// transportMode=request.getParameter("transport_mode");
 
-			System.out.println("Vehicle No " + vehicleNo + "Transport Mode = " + transportMode);
+		//	System.out.println("Vehicle No " + vehicleNo + "Transport Mode = " + transportMode);
 
-			System.out.println("Inside new form action ");
+		//	System.out.println("Inside new form action ");
 
 			RestTemplate restTemplate = new RestTemplate();
 
@@ -927,7 +927,7 @@ public class BillingController {
 
 			billDetailsListForPrint = new ArrayList<GetBillDetailPrint>();
 			billDetailsListForPrint = billDetailsResponse;
-			System.out.println(" *** get Bill detail for Print response :: " + billDetailsListForPrint.toString());
+		//	System.out.println(" *** get Bill detail for Print response :: " + billDetailsListForPrint.toString());
 
 			System.out.println("Size Here Now  " + billHeadersListForPrint.size());
 
