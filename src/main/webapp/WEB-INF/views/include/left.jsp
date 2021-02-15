@@ -608,6 +608,20 @@
 								class="fa fa-files-o icon"></i>Customer List Report</a>
 						</div>
 					</li>
+					
+					<li class="small-box">
+
+						<div class="ibox txt_icn">
+							<div class="ibox-head">
+								<div class="ibox-title">Generate Pdf</div>
+							</div>
+
+							<a href="${pageContext.request.contextPath}/genPurchaseBillPdf"><i
+								class="fa fa-files-o icon"></i>Purchase Bill Pdf</a> 
+							<a href="${pageContext.request.contextPath}/showCurrentStockData"><i
+								class="fa fa-files-o icon"></i>Current Stock Pdf</a> 
+						</div>
+					</li>
 
 
 
