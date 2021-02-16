@@ -622,6 +622,9 @@
 								class="fa fa-files-o icon"></i>Current Stock Pdf</a> 
 							<a href="${pageContext.request.contextPath}/viewCrnGrnGvnItemQty"><i
 								class="fa fa-files-o icon"></i>CRN GRN GVN Pdf</a> 
+							<a href="${pageContext.request.contextPath}/showFranchiseeSummaryReport"><i
+								class="fa fa-files-o icon"></i>Franchise Summary Pdf</a> 	
+								
 						</div>
 					</li>
 
