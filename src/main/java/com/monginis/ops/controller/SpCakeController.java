@@ -315,8 +315,11 @@ System.err.println("E " +e.getResponseBodyAsString());
 
 					}
 					SetOrderDataCommon orderData=new SetOrderDataCommon();
-					
+					try {
 					specialCake=orderData.setSpCakeOrderData(specialCake, flavourList.getFlavour().get(0), menuList.get(globalIndex));
+					}catch (Exception e) {
+						model.addObject("flavorMsg", "No flavor associated with this cake, please select another");
+					}
 					//model.addObject("sprRate", sprRate);
 					//model.addObject("spBackendRate", spBackendRate);
 

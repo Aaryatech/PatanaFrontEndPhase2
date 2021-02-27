@@ -183,7 +183,9 @@ select {
 							<div class="fullform">
 								<div class="cackleft">Name</div>
 								<div class="cackright" id="sp_name">
-									<span class="cakename">${specialCake.spName}</span>
+									<span class="cakename">
+									<c:if test="${not empty flavorMsg}">${flavorMsg} For </c:if>
+									 ${specialCake.spName}</span>
 								</div>
 							</div>
 
