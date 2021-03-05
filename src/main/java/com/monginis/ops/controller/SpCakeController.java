@@ -1335,7 +1335,7 @@ System.err.println("In loop " +flavour.getSpfId());
 			spCakeOrder.setOrderDate(dateFormat.format(orderDate));
 			spCakeOrder.setExVar1(timeFormate.format(date));
 			float rmAmt = spSubTotal - spAdvance;
-			spCakeOrder.setRmAmount(rmAmt);
+			spCakeOrder.setRmAmount(Float.valueOf(rmAmount));
 			spCakeOrder.setSpTotalAddRate(Float.valueOf(spAddRate));
 			spCakeOrder.setSpAdvance(spAdvance);
 
