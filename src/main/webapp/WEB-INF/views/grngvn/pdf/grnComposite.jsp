@@ -168,6 +168,8 @@
 														<c:otherwise>
 															<c:set var="type" value="GRN ${detail.grnType}"></c:set>
 																<c:set var="rate" value="${detail.baseRate*detail.grnType}"></c:set>
+														</c:otherwise>
+													</c:choose>
 														
 															<%--Sac02Feb2021 <c:choose>
 																<c:when test="${detail.grnType==0}">
@@ -186,9 +188,7 @@
 
 																</c:when>
 															</c:choose> --%>
-														</c:otherwise>
-													</c:choose>
-
+														
 													<td align="center"><p style="font-size: 10px">${type}-${detail.invoiceNo}</p></td>
 													<td align="center"><p style="font-size: 10px"><fmt:formatNumber
 															type="number" maxFractionDigits="2" value="${rate}" /></p></td>

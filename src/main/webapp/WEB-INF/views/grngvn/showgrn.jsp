@@ -383,7 +383,7 @@ table, th, td {
 		} */
 		var grnRate=$("#grn_rate"+billDetailNo).text();
 		grnBaseRate = parseFloat(baseRate) *parseFloat(grnType) / 100;
-		grnRate=(rate * 90) / 100;
+		 grnRate=(parseFloat(rate) * parseFloat(grnType)) / 100;
 		
 	/* Sac02Feb2021 if(grnType==1){
 			var grnRate=$("#grn_rate"+billDetailNo).text();
