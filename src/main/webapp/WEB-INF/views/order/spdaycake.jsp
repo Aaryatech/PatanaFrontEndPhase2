@@ -255,8 +255,24 @@ $("#tech").change(function() {
 														<tbody>
 															<c:forEach var="items" items="${itemList}"
 																varStatus="loop">
+<tr>
+																			<td class="col-md-1"><c:out value='${loop.index+1}' /></td>
 
-																<c:choose>
+																			<td class="col-md-1"><c:out value='${items.itemName}' /></td>
+																			<td class="col-md-1"><input name='${items.id}' id='${items.id}'
+																				value='${items.itemQty}' class="tableInput"
+																				type="text" onkeydown="myFunction()"
+																				onchange="onChange('${items.orderRate}',${items.id})"></td>
+																			<td class="col-md-1"><c:out value='${items.orderMrp}' /></td>
+
+																			<td class="col-md-1"><c:out value='${items.orderRate}' /></td>
+																			<c:set var="rate" value="${items.orderRate}" />
+																			<c:set var="qty" value="${items.itemQty}" />
+																			<td class="col-md-1" id="total${items.id}"><c:out
+																					value='${rate * qty}' /></td>
+																		</tr>
+						
+																<%-- <c:choose>
 																	<c:when test="${frDetails.frRateCat=='1'}">
 																		<tr>
 																			<td class="col-md-1"><c:out value='${loop.index+1}' /></td>
@@ -313,7 +329,7 @@ $("#tech").change(function() {
 																					value='${rate * qty}' /></td>
 																		</tr>
 																	</c:when>
-																</c:choose>
+																</c:choose> --%>
 															</c:forEach>
 							</tbody>
 
@@ -406,7 +422,7 @@ function closeNav3() {
 
 <script type="text/javascript">
 		function onKeyDown(id) {
-			alert("alert");
+			//alert("alert");
 			var e = $('#'+id).val();
 			if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
 		             // Allow: Ctrl/cmd+A

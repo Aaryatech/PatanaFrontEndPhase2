@@ -33,6 +33,59 @@ public class GetFrItem  {
 	
 	private int minQty;
 
+	
+	
+private float discPer;//new
+	
+	//NEw field added Sachin 04-03-2021 16-03-2021
+		private double orderRate;
+		private double orderMrp;
+		private int grnPer;
+		private float menuDiscPer;
+		
+		
+		
+		
+	public float getDiscPer() {
+			return discPer;
+		}
+
+		public void setDiscPer(float discPer) {
+			this.discPer = discPer;
+		}
+
+		public double getOrderRate() {
+			return orderRate;
+		}
+
+		public void setOrderRate(double orderRate) {
+			this.orderRate = orderRate;
+		}
+
+		public double getOrderMrp() {
+			return orderMrp;
+		}
+
+		public void setOrderMrp(double orderMrp) {
+			this.orderMrp = orderMrp;
+		}
+
+		public int getGrnPer() {
+			return grnPer;
+		}
+
+		public void setGrnPer(int grnPer) {
+			this.grnPer = grnPer;
+		}
+
+		public float getMenuDiscPer() {
+			return menuDiscPer;
+		}
+
+		public void setMenuDiscPer(float menuDiscPer) {
+			this.menuDiscPer = menuDiscPer;
+		}
+
 	public Integer getId() {
 		return id;
 	}
@@ -238,7 +291,8 @@ public class GetFrItem  {
 				+ ", itemMrp3=" + itemMrp3 + ", itemImage=" + itemImage + ", itemTax1=" + itemTax1 + ", itemTax2="
 				+ itemTax2 + ", itemTax3=" + itemTax3 + ", itemIsUsed=" + itemIsUsed + ", itemSortId=" + itemSortId
 				+ ", grnTwo=" + grnTwo + ", itemQty=" + itemQty + ", delStatus=" + delStatus + ", subCatName="
-				+ subCatName + ", menuId=" + menuId + ", minQty=" + minQty + "]";
+				+ subCatName + ", menuId=" + menuId + ", minQty=" + minQty + ", discPer=" + discPer + ", orderRate="
+				+ orderRate + ", orderMrp=" + orderMrp + ", grnPer=" + grnPer + ", menuDiscPer=" + menuDiscPer + "]";
 	}
 	
 	

@@ -20,8 +20,11 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -50,6 +53,7 @@ import com.monginis.ops.model.FrMenu;
 import com.monginis.ops.model.Franchisee;
 import com.monginis.ops.model.GetRegularSpCkItem;
 import com.monginis.ops.model.Info;
+import com.monginis.ops.model.Item;
 import com.monginis.ops.model.MCategory;
 import com.monginis.ops.model.Main;
 import com.monginis.ops.model.RegularSpCake;
@@ -77,10 +81,119 @@ public class RegularSpCakeController {
 	 List<SpMessage> spMessageList;
 	 
 	 RegularSpCkItemResponse regularSpCkItemList;
+	 
+	 List<Item> itemList;
+	 
 	String spImage = "0463a490-b678-46d7-b31d-d7d6bae5c954-ats.png";//Default Image to spCake order Page
    //--------------------------Show Regular Special Cake Order Page--------------------------------------
-		@RequestMapping(value = "/showRegularSpCakeOrder/{index}", method = RequestMethod.GET)
-		public ModelAndView displayregularSpCakeOrder(@PathVariable("index") int index,HttpServletRequest request,
+	
+	@RequestMapping(value = "/showRegularSpCakeOrder/{index}", method = RequestMethod.GET)
+	public ModelAndView displayregularSpCakeOrder(@PathVariable("index") int index,HttpServletRequest request,
+			HttpServletResponse response) {
+		
+		logger.info("/regularSpCkOrder  request mapping");
+
+		ModelAndView model = new ModelAndView("order/regularSpCkOrder");
+		HttpSession session = request.getSession();
+		
+		
+		RestTemplate restTemplate = new RestTemplate();
+         try {
+        	     menuList = (ArrayList<FrMenu>) session.getAttribute("menuList");
+
+ 			    currentMenuId = menuList.get(index).getMenuId();
+ 			  
+ 			    String menutitle=menuList.get(index).getMenuTitle();
+ 			    System.out.println("MenuList" + currentMenuId);
+ 			    globalIndex = index;
+ 			    
+ 			   Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+ 				itemShow = menuList.get(globalIndex).getItemShow();
+ 				//System.err.println("Item Show-->"+itemShow);
+			    logger.info("/ITEMSHOW"+itemShow);
+			    
+			    MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			    map.add("itemList", itemShow);
+
+				ParameterizedTypeReference<List<Item>> typeRef1 = new ParameterizedTypeReference<List<Item>>() {
+				};
+
+				ResponseEntity<List<Item>> responseEntity1 = restTemplate.exchange(Constant.URL + "getItemsByItemId",
+						HttpMethod.POST, new HttpEntity<>(map), typeRef1);
+				itemList = responseEntity1.getBody();
+				model.addObject("selectedItems",responseEntity1.getBody());
+				
+				//System.err.println("Item List--->"+responseEntity1.getBody());
+
+        	 //   MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			  //  map.add("catId",2);
+	
+			    SubCategoryResponse categoryResponse = restTemplate.getForObject(Constant.URL + "/showAllCategory",SubCategoryResponse.class);
+			    logger.info("/regularSpCkOrder  request mapping"+categoryResponse.toString());
+			    
+			    
+          
+				AllspMessageResponse allspMessageList = restTemplate.getForObject(Constant.URL + "getAllSpMessage",
+						AllspMessageResponse.class);
+
+				spMessageList = allspMessageList.getSpMessage();
+                /*EventList eventList = restTemplate.getForObject(Constant.URL + "/showEventList", EventList.class);
+		        logger.info("/regularSpCkOrder Event List"+eventList.toString());*/
+	
+				List<MCategory> catList=new ArrayList<>();
+		        mCategories=categoryResponse.getmCategoryList();
+		        
+//		    	for (MCategory mCategory : mCategories) {
+//		    		if(currentMenuId==42) {
+//					if (mCategory.getCatId() == 2) {
+//						catList.add(mCategory);
+//                        model.addObject("mainCatId", mCategory.getCatId());
+//					}
+//		    		}
+//		    		else
+//		    			if(currentMenuId==29||currentMenuId==30||currentMenuId==80)
+//		    			{
+//		    				if (mCategory.getCatId() == 1) {
+//								catList.add(mCategory);
+//	                            model.addObject("mainCatId", mCategory.getCatId());
+//							}
+//		    			}
+//		    		
+//				}
+		    	String spNo="";
+		      try {
+		    	  spNo=getSpNo(request,response);
+		      }catch (Exception e) {
+		    	  spNo="";
+				e.printStackTrace();
+			}
+			    model.addObject("frDetails",frDetails);
+			    
+			    model.addObject("eventList", spMessageList);
+		
+			   // model.addObject("categoryResponse", subCategories);
+			    
+			    //model.addObject("mCategories", catList);
+			    model.addObject("mCategories", mCategories);
+			    
+			     
+			    model.addObject("url", Constant.SPCAKE_IMAGE_URL);
+			    model.addObject("title",menutitle);
+			    model.addObject("currentMenuId",currentMenuId);
+			    model.addObject("spNo", spNo);
+		} catch (Exception e) {
+			
+			System.out.println("Show Regular Sp Cake Page Excep: " + e.getMessage());
+			
+
+		}
+
+		return model;
+	}
+	
+	
+		@RequestMapping(value = "/showRegularSpCakeOrder/{index}_OLD", method = RequestMethod.GET)
+		public ModelAndView displayregularSpCakeOrder_OLD(@PathVariable("index") int index,HttpServletRequest request,
 				HttpServletResponse response) {
 			
 			logger.info("/regularSpCkOrder  request mapping");
@@ -119,23 +232,16 @@ public class RegularSpCakeController {
 					List<MCategory> catList=new ArrayList<>();
 			        mCategories=categoryResponse.getmCategoryList();
 			        
-			    	for (MCategory mCategory : mCategories) {
-			    		if(currentMenuId==42) {
-						if (mCategory.getCatId() == 2) {
-							catList.add(mCategory);
-                            model.addObject("mainCatId", mCategory.getCatId());
-						}
-			    		}
-			    		else
-			    			if(currentMenuId==29||currentMenuId==30||currentMenuId==80)
-			    			{
-			    				if (mCategory.getCatId() == 1) {
-									catList.add(mCategory);
-		                            model.addObject("mainCatId", mCategory.getCatId());
-								}
-			    			}
-			    		
-					}
+			/*
+			 * for (MCategory mCategory : mCategories) { if(currentMenuId==42) { if
+			 * (mCategory.getCatId() == 2) { catList.add(mCategory);
+			 * model.addObject("mainCatId", mCategory.getCatId()); } } else
+			 * if(currentMenuId==29||currentMenuId==30||currentMenuId==80) { if
+			 * (mCategory.getCatId() == 1) { catList.add(mCategory);
+			 * model.addObject("mainCatId", mCategory.getCatId()); } }
+			 * 
+			 * }
+			 */
 			    	String spNo="";
 			      try {
 			    	  spNo=getSpNo(request,response);
@@ -324,9 +430,34 @@ public class RegularSpCakeController {
 		}
 		//----------------------------------------END--------------------------------------------
 
-		 //-------------------------GET Regular Cake (AJAX METHOD)-------------------------
+		
 		@RequestMapping(value = "/getRegSpecialCkById", method = RequestMethod.GET)
-		public @ResponseBody GetRegularSpCkItem getSpecialCkById(@RequestParam(value = "id", required = true) int id) {
+		public @ResponseBody Item getSpecialCkById(@RequestParam(value = "id", required = true) int id,
+				HttpServletRequest request, HttpServletResponse response) throws Exception{
+			System.err.println("In /getRegSpecialCkById"+id);
+			List<GetRegularSpCkItem> regularSpCkItems=new ArrayList<GetRegularSpCkItem>();
+		   // regularSpCkItems=regularSpCkItemList.getGetRegularSpCkItems();
+		    /*GetRegularSpCkItem getRegularSpCkItem=new GetRegularSpCkItem();*/
+		    Item item=new Item();
+HttpSession session=request.getSession();
+		     for(Item selItem:itemList)
+		     {
+		    	 if(selItem.getId()==id)
+		    	 {
+		    		 item=selItem;
+		    		 break;
+		    	 }
+		}
+		     SetOrderDataCommon orderData=new SetOrderDataCommon();
+	    	  menuList = (ArrayList<FrMenu>) session.getAttribute("menuList");
+	    	  item= orderData.setItemRateMRP(item, menuList.get(globalIndex), request);
+		     System.err.println("Item is"+item);
+				return item;
+		}
+		
+		 //-------------------------GET Regular Cake (AJAX METHOD)-------------------------
+		@RequestMapping(value = "/getRegSpecialCkById_OLD", method = RequestMethod.GET)
+		public @ResponseBody GetRegularSpCkItem getSpecialCkById_OLD(@RequestParam(value = "id", required = true) int id) {
 			
 			List<GetRegularSpCkItem> regularSpCkItems=new ArrayList<GetRegularSpCkItem>();
 		    regularSpCkItems=regularSpCkItemList.getGetRegularSpCkItems();
@@ -352,8 +483,8 @@ public class RegularSpCakeController {
 			    Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 	      
 			    ArrayList<FrMenu> menuList = (ArrayList<FrMenu>) session.getAttribute("menuList");
-			
-			    rspSubCat = Integer.parseInt(request.getParameter("regular_sp_cake"));
+			    System.err.println("menuList" +menuList.toString());
+			    //rspSubCat = Integer.parseInt(request.getParameter("regular_sp_cake"));
 			    logger.info("1" + rspSubCat);
 			
 			     itemId = Integer.parseInt(request.getParameter("regSpCkItem"));
@@ -476,7 +607,12 @@ public class RegularSpCakeController {
 			regularSpCakeOrder.setRspCustName(rspCustName);
 			regularSpCakeOrder.setRspDeliveryDt(rspDeliveryDt);
 			regularSpCakeOrder.setOrderDate(convertedOrderDate);
-			regularSpCakeOrder.setRspEvents(rspEvents);
+			
+			 FrMenu menu=menuList.get(globalIndex);
+			 System.err.println(""+menu.getDiscPer());
+				regularSpCakeOrder.setRspEvents(""+menu.getDiscPer());//new field set Sachin 16-3-2021
+				
+			//regularSpCakeOrder.setRspEvents(rspEvents);
 			regularSpCakeOrder.setRspSubCat(rspSubCat);
 			regularSpCakeOrder.setRspSubTotal(rspSubTotal);
 			regularSpCakeOrder.setRspRemainingAmt(rspRemainingAmt);
@@ -499,11 +635,13 @@ public class RegularSpCakeController {
 				e.printStackTrace();
 			}
             regularSpCakeOrder.setRspPlace(spNo);
-			SetOrderDataCommon orderDataSetting=new SetOrderDataCommon();
-
-            regularSpCakeOrder=orderDataSetting.setRegSpOrderData(regularSpCakeOrder, menuList.get(globalIndex), menuList.get(globalIndex).getMenuId(),
-					frDetails.getFrId(),
-					regularSpCakeOrder.getQty(), request);
+			/* Commented on 16-03-2021 as of Baroda.
+			 * SetOrderDataCommon orderDataSetting=new SetOrderDataCommon();
+			 * 
+			 * regularSpCakeOrder=orderDataSetting.setRegSpOrderData(regularSpCakeOrder,
+			 * menuList.get(globalIndex), menuList.get(globalIndex).getMenuId(),
+			 * frDetails.getFrId(), regularSpCakeOrder.getQty(), request);
+			 */
 				HttpHeaders httpHeaders = new HttpHeaders();
 				httpHeaders.set("Content-Type", "application/json");
 

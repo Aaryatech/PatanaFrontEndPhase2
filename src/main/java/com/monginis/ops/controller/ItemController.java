@@ -43,6 +43,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.monginis.ops.common.Common;
+import com.monginis.ops.common.DateConvertor;
 import com.monginis.ops.common.Firebase;
 import com.monginis.ops.common.SetOrderDataCommon;
 import com.monginis.ops.constant.Constant;
@@ -55,6 +56,7 @@ import com.monginis.ops.model.GetFrItem;
 import com.monginis.ops.model.GetOrder;
 import com.monginis.ops.model.GetOrderList;
 import com.monginis.ops.model.Info;
+import com.monginis.ops.model.NewSetting;
 import com.monginis.ops.model.Orders;
 import com.monginis.ops.model.TabTitleData;
 
@@ -84,6 +86,9 @@ public class ItemController {
 
 		subCatList = new ArrayList<>();
 		globalIndex = index;
+		
+		String prevDate = request.getParameter("prevdatepicker");
+
 		// ---------------------------For New Menu For Late Orders-------------
 		try {
 			String marginKey = new String();
@@ -152,15 +157,12 @@ public class ItemController {
 		LocalTime formatedFromTime = LocalTime.parse(fromTime);
 		LocalTime formatedToTime = LocalTime.parse(toTime);
 
-		// currentTime = currentTime.plusHours(15);
-		// System.out.println("current time " + currentTime);
-		// System.out.println("from time " + formatedFromTime);
 
 		String orderDate = "";
 		String productionDate = "";
 		String deliveryDate = "";
 
-		if (formatedFromTime.isBefore(formatedToTime)) {
+		/*if (formatedFromTime.isBefore(formatedToTime)) {
 
 			orderDate = todaysDate;
 			productionDate = todaysDate;
@@ -196,58 +198,94 @@ public class ItemController {
 				// System.out.println("inside 2.2");
 			}
 
+		}*/
+
+		FrMenu menu=menuList.get(globalIndex);
+		//SACHIN Del Date from Menu 08-03-2021 16-03-2021
+		
+		//ZoneId z = ZoneId.of("Asia/Calcutta");
+		LocalTime now = LocalTime.now(z); // Explicitly specify the desired/expected time zone.
+
+		LocalTime fromTimeLocalTime = LocalTime.parse(fromTime);
+		LocalTime toTimeLocalTIme = LocalTime.parse(toTime);
+		if (fromTimeLocalTime.isBefore(toTimeLocalTIme)) {
+			orderDate = todaysDate;
+			// productionDate = todaysDate;
+			productionDate = incrementDate(todaysDate, menu.getProdDays());
+			deliveryDate = incrementDate(todaysDate, menu.getDelDays());
+		} else {
+			if (now.isAfter(fromTimeLocalTime)) {
+				orderDate = todaysDate;
+				productionDate = incrementDate(todaysDate, menu.getProdDays() + 1);
+				deliveryDate = incrementDate(todaysDate, menu.getDelDays() + 1);
+			} else {
+				orderDate = todaysDate;
+				productionDate = incrementDate(todaysDate, menu.getProdDays());
+				deliveryDate = incrementDate(todaysDate, menu.getDelDays());
+			}
 		}
-
-		// System.out.println("Order date: " + orderDate);
-		// System.out.println("Production date: " + productionDate);
-		// System.out.println("Delivery date: " + deliveryDate);
-
+		//SACHIN Del Date from Menu 08-03-2021 16-03-2021 End
 		frItemList = new ArrayList<GetFrItem>();
 		prevFrItemList = new ArrayList<GetFrItem>();
 		List<GetOrder> orderList = new ArrayList<GetOrder>();
 		int flagRes = 0;
+		NewSetting settingValue = new NewSetting();
 		try {
+			 rest = new RestTemplate();
+			// new on 10 july
+			// -----------------------------------------------------------------------------
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("settingKey", "show_prev_order");
+			//settingValue = rest.postForObject(Constant.URL + "/findNewSettingByKey", map, NewSetting.class);
+			// ------------------------------------------------------------------------------
 
-			// System.out.println("Date is : " + currentDate);
+			System.out.println("Date is : " + currentDate);
 			currentMenuId = menuList.get(index).getMenuId();
-			try {
-				map = new LinkedMultiValueMap<String, Object>();
-				map.add("frId", frDetails.getFrId());
-				map.add("date", currentDateFc);
-				map.add("menuId", "66");
-				orderList = rest.postForObject(Constant.URL + "/getOrdersListRes", map, List.class);
-				// System.err.println("orderList:"+orderList.toString());
-				model.addObject("orderList", orderList);
-
-				flagRes = 1;
-				model.addObject("flagRes", flagRes);
-			} catch (Exception e) {
-				flagRes = 0;
-				model.addObject("flagRes", flagRes);
-
-				e.printStackTrace();
-			}
+			/*
+			 * if (currentMenuId == Integer.parseInt(settingValue.getSettingValue1())) { try
+			 * { map = new LinkedMultiValueMap<String, Object>(); map.add("frId",
+			 * frDetails.getFrId()); map.add("date", currentDateFc); map.add("menuId",
+			 * settingValue.getSettingValue2());// new on 10 july orderList =
+			 * rest.postForObject(Constant.URL + "/getOrdersListRes", map, List.class);
+			 * System.err.println("orderList:" + orderList.toString());
+			 * model.addObject("orderList", orderList);
+			 * 
+			 * flagRes = 1; model.addObject("flagRes", flagRes);
+			 * System.out.println("in iff "); } catch (Exception e) { flagRes = 0;
+			 * model.addObject("flagRes", flagRes);
+			 * 
+			 * e.printStackTrace(); } }
+			 */
 			map = new LinkedMultiValueMap<String, Object>();
 
 			map.add("items", menuList.get(index).getItemShow());
 			map.add("frId", frDetails.getFrId());
-			map.add("date", productionDate);
+			//map.add("date", productionDate);
+		
+			if (prevDate != null) {
+				System.err.println("In Prev Date SELECTED");
+				productionDate = DateConvertor.convertToYMD(prevDate);
+				map.add("date", productionDate);
+			}else {
+				System.err.println("In Prev Date Null");
+				map.add("date", deliveryDate);
+			}
 			map.add("menuId", menuList.get(index).getMenuId());
 			map.add("isSameDayApplicable", isSameDayApplicable);
 
 			RestTemplate restTemplate = new RestTemplate();
-
+			System.out.println("before service");
 			ParameterizedTypeReference<List<GetFrItem>> typeRef = new ParameterizedTypeReference<List<GetFrItem>>() {
 			};
 			ResponseEntity<List<GetFrItem>> responseEntity = restTemplate.exchange(Constant.URL + "/getFrItems",
 					HttpMethod.POST, new HttpEntity<>(map), typeRef);
-
+			System.out.println("after service");
 			frItemList = responseEntity.getBody();
 			prevFrItemList = responseEntity.getBody();
-			// System.out.println("Fr Item List " + frItemList.toString());
+			System.err.println("Fr Item List prevFrItemList " + prevFrItemList.toString());
 		} catch (Exception e) {
-
-			// System.out.println("Exception Item List " + e.getMessage());
+			e.printStackTrace();
+			System.out.println("Exception Item List " + e.getMessage());
 		}
 
 		Set<String> setName = new HashSet<String>();
@@ -258,32 +296,14 @@ public class ItemController {
 
 		for (int i = 0; i < frItemList.size(); i++) {
 
-			if (frDetails.getFrRateCat() == 1) {
-				// System.err.println(currentMenuId+"ans1111"+ans);
-				if (ans) {
-					double rate1 = frItemList.get(i).getItemRate1()
-							+ (frItemList.get(i).getItemRate1() * marginPer / 100);
-					grandTotal = grandTotal + (frItemList.get(i).getItemQty() * frItemList.get(i).getItemRate3());
-				} else {
-					grandTotal = grandTotal + (frItemList.get(i).getItemQty() * frItemList.get(i).getItemRate1());
-				}
-			} else if (frDetails.getFrRateCat() == 2) {
-				if (ans) {
-					double rate2 = frItemList.get(i).getItemRate2()
-							+ (frItemList.get(i).getItemRate2() * marginPer / 100);
-					grandTotal = grandTotal + (frItemList.get(i).getItemQty() * frItemList.get(i).getItemRate3());
-				} else {
-					grandTotal = grandTotal + (frItemList.get(i).getItemQty() * frItemList.get(i).getItemRate2());
-				}
-			} else if (frDetails.getFrRateCat() == 3) {
-				if (ans) {
-					double rate3 = frItemList.get(i).getItemRate3()
-							+ (frItemList.get(i).getItemRate3() * marginPer / 100);
-					grandTotal = grandTotal + (frItemList.get(i).getItemQty() * frItemList.get(i).getItemRate3());
-				} else {
-					grandTotal = grandTotal + (frItemList.get(i).getItemQty() * frItemList.get(i).getItemRate3());
-				}
-			}
+			//Sachin Logic
+			SetOrderDataCommon orderData=new SetOrderDataCommon();
+			GetFrItem item =orderData.setFrItemRateMRP(frItemList.get(i),menu,request);
+			frItemList.set(i, item);
+			grandTotal = grandTotal + (frItemList.get(i).getItemQty() * frItemList.get(i).getOrderRate());
+
+			//Sachin Logic End
+			
 			setName.add(frItemList.get(i).getSubCatName());
 
 		}
@@ -303,27 +323,22 @@ public class ItemController {
 				if (frItemList.get(j).getSubCatName().equalsIgnoreCase(subCat)) {
 
 					qty = qty + frItemList.get(j).getItemQty();
+					total = total + (frItemList.get(j).getOrderRate() * frItemList.get(j).getItemQty());
 
-					if (frDetails.getFrRateCat() == 1) {
-
-						if (ans) {
-							total = total + (frItemList.get(j).getItemRate3() * frItemList.get(j).getItemQty());
-						} else {
-							total = total + (frItemList.get(j).getItemRate1() * frItemList.get(j).getItemQty());
-						}
-					} else if (frDetails.getFrRateCat() == 2) {
-						if (ans) {
-							total = total + (frItemList.get(j).getItemRate3() * frItemList.get(j).getItemQty());
-						} else {
-							total = total + (frItemList.get(j).getItemRate2() * frItemList.get(j).getItemQty());
-						}
-					} else if (frDetails.getFrRateCat() == 3) {
-						if (ans) {
-							total = total + (frItemList.get(j).getItemRate3() * frItemList.get(j).getItemQty());
-						} else {
-							total = total + (frItemList.get(j).getItemRate3() * frItemList.get(j).getItemQty());
-						}
-					}
+					/*
+					 * if (frDetails.getFrRateCat() == 1) {
+					 * 
+					 * if (ans) { total = total + (frItemList.get(j).getItemRate3() *
+					 * frItemList.get(j).getItemQty()); } else { total = total +
+					 * (frItemList.get(j).getItemRate1() * frItemList.get(j).getItemQty()); } } else
+					 * if (frDetails.getFrRateCat() == 2) { if (ans) { total = total +
+					 * (frItemList.get(j).getItemRate3() * frItemList.get(j).getItemQty()); } else {
+					 * total = total + (frItemList.get(j).getItemRate2() *
+					 * frItemList.get(j).getItemQty()); } } else if (frDetails.getFrRateCat() == 3)
+					 * { if (ans) { total = total + (frItemList.get(j).getItemRate3() *
+					 * frItemList.get(j).getItemQty()); } else { total = total +
+					 * (frItemList.get(j).getItemRate3() * frItemList.get(j).getItemQty()); } }
+					 */
 
 				}
 
@@ -416,7 +431,15 @@ public class ItemController {
 		model.addObject("isSameDayApplicable", isSameDayApplicable);
 		model.addObject("qtyMessage", qtyAlert);
 		model.addObject("url", Constant.ITEM_IMAGE_URL);
-
+		model.addObject("menuDiscPer", menuList.get(index).getDiscPer());//Sac 16-03-2021
+		if (prevDate == null) {
+			model.addObject("prevDate", strOrderDate);
+			model.addObject("prevDateFlag", 0);
+		} else {
+			model.addObject("prevDate", prevDate);
+			model.addObject("prevDateFlag", 1);
+		}
+		
 		return model;
 
 	}

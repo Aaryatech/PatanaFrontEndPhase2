@@ -269,7 +269,7 @@ public class HomeController {
 		FrLoginResponse loginResponse = restTemplate.postForObject(Constant.URL + "/loginFr", map,
 				FrLoginResponse.class);
 
-		//System.out.println("Login Response " + loginResponse.toString());
+		System.out.println("Login Response " + loginResponse.toString());
 
 		if (loginResponse.getLoginInfo().isError()) {
 

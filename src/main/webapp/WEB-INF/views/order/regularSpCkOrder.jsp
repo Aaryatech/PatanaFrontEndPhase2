@@ -99,7 +99,7 @@ select {
 							<div class="left">
 
 
-								<div class="fullform">
+								<%-- <div class="fullform">
 									<div class="cackleft">Category</div>
 									<div class="cackright">
 										<select name="catId" id="catId" class="form-control"
@@ -113,8 +113,8 @@ select {
 											</c:forEach>
 										</select>
 									</div>
-								</div>
-								<div class="fullform">
+								</div> --%>
+								<!-- <div class="fullform">
 									<div class="cackleft">Sub Category</div>
 									<div class="cackright">
 										<select name="regular_sp_cake" id="regular_sp_cake"
@@ -123,13 +123,16 @@ select {
 
 										</select>
 									</div>
-								</div>
+								</div> -->
 								<div class="fullform">
 									<div class="cackleft2">Regular Cake</div>
 									<div class="cackrighttexbox">
 										<select data-placeholder="Select Item" class="form-control"
 											tabindex="7" id="regSpCkItem" name="regSpCkItem" required>
-
+<option value="-1" >Select Item</option>
+										<c:forEach items="${selectedItems}" var="item">
+											<option value="${item.id}" >${item.itemName}</option>
+										</c:forEach>
 										</select>
 
 									</div>
@@ -210,12 +213,12 @@ select {
 											</c:forEach>
 										</select> --%>
 								<input name="sp_event" type="hidden" id="sp_event"
-									value="Birthday" required>
+									value="Birthday" >
 								<!--  </div>
 									<div class="col3">  -->
 								<input class="texboxitemcode" placeholder="Name"
 									name="event_name" type="hidden" id="event_name"
-									value="happy bday" required>
+									value="happy bday" >
 								<!-- 	</div>
 								</div>  -->
 
@@ -501,18 +504,21 @@ select {
 							$('#regSpCkItem')
 									.change(
 											function() {
+												//alert(document.getElementById("regSpCkItem").value)
+												var Pid=document.getElementById("regSpCkItem").value;
 												$
 														.getJSON(
 																'${findRegSpecialCkById}',
 																{
-																	id : $(this).val(),
+																	id : Pid,
 																	ajax : 'true'
 																},
 																function(data) {
-
+																	//alert(JSON.stringify(data))
 																	var len = data.length;
-																	var actqty =parseFloat($("#sp_qty").val());
-																	var frRateCat = $("#frRateCat").val();
+																	 var actqty =data.itemGrp3;
+																	/* var actqty =parseFloat($("#sp_qty").val()); */
+																	/*SAchin comment var frRateCat = $("#frRateCat").val();
 																	if (frRateCat == 1) {
 																		data.itemMrp3 = data.itemMrp1;
 																		document.getElementById("rate").setAttribute('value',data.itemRate1);
@@ -524,10 +530,18 @@ select {
 																		data.itemMrp3 = data.itemMrp3;
 																		document.getElementById("rate").setAttribute('value',data.itemRate3);
 
-																	}
-																	document.getElementById("MRP").setAttribute('value',data.itemMrp3);
-
+																	} */
+																	
+																	document.getElementById("MRP").setAttribute('value',data.orderMrp);
+																	data.itemMrp3 = data.orderMrp;
+																	document.getElementById("rate").setAttribute('value',data.orderRate);
+					
+																	
+																	
 																	$("#rg_ck_name").text(data.itemName);
+																	$("#reg_desc").text(data.itemGrp3);
+																	$("#maxQty").val(data.itemGrp3);
+																	$("#regular_sp_cake").val(data.itemGrp2);
 																	document.getElementById("rg_sp_name").setAttribute('value',data.itemName);
                                                                     
 																	var calcPrice=(data.itemMrp3*actqty).toFixed(2);
@@ -535,7 +549,10 @@ select {
 																	document.getElementById("sp_calc_price").setAttribute('value',calcPrice);
 
 																	$("#subtotal").text(calcPrice);
-																	document.getElementById("sp_sub_total").setAttribute('value',calcPrice);
+																	var discAmt=calcPrice*(data.menuDiscPer/100);
+																	//alert(data.menuDiscPer);
+																	$("#sp_menu_disc_amt").text(discAmt);
+																	document.getElementById("sp_sub_total").setAttribute('value',(calcPrice-discAmt).toFixed(2));
 
 																	document.getElementById("t1").setAttribute('value',data.itemTax1);
 																	document.getElementById("t2").setAttribute('value',data.itemTax2);
@@ -589,27 +606,27 @@ select {
                                                         				}
                                                         			   
                                                         			}
-                                                        			
+                                                        			  	
                                                         			document.getElementById("t1Amt").setAttribute('value',tax1Amt.toFixed(2));
 																	document.getElementById("t2Amt").setAttribute('value',tax2Amt.toFixed(2));
 																	
-                                                                    $("#INR").text('INR-'+ total.toFixed(2));
-																	document.getElementById("sp_grand").setAttribute('value',total.toFixed(2));
+                                                                    $("#INR").text('INR-'+ (total-discAmt).toFixed(2));
+																	document.getElementById("sp_grand").setAttribute('value',(total-discAmt).toFixed(2));
 																	
 																	$('#gstrs').html(gstInRs.toFixed(2));
 																	document.getElementById("gst_rs").setAttribute('value',gstInRs.toFixed(2));
 
-																	$('#tot').html('TOTAL-'+ total.toFixed(2));
-																	document.getElementById("total_amt").setAttribute('value',total.toFixed(2));
+																	$('#tot').html('TOTAL-'+ (total-discAmt).toFixed(2));
+																	document.getElementById("total_amt").setAttribute('value',(total-discAmt).toFixed(2));
 
 
 																	$('#mgstamt').html('AMT-'+ mrpBaseRate.toFixed(2));
 																	document.getElementById("m_gst_amt").setAttribute('value',mrpBaseRate.toFixed(2));
 
-																	$('#rmAmt').html(total.toFixed(2));
-																	document.getElementById("rm_amount").setAttribute('value',total.toFixed(2));
-
-																	document.getElementById("sp_qty").setAttribute('value',1);
+																	$('#rmAmt').html((total-discAmt).toFixed(2));
+																	document.getElementById("rm_amount").setAttribute('value',(total-discAmt).toFixed(2));
+																	
+																	document.getElementById("sp_qty").setAttribute('value',data.itemGrp3);
 
 																});
 											});

@@ -41,6 +41,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.monginis.ops.common.Common;
+import com.monginis.ops.common.SetOrderDataCommon;
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.model.ConfiguredSpDayCkResponse;
 import com.monginis.ops.model.DateResponse;
@@ -139,9 +140,121 @@ public class SpDayCakeController {
 		
 	}
 	//-----------------------SEARCH ITEMS-------------------------------------------
-	
 	@RequestMapping(value = "/searchItems", method = RequestMethod.POST)
 	public ModelAndView searchItems(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("order/spdaycake");
+		HttpSession session = request.getSession();
+		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+
+		ArrayList<FrMenu> menuList = (ArrayList<FrMenu>) session.getAttribute("menuList");
+		
+		List<GetConfiguredSpDayCk> configureSpDayFrList = new ArrayList<GetConfiguredSpDayCk>();
+
+		configureSpDayFrList = configuredSpDayCkRes.getConfiguredSpDayCkList();
+		
+		System.out.println("SpdayId"+spdayId);
+		
+		 spdayId=Integer.parseInt(request.getParameter("spdayId"));
+	
+		
+		GetConfiguredSpDayCk spDayCk=new GetConfiguredSpDayCk();
+		
+	   for(GetConfiguredSpDayCk getConfiguredSpDayCk:configureSpDayFrList)
+	   {
+		  if(getConfiguredSpDayCk.getSpdayId()==spdayId)
+		  {
+			  spDayCk=getConfiguredSpDayCk;
+		  }
+	   }
+	   System.out.println("Special Day Cake Response:"+spDayCk.toString());
+	   
+		 delDate=request.getParameter("datepicker");
+		 fromDate=request.getParameter("fromDate");
+		 toDate=request.getParameter("toDate");
+		 
+		try {
+			
+	       Date deliveryDate=Main.stringToDate(delDate);
+			
+			DateFormat dmyFormat = new SimpleDateFormat("dd-MM-yyyy");
+			
+			deliveryDate = dmyFormat.parse(delDate);
+		
+	      System.out.println("Delivery date "+deliveryDate);
+		
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(deliveryDate);
+
+		 deliDate = cal.getTime();
+		 
+		  cal.add(Calendar.DATE, -1);
+		
+		// manipulate date
+		//c.add(Calendar.DATE, prodTime);
+			productionDate = cal.getTime();
+
+			
+			DateFormat ymdFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+			String strProdDate = ymdFormat.format(productionDate);
+		
+			
+			System.out.println("String ymd  date is: " +strProdDate);
+
+	    	 map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("items",spDayCk.getItemId());
+			map.add("frId", frDetails.getFrId());
+			map.add("date", strProdDate);
+			map.add("menuId",spDayCk.getMenuId());
+
+			RestTemplate restTemplate = new RestTemplate();
+
+			ParameterizedTypeReference<List<GetFrItem>> typeRef = new ParameterizedTypeReference<List<GetFrItem>>() {};
+			ResponseEntity<List<GetFrItem>> responseEntity = restTemplate.exchange(Constant.URL + "/getFrItems",
+					HttpMethod.POST, new HttpEntity<>(map), typeRef);
+
+			frItemList = responseEntity.getBody();
+			prevFrItemList = responseEntity.getBody();
+			System.out.println("Fr Item List " + frItemList.toString());
+			
+			FrMenu menu=new  FrMenu();
+			
+			for(int i=0;i<menuList.size();i++) {
+				if(menuList.get(i).getMenuId()==spDayCk.getMenuId()) {
+					menu=menuList.get(i);
+					break;
+				}
+			}
+			
+			for (int i = 0; i < frItemList.size(); i++) {
+				//Sachin Logic
+				SetOrderDataCommon orderData=new SetOrderDataCommon();
+				GetFrItem item =orderData.setFrItemRateMRP(frItemList.get(i),menu,request);
+				frItemList.set(i, item);
+			}
+			
+			model.addObject("frDetails", frDetails);
+			model.addObject("itemList", frItemList);
+			model.addObject("menuId", spDayCk.getMenuId());
+			model.addObject("fromDate",fromDate);
+			model.addObject("toDate",toDate);
+			model.addObject("delDate",delDate );
+			model.addObject("spdayId",spdayId);
+
+			model.addObject("configureSpDayFrList", configureSpDayFrList);
+	       } catch (Exception e) {
+
+	        	System.out.println("Exception Item List " + e.getMessage());
+	      }
+		
+
+		return model;
+	}	
+	@RequestMapping(value = "/searchItems_OLD", method = RequestMethod.POST)
+	public ModelAndView searchItems_OLD(HttpServletRequest request,
 			HttpServletResponse response) {
 
 		ModelAndView model = new ModelAndView("order/spdaycake");
@@ -467,7 +580,12 @@ public class SpDayCakeController {
 					order.setOrderRate(frItem.getItemRate3());
 
 				}
-				
+				//Sachin 5-3-21 16-3-21
+				order.setOrderMrp(frItem.getOrderMrp());
+				order.setOrderRate(frItem.getOrderRate());
+				order.setGrnType(frItem.getGrnPer());
+				order.setIsPositive(frItem.getMenuDiscPer());// set discPer
+				//Sachin 5-3-21 End 16-3-21
 				orders.add(order);
 
 			}

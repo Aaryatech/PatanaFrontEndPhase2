@@ -10,9 +10,18 @@ public class Item {
 		private Integer itemGrp3;
 		private Double itemRate1;
 		private Double itemRate2;
-		private Double itemMrp1;
-		private Double itemMrp2;
-		private Double itemMrp3;
+		private double itemMrp1;
+		private double itemMrp2;
+		private double itemMrp3;
+		public void setItemMrp1(double itemMrp1) {
+			this.itemMrp1 = itemMrp1;
+		}
+		public void setItemMrp2(double itemMrp2) {
+			this.itemMrp2 = itemMrp2;
+		}
+		public void setItemMrp3(double itemMrp3) {
+			this.itemMrp3 = itemMrp3;
+		}
 		private String itemImage;
 		private Double itemTax1;
 		private Double itemTax2;
@@ -25,6 +34,36 @@ public class Item {
 		private Integer minQty;
 		private Integer shelfLife;
 		
+		
+		//Sac 16-03-2021
+		//Sachin New field added at ops only to set orderRate and OrderMrp as per Menu Setting
+		//5-03-2021
+		//NEw field added Sachin 05-03-2021
+				private double orderRate;
+				private double orderMrp;
+				private float menuDiscPer;
+				
+				
+				
+				
+		public double getOrderRate() {
+					return orderRate;
+				}
+				public void setOrderRate(double orderRate) {
+					this.orderRate = orderRate;
+				}
+				public double getOrderMrp() {
+					return orderMrp;
+				}
+				public void setOrderMrp(double orderMrp) {
+					this.orderMrp = orderMrp;
+				}
+				public float getMenuDiscPer() {
+					return menuDiscPer;
+				}
+				public void setMenuDiscPer(float menuDiscPer) {
+					this.menuDiscPer = menuDiscPer;
+				}
 		public int getId() {
 			return id;
 		}
@@ -73,23 +112,15 @@ public class Item {
 		public void setItemRate2(Double itemRate2) {
 			this.itemRate2 = itemRate2;
 		}
-		public Double getItemMrp1() {
+		
+		public double getItemMrp1() {
 			return itemMrp1;
 		}
-		public void setItemMrp1(Double itemMrp1) {
-			this.itemMrp1 = itemMrp1;
-		}
-		public Double getItemMrp2() {
+		public double getItemMrp2() {
 			return itemMrp2;
 		}
-		public void setItemMrp2(Double itemMrp2) {
-			this.itemMrp2 = itemMrp2;
-		}
-		public Double getItemMrp3() {
+		public double getItemMrp3() {
 			return itemMrp3;
-		}
-		public void setItemMrp3(Double itemMrp3) {
-			this.itemMrp3 = itemMrp3;
 		}
 		public String getItemImage() {
 			return itemImage;

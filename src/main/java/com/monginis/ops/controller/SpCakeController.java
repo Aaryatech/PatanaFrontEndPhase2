@@ -1362,6 +1362,7 @@ System.err.println("In loop " +flavour.getSpfId());
 			spCakeOrder.setSpSelectedWeight(spWeight);
 			spCakeOrder.setExtraCharges(exCharges);
 			spCakeOrder.setDisc(disc);
+			spCakeOrder.setSpMinWeight(specialCake.getMenuDiscPer());//NEW SET ON 05-03-2021 16-03-2021
 
 			String spNo = "";
 			try {
